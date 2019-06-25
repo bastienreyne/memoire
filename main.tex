@@ -1,0 +1,91 @@
+\documentclass[a4paper, 11pt]{memoir}
+
+% Nécessaire
+\usepackage{natbib}
+\usepackage[french]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amsmath, amsthm}
+\usepackage{amsfonts,amssymb}
+
+
+% Marge
+\usepackage{geometry}
+\geometry{margin={3cm, 3cm}}
+% \usepackage[inner=3cm,outer=2cm]{geometry}
+% \usepackage[inner=100pt, textwidth=400pt]{geometry}
+
+% Figures, graphiques
+\usepackage{graphicx}
+\usepackage{epsfig}
+\usepackage{caption}
+\usepackage{wrapfig}
+
+% Surlignage
+\usepackage{alltt}
+
+\usepackage[dvipsnames]{xcolor}
+\usepackage{soul}
+\usepackage{color}
+\usepackage{colortbl}
+
+% Indicatrice
+\usepackage{dsfont}
+
+\usepackage{multirow}
+\usepackage{eurosym}
+\usepackage{extarrows}
+
+% Graphique
+\usepackage{tikz}
+
+
+% Thème, style
+
+\usepackage{lettrine}
+\usepackage{titlesec}
+\renewcommand{\chapnumfont}{%     % define font for chapter number
+  \usefont{T1}{pnc}{b}{n}%      % choose New Chancery, bold, normal shape
+  \fontsize{100}{100}%          % font size 100pt, baselineskip 100pt
+  \selectfont%                  % activate font
+}
+\colorlet{chapnumcol}{gray!75}  % color for chapter number
+
+\titleformat{\chapter}[display]
+{\filleft\bfseries}
+{\filleft\chapnumfont\textcolor{chapnumcol}{\thechapter}}
+{-24pt}
+{\Huge}
+
+\usepackage{titletoc}
+\usepackage{fancyhdr}
+ 
+\pagestyle{plain}
+
+
+
+\begin{document}
+
+% Page de garde
+\input{titlepage}
+
+\frontmatter
+
+\begin{abstract}
+ Résumé en francais
+\end{abstract}
+
+\include{thanks}
+
+
+\tableofcontents
+
+\mainmatter
+
+\include{introduction}
+
+
+
+\end{document}
+
