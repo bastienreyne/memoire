@@ -1,14 +1,21 @@
 \documentclass[a4paper, 11pt]{memoir}
 
 % Nécessaire
-\usepackage{natbib}
-\usepackage[french]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{lmodern}
+
+% Biblio
+\usepackage{natbib}
+\bibliographystyle{humannat}
+\usepackage{hypernat}
+\bibpunct{\textcolor{blue}{[}}{\textcolor{blue}{]}}{,}{a}{\textcolor{blue}{,}}{;}
+
+\usepackage[french]{babel}
 \usepackage{amsmath, amsthm}
 \usepackage{amsfonts,amssymb}
 
+\usepackage[colorlinks=true, citecolor=blue, linkcolor=.]{hyperref}
 
 % Marge
 \usepackage{geometry}
@@ -85,7 +92,7 @@
 
 \include{introduction}
 
-
+\bibliography{biblio}
 
 \end{document}
 
