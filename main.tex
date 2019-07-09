@@ -9,13 +9,13 @@
 \usepackage{natbib}
 \bibliographystyle{abbrvnat}
 \usepackage{hypernat}
-\bibpunct{\textcolor{blue}{[}}{\textcolor{blue}{]}}{,}{a}{\textcolor{blue}{,}}{;}
+\bibpunct{\textcolor{blue}{[}}{\textcolor{blue}{]}}{\textcolor{blue}{;}}{a}{\textcolor{blue}{,}}{;}
 
 \usepackage[french]{babel}
 \usepackage{amsmath, amsthm}
 \usepackage{amsfonts,amssymb}
 
-\usepackage[colorlinks=true, citecolor=blue, linkcolor=.]{hyperref}
+\usepackage[colorlinks=true, citecolor=blue, linkcolor=., urlcolor = blue]{hyperref}
 
 % Marge
 \usepackage{geometry}
@@ -28,10 +28,12 @@
 \usepackage{epsfig}
 \usepackage{caption}
 \usepackage{wrapfig}
+% \usepackage{graphics}
 
 % Surlignage
 \usepackage{alltt}
 
+% Couleurs
 \usepackage[dvipsnames]{xcolor}
 \usepackage{soul}
 \usepackage{color}
@@ -49,7 +51,6 @@
 
 
 % Thème, style
-
 \usepackage{lettrine}
 \usepackage{titlesec}
 \renewcommand{\chapnumfont}{%     % define font for chapter number
@@ -64,7 +65,6 @@
 {\filleft\chapnumfont\textcolor{chapnumcol}{\thechapter}}
 {-24pt}
 {\Huge}
-
 \usepackage{titletoc}
 \usepackage{fancyhdr}
  
@@ -90,7 +90,26 @@
 
 \mainmatter
 
+% Chapitre 1
 \include{introduction}
+
+% Chapitre 2
+\include{connaissance_biologie}
+
+% Chapitre 3
+\include{experimentation}
+
+% Chapitre 4
+\include{modele}
+
+% Chapitre 5
+\include{math}
+
+% Chapitre 6
+\include{resultats}
+
+% Chapitre 7
+\include{conclusion}
 
 \bibliography{biblio}
 
