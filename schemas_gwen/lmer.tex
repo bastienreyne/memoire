@@ -1,0 +1,179 @@
+\documentclass[a4paper, landscape, 11pt]{article}
+
+% Nécessaire
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+
+% Biblio
+\usepackage{natbib}
+\bibliographystyle{humannat}
+\usepackage{hypernat}
+\bibpunct{\textcolor{blue}{[}}{\textcolor{blue}{]}}{}{a}{\textcolor{blue}{,}}{;}
+
+\usepackage[french]{babel}
+\usepackage{amsmath, amsthm}
+\usepackage{amsfonts,amssymb}
+
+% Marge
+\usepackage{geometry}
+\geometry{margin={2.2cm ,2cm}}
+
+% Figures, graphiques
+\usepackage{graphicx}
+\usepackage{epsfig}
+\usepackage{caption}
+
+% Surlignage
+\usepackage{alltt}
+
+\usepackage{xcolor}
+\usepackage{soul}
+\usepackage{color}
+\usepackage{colortbl}
+
+% Indicatrice
+\usepackage{dsfont}
+
+\usepackage{multirow}
+\usepackage{eurosym}
+\usepackage{extarrows}
+\usepackage[colorlinks=true, citecolor=blue, linkcolor=.]{hyperref}
+
+% Graphique
+\usepackage{tikz}
+
+
+% Titre
+\title{}
+\author{}
+\date{}
+
+
+\begin{document}
+
+\LARGE
+\[
+Y_{ijk\ell} = \beta_0 + \beta_j^d + \beta_{\ell}^v + \left( \beta^d\beta^t \right)_{jk} + \left( \beta^d\beta^v \right)_{j\ell} + \left( \beta^d\beta^t\beta^v \right)_{jk\ell} +\gamma_{0i} + \gamma_{0ij} + \gamma_{0ijk}  + \varepsilon_{ijk\ell}
+\]
+
+\newpage
+
+\[
+Y_{ijk\ell} = \beta_0 + D_j + V_\ell + \left( DT \right)_{jk} + \left( DV \right)_{j\ell} + \left( DTV \right)_{jk\ell} +\gamma_{0i} + \gamma_{0ij} + \gamma_{0ijk}  + \varepsilon_{ijk\ell}
+\]
+
+\newpage
+
+\[
+\text{ln}\left[\mathbb{E}\left( Y_{ijk\ell} | \text{ density, training, variety} \right) \right] = \beta_0 + \beta_j^d + \beta_{\ell}^v + \left( \beta^d\beta^t \right)_{jk} + \left( \beta^d\beta^v \right)_{j\ell} + \left( \beta^d\beta^t\beta^v \right)_{jk\ell} +\gamma_{0i} + \gamma_{0ij} + \gamma_{0ijk} 
+\]
+
+\newpage
+
+\[
+\text{ln}\left[\mathbb{E}\left( Y_{ijk\ell} | \text{ density, training, variety} \right) \right] = \beta_0 + D_j + V_\ell + \left( DT \right)_{jk} + \left( DV \right)_{j\ell} + \left( DTV \right)_{jk\ell}+\gamma_{0i} + \gamma_{0ij} + \gamma_{0ijk} 
+\]
+
+\newpage
+
+\[
+\text{logit}\left( P_{ijk\ell} \right) = \beta_0 + \beta_j^d + \beta_{\ell}^v + \left( \beta^d\beta^t \right)_{jk} + \left( \beta^d\beta^v \right)_{j\ell} + \left( \beta^d\beta^t\beta^v \right)_{jk\ell}+\gamma_{0i} + \gamma_{0ij} + \gamma_{0ijk} 
+\]
+
+
+\newpage
+
+\[
+\text{logit}\left( P_{ijk\ell} \right) = \beta_0 + D_j + V_\ell + \left( DT \right)_{jk} + \left( DV \right)_{j\ell} + \left( DTV \right)_{jk\ell}+\gamma_{0i} + \gamma_{0ij} + \gamma_{0ijk} 
+\]
+
+\newpage
+
+\[
+\begin{cases}
+ \text{Block : } & \gamma_{0i} \sim \mathcal{N}\left( 0, \sigma_1^2 \right)\\
+ \text{Variety : } & \gamma_{0ij} \sim \mathcal{N}\left( 0, \sigma_2^2 \right)\\
+ \text{Training : } & \gamma_{0ijk} \sim \mathcal{N}\left( 0, \sigma_3^2 \right)\\
+\end{cases}
+\]
+\vspace{3cm}
+\[
+\varepsilon_{ijk\ell} \sim \mathcal{N}\left( 0, \sigma^2_\varepsilon \right)
+\]
+
+
+\newpage
+
+\begin{align*}
+ Y_{ijk\ell} = \ &\beta_0 +\beta_1 \text{denstity(medium)} + \beta_2 \text{denstity(high)} +\beta_3 \text{variety(Calypso)}  +\beta_4 \text{variety(Keitt)} \\
+ &+\beta_5 \text{denstity(medium)} \times \text{training(SL)}  +\beta_6 \text{denstity(high)} \times \text{training(SL)}\\
+ &+\beta_7 \text{denstity(medium)} \times \text{variety(Calypso)} +\beta_8 \text{denstity(high)} \times \text{variety(Calypso)}\\
+ &+\beta_9 \text{denstity(medium)} \times \text{variety(Keitt)} +\beta_{10} \text{denstity(high)} \times \text{variety(Keitt)}\\
+ & +\beta_{11} \text{denstity(medium)} \times \text{training(SL)} \times \text{variety(Calypso)} \\
+ & +\beta_{12} \text{denstity(high)} \times \text{training(SL)} \times \text{variety(Calypso)} \\
+ & +\beta_{13} \text{denstity(medium)} \times \text{training(SL)} \times \text{variety(Keitt)} \\
+ & +\beta_{14} \text{denstity(high)} \times \text{training(SL)} \times \text{variety(Keitt)} \\
+ & +\gamma_{0i} + \gamma_{0ij} + \gamma_{0ijk} + \varepsilon_{ijk\ell}
+\end{align*}
+
+\newpage
+
+\begin{align*}
+ \text{ln}&\left[\mathbb{E}\left( Y_{ijk\ell} | \text{ density, training, variety} \right) \right] =\\ 
+ &\beta_0 +\beta_1 \text{denstity(medium)} + \beta_2 \text{denstity(high)} +\beta_3 \text{variety(Calypso)}  +\beta_4 \text{variety(Keitt)} \\
+ &+\beta_5 \text{denstity(medium)} \times \text{training(SL)}  +\beta_6 \text{denstity(high)} \times \text{training(SL)}\\
+ &+\beta_7 \text{denstity(medium)} \times \text{variety(Calypso)} +\beta_8 \text{denstity(high)} \times \text{variety(Calypso)}\\
+ &+\beta_9 \text{denstity(medium)} \times \text{variety(Keitt)} +\beta_{10} \text{denstity(high)} \times \text{variety(Keitt)}\\
+ & +\beta_{11} \text{denstity(medium)} \times \text{training(SL)} \times \text{variety(Calypso)} \\
+ & +\beta_{12} \text{denstity(high)} \times \text{training(SL)} \times \text{variety(Calypso)} \\
+ & +\beta_{13} \text{denstity(medium)} \times \text{training(SL)} \times \text{variety(Keitt)} \\
+ & +\beta_{14} \text{denstity(high)} \times \text{training(SL)} \times \text{variety(Keitt)} \\
+ & +\gamma_{0i} + \gamma_{0ij} + \gamma_{0ijk} 
+\end{align*}
+
+\newpage
+
+\begin{align*}
+ \text{logit}&\left( P_{ijk\ell} \right) =\\
+ &\beta_0 +\beta_1 \text{denstity(medium)} + \beta_2 \text{denstity(high)} +\beta_3 \text{variety(Calypso)}  +\beta_4 \text{variety(Keitt)} \\
+ &+\beta_5 \text{denstity(medium)} \times \text{training(SL)}  +\beta_6 \text{denstity(high)} \times \text{training(SL)}\\
+ &+\beta_7 \text{denstity(medium)} \times \text{variety(Calypso)} +\beta_8 \text{denstity(high)} \times \text{variety(Calypso)}\\
+ &+\beta_9 \text{denstity(medium)} \times \text{variety(Keitt)} +\beta_{10} \text{denstity(high)} \times \text{variety(Keitt)}\\
+ & +\beta_{11} \text{denstity(medium)} \times \text{training(SL)} \times \text{variety(Calypso)} \\
+ & +\beta_{12} \text{denstity(high)} \times \text{training(SL)} \times \text{variety(Calypso)} \\
+ & +\beta_{13} \text{denstity(medium)} \times \text{training(SL)} \times \text{variety(Keitt)} \\
+ & +\beta_{14} \text{denstity(high)} \times \text{training(SL)} \times \text{variety(Keitt)} \\
+ & +\gamma_{0i} + \gamma_{0ij} + \gamma_{0ijk} 
+\end{align*}
+
+\newpage
+
+\[
+\begin{cases}
+ i = 1, 2, 3\\
+ j = 1 \text{ (Low)},\ 2 \text{ (Medium)},\ 3 \text{ (High)}\\
+ k = 1\text{ (Conv)},\ 2\text{ (SL)}\\
+ \ell = 1 \text{ (1243)},\ 2 \text{ (Calypso)}, \ 3 \text{ (Keitt)}\\
+\end{cases}
+\]
+
+\newpage
+
+
+\[
+Y_{ijk\ell} = \beta_0 + \beta_j^{\text{GC}} + \beta_k^{\text{trt}} + \beta_\ell^{\text{var}} + \left( \beta^{\text{GC}}\beta^{\text{trt}} \right)_{jk} + \left( \beta^{\text{GC}}\beta^{\text{var}} \right)_{j\ell}
++ \left( \beta^{\text{trt}}\beta^{\text{var}} \right)_{k\ell} + \left( \beta^{\text{GC}}\beta^{\text{trt}}\beta^{\text{var}} \right)_{jk\ell} + \varepsilon_{ijk\ell}
+\]
+
+\vspace*{3cm}
+
+\[
+\varepsilon_{ijk\ell} \sim \mathcal{N}\left( 0, \sigma^2\Lambda_i \right)
+\]
+
+
+
+
+\end{document}
+

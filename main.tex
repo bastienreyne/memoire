@@ -26,7 +26,7 @@
 % Figures, graphiques
 \usepackage{graphicx}
 \usepackage{epsfig}
-\usepackage{caption}
+% \usepackage{caption}
 \usepackage{wrapfig}
 % \usepackage{graphics}
 
@@ -70,14 +70,14 @@
 \usepackage{fancyhdr}
  
 \pagestyle{plain}
-
-
+\usepackage[colorlinks=true, citecolor=blue, linkcolor=., urlcolor = blue]{hyperref}
 
 \begin{document}
 
 % Page de garde
+\hypersetup{pageanchor=false}
 \input{titlepage}
-
+\hypersetup{pageanchor=true}
 \frontmatter
 
 \begin{abstract}
@@ -112,7 +112,15 @@
 % Chapitre 7
 \include{conclusion}
 
+% Remerciements obligatoires
+\include{ecoverger_cosaq}
+
 \bibliography{biblio}
+
+\appendix
+
+% Graphiques verger 2
+\include{graphiques_bloc2}
 
 \end{document}
 

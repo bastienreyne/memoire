@@ -1,7 +1,7 @@
 ## Script qui plotte les larves observés + inflorescences vivantes (dataset 2)
 
 library(tidyverse)
-data <- read_csv("2017_piege.csv")
+data <- read_csv("2017_piege_bloc2.csv")
 load("date2017.Rdata")
 
 data$sol <- factor(rep(c("Enherbement ras",
