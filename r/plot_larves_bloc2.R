@@ -8,8 +8,8 @@ data$sol <- factor(rep(c("Enherbement ras",
                          "Paillage synthétique", 
                          "Enherbement haut"), each = 80),
                    levels = c("Enherbement ras",
-                              "Paillage synthétique",
-                              "Enherbement haut"))
+                              "Enherbement haut",
+                              "Paillage synthétique"))
 
 data %>% ggplot +
     aes(x = date, y = larves) +

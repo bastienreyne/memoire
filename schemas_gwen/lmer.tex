@@ -173,7 +173,27 @@ Y_{ijk\ell} = \beta_0 + \beta_j^{\text{GC}} + \beta_k^{\text{trt}} + \beta_\ell^
 \]
 
 
+\newpage
 
+\begin{align*}
+ Y_{ijk\ell} = \ &\beta_0 + \beta_1\, \text{variety(Calypso)} + \beta_{2}\, \text{variety(Keitt)} + \beta_{3}\, \text{treatment(3)} + \beta_4\, \text{treatment(5)}\\
+ & + \beta_5\, \text{variety(Calypso)} \times \text{treatment(3)} + \beta_6\, \text{variety(Keitt)} \times \text{treatment(3)} \\
+ & + \beta_7\, \text{variety(Calypso)} \times \text{treatment(5)} + \beta_8\, \text{variety(Keitt)} \times \text{treatment(5)} \\
+ & + \gamma_{0i} + \gamma_{0ij} + \gamma_{0ijk} + \varepsilon_{ijk\ell}
+\end{align*}
+
+\vspace*{2cm}
+
+Est-ce que ce ne serait pas mieux de mettre : au lieu de $\times$ pour les intéractions ?
+
+\vspace*{1cm}
+
+\begin{align*}
+ Y_{ijk\ell} = \ &\beta_0 + \beta_1 \text{variety(Calypso)} + \beta_{2}\, \text{variety(Keitt)} + \beta_{3}\, \text{treatment(3)} + \beta_4\, \text{treatment(5)}\\
+ & + \beta_5 \, \text{variety(Calypso)} \colon \! \text{treatment(3)} + \beta_6\, \text{variety(Keitt)} \colon \! \text{treatment(3)} \\
+ & + \beta_7\, \text{variety(Calypso)} \colon \! \text{treatment(5)} + \beta_8\, \text{variety(Keitt)} \colon \! \text{treatment(5)} \\
+ & + \gamma_{0i} + \gamma_{0ij} + \gamma_{0ijk} + \varepsilon_{ijk\ell}
+\end{align*}
 
 \end{document}
 
