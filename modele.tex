@@ -13,11 +13,12 @@ Les données utilisées proviennent d'une expérimentation menée sur un verger 
 C'est un modèle stochastique et spatialisé qui prend en compte l'arrivée des femelles sur le verger, leurs pontes d'œufs dans les inflorescences, le développement de ces derniers jusqu'au troisième stade de développement larvaire et enfin l'éjection des larves des inflorescences.
 Cependant, le fait que le verger modélisé est entièrement bâché implique l'abscence de cycle de développement complet pour les cécidomyies à l'intérieur du verger ainsi que l'absence d'émergence de cécidomyies dans le verger.
 
-On choisira ici l'approche amorcé par \citet{laurie}, qui propose une modélisation du verger expérimental avec à la fois venue de femelles exogènes et reproduction endogène, tout en prenant en compte les différentes modalités de couverture du sol.
+On choisira ici l'approche amorcée par \citet{laurie}, qui propose une modélisation non spatialisée du verger expérimental avec à la fois venue de femelles exogènes et reproduction endogène, tout en prenant en compte les différentes modalités de couverture du sol.
 L'objectif sera de simuler les dynamiques de larves à l'échelle de la sous-parcelle en fonction du nombre d'inflorescences présentes.
 
+\section{Approche retenue}
 
-
+L'approche retenue se veut simple. 
 
 \section{Hypothèses}
 
@@ -26,13 +27,13 @@ Les voici :
 \begin{itemize}
  \item la modalité de couverture du sol n'influe pas sur le développement et la phénologie du manguier, elle n'influe pas non plus sur le déplacement des cécidomyies ;
  \item la durée de vie des femelles n'est que d'un jour, et il correspond au jour de la ponte ;
- \item aucune femelle ne rentre dans le sol ou ne sort du sol pour la sous-parcelle avec un paillage synthétique ;
+ \item aucune cécidomyie ni larve ne rentre dans le sol ou ne sort du sol pour la sous-parcelle avec un paillage synthétique ;
  \item il y a un taux de mortalité pour larves lorsqu'elle rentrent ou sortent du sol, et ce taux est différent entre l'enherbement ras et l'enherbement haut ;
  \item les larves qui n'entrent pas en pupaison (soit qui meurent, soit qui rentrent en diapause) sont exclues du système ;
  \item la probabilité d'entrer en pupaison dépend de la température ;
  \item des larves entrées en phase de diapause l'année précédente émergent dans les sous-parcelles avec un enherbement ;
- \item un individu qui émerge dans une sous-parcelle peut se déplacer dans les autres, il y a cependant un coût relatif à la distance (autrement dit, les cécidomyies préfèrent rester dans la sous-parcelle dans laquelle elles émergent, puis aller dans la sous-parcelle limitrophe plutôt que dans la troisième) ;
- \item les femelles exogènes arrivent proportionnellement aux inflorescences ;
+ \item un individu qui émerge dans une sous-parcelle peut se déplacer dans les autres sous-parcelles, il y a cependant un coût relatif à la distance (autrement dit, les cécidomyies préfèrent rester dans la sous-parcelle dans laquelle elles émergent, puis aller dans la sous-parcelle limitrophe plutôt que dans la troisième) ;
+ \item les femelles exogènes arrivent proportionnellement aux inflorescences vivantes dans la parcelles (qui exercent un effet d'attraction) ;
  \item s'il y a significativement plus de femelles que d'inflorescences, alors elles ne peuvent pas toutes pondre ;
  \item  seuls les premiers stades phénologiques de l'inflorescence sont attractifs pour les cécidomyies.
 \end{itemize}

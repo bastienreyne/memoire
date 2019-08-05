@@ -209,7 +209,7 @@ Et il faut plusieurs générations pour se retrouver avec des solutions non-domi
  \item On choisira alors de garder en priorité les solutions de $F_1$ puis de $F_2$ et ainsi de suite jusqu'à en obtenir $N$. 
  Il faut noter qu'il existe probablement un front $F_k$ où toutes les solutions ne pourront être garger pour ne pas dépasser la limite imposée de $N$ solutions.
  Plutôt que de choisir aléatoirement le nombre nécésaires de solutions dans $F_k$, seront sélectionnées les solutions qui maximisent une certaine distance --- the \emph{crowding distance} --- avec les autres solutions.
- (On n'entrera pas dans le détail ici).
+ (On n'entrera pas dans le détail ici.)
  C'est fait pour assurer une certaine diversité entre les différentes solutions.
  Les $N$ solutions ainsi sélectionnées constitueront $P_{t+1}$, la population initiale de la génération suivante $t+1$.
 \end{enumerate}
@@ -219,7 +219,8 @@ Pour générer une solution fille, plusieurs étapes sont là aussi nécessaires
 Ces étapes (simplifiées) sont :
 \begin{enumerate}
  \item On selectionne deux solutions $s_1$ et $s_2$ dans $P_t$.
- \item On construit une solution fille $f_1$ en prenant la moitié des coordonnées de $s_1$ et l'autre moitié de $s_2$. On construit $f_2$ en prenant les moitiés de $s_1$ et $s_2$ inutilisées dans la construction de $f_1$.
+ \item On construit une solution fille $f_1$ en prenant la moitié des coordonnées de $s_1$ et l'autre moitié de $s_2$. 
+ On construit $f_2$ en prenant les moitiés de $s_1$ et $s_2$ inutilisées dans la construction de $f_1$.
  \item Sur chacune des solutions filles, une coordonnée choisie aléatoirement est remplacée par une valeur aléatoire choisie dans un intervalle centré sur la valeur initiale.
  \item On réitère ces étapes jusqu'à avoir $N$ solutions filles.
 \end{enumerate}
@@ -237,6 +238,19 @@ Et qu'il ne reste plus qu'à faire un choix.
 
 
 Choisir une solution n'est cependant pas trivial.
-En effet, les solutions possibles ne sont 
+En effet, parmi les solutions possibles, aucune n'est objectivement meilleure que les autres.
+Il en découle que le choix sera forcément arbitraire.
 
+Plusieurs approches sont possibles.
+On peut par exemple choisir au hasard un nombre restreint de solutions possibles, les tester puis sélectionner celle qui semble la plus pertinente.
+On peut aussi sélectionner la solution associée aux trois critères qui minimisent une distance à 0, en estimant qu'elle représente un bon compromis entre les différents critères.
 
+Ou alors on essaye d'avoir une vision globale de l'ensemble des solutions.
+Il peut même être pertinent de comprendre voire d'\emph{expliquer} quel jeu de paramètres génère quelle solution.
+Le choix du jeu de paramètre sera alors plus réfléchi, bien que toujours arbitraire.
+
+Plus précisément, on possède les valeurs de la fonction de coût de nos critères rassemblées dans un tableau $Y$.
+On possède également les jeux de paramètres (nos solutions) responsables de ces valeurs rassemblés dans un tableau $X$.
+Le but serait alors d'explorer $Y,$ pour savoir par exemple si les critères sont antagonistes (\emph{e.g.} améliorer la prédiction sur une sous-parcelle ne détériore pas la solution de la sous-parcelle voisine ?) ou alors totalement indépendant.
+Mais aussi de pouvoir dire quelles sont les valeurs pour les variables de $X$ qui minimisent quel critère de $Y$. 
+À cette fin, on peut choisir entre deux méthodes : l'ACP-VI  et la régression PLS2.

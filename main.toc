@@ -11,11 +11,12 @@
 \contentsline {subsection}{Inflorescences vivantes}{8}{section.3.2}% 
 \contentsline {subsection}{Larves}{10}{figure.3.2}% 
 \contentsline {chapter}{\chapternumberline {4}Le mod\IeC {\`e}le}{13}{chapter.4}% 
-\contentsline {section}{\numberline {4.1}Hypoth\IeC {\`e}ses}{13}{section.4.1}% 
-\contentsline {section}{\numberline {4.2}Formalisme}{14}{section.4.2}% 
-\contentsline {section}{\numberline {4.3}Inflorescences}{15}{section.4.3}% 
-\contentsline {subsection}{D\IeC {\'e}bourrements}{16}{section.4.3}% 
-\contentsline {subsection}{Dynamiques}{16}{section.4.3}% 
+\contentsline {section}{\numberline {4.1}Approche retenue}{13}{section.4.1}% 
+\contentsline {section}{\numberline {4.2}Hypoth\IeC {\`e}ses}{13}{section.4.2}% 
+\contentsline {section}{\numberline {4.3}Formalisme}{14}{section.4.3}% 
+\contentsline {section}{\numberline {4.4}Inflorescences}{16}{section.4.4}% 
+\contentsline {subsection}{D\IeC {\'e}bourrements}{16}{section.4.4}% 
+\contentsline {subsection}{Dynamiques}{16}{section.4.4}% 
 \contentsline {chapter}{\chapternumberline {5}Calibration du mod\IeC {\`e}le}{17}{chapter.5}% 
 \contentsline {section}{\numberline {5.1}Fonction de co\IeC {\^u}t}{17}{section.5.1}% 
 \contentsline {section}{\numberline {5.2}Analyse de sensibilit\IeC {\'e}}{18}{section.5.2}% 
