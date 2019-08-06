@@ -64,15 +64,14 @@ Les données de ce relevé seront rassemblées en un jeu de données que l'on no
 
 \section{Données}
 
-Après mise en forme des données\footnote{Tous les scripts utilisés sont disponibles à l'adresse \url{https://github.com/bastienreyne/cecidomyie}}, on peut extraire les dynamiques qui nous intéressent.
+Après mise en forme des données\footnote{Tous les scripts et les données utilisés sont disponibles à l'adresse \url{https://github.com/bastienreyne/cecidomyie}}, on peut extraire les dynamiques qui nous intéressent.
 Il faut cependant noter que les deux jeux de données n'ont pas la même échelle.
 On choisira de tout mettre à l'échelle de la sous-parcelle.
 
 \subsection{Inflorescences vivantes}
 
 On peut extraire les dynamiques d'inflorescences vivantes grâce aux deux jeux de données : elles seront notées $I^1_t$ pour le \emph{dataset 1} et $I^2_t$ pour le \emph{dataset 2}.
-Pour le \emph{dataset 2}, c'est facile. 
-On possède le nombre d'inflorescences vivantes dans les arbres suivis aux différentes dates; il suffit alors de mettre à l'échelle comme suit :
+Pour le \emph{dataset 2}, on possède le nombre d'inflorescences vivantes dans les arbres suivis aux différentes dates; il suffit alors de mettre à l'échelle comme suit :
 \[
 I_{t}^{2} = \frac{N}{n}\sum_{k=1}^{n} I^{2}_{k, t},
 \]

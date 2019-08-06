@@ -18,12 +18,60 @@ L'objectif sera de simuler les dynamiques de larves à l'échelle de la sous-par
 
 \section{Approche retenue}
 
-L'approche retenue se veut simple. 
+L'approche retenue se veut simple.
+On reprend le cycle de développement de la cécidomyie présenté dans la partie~\ref{chap:cecido}, et on essaye de le traduire par deux équations simples.
+Une version simplifiée du cycle de développement est visible sur la figure~\ref{fig:schema_simple}, où les deux flèches noires correspondent aux deux étapes majeures du cycle de développement :
+\begin{itemize}
+ \item l'apparition de larves qui découle de la ponte des femelles dans les inflorescences ;
+ \item l'émergence de femelles du sol qui intervient après la phase de pupaison des larves.
+ \end{itemize}
+
+
+%% SCHÉMA
+\begin{figure}[ht]
+ \centering
+ \begin{tikzpicture}[scale = 0.9]
+ \draw (0, 1) node{\small \textsc{sol}};
+ \draw [line width = 1.5mm, color = gray] (0.5, 1) -- (15, 1);
+ \draw (3, 3) ellipse (1.5cm and 1cm);
+ \draw (12, 3) ellipse (1.5cm and 1cm);
+ \draw [color = gray] (6, 4.1) rectangle (9, 6);
+ \draw (3, 3) node {\small \text{Larves}} ;
+ \draw (12, 3) node {\small \text{Femelles}} ;
+ \draw (7.5, 5.5) node {\small \textcolor{gray}{Inflorescences}} ;
+ \draw [->, line width=0.9] (10.7, 3.52) arc (60:120:6.4) ;
+ \draw [->, line width=0.9] (4.3, 2.52) arc (200:340:3.4) ;
+ \draw (7.5, -0.1) node {\small \text{durée : $d_{\text{p}}$ jours}};
+ \draw (7.5, 3.8) node {\small \text{durée : $d_{\ell}$ jours}};
+ \end{tikzpicture}
+ \caption{Schéma simplifié du cycle de développement de la cécidomyie.}
+ \label{fig:schema_simple}
+\end{figure}
+
+
+La première équation donne le nombre larves qui résulte de la ponte des femelles :
+\begin{equation}
+ L_{t, i} = F_{t - d_{\ell}, i} \times R \times E_0 \times \mu_{\ell}.
+ \label{eq:larves}
+\end{equation}
+Ici, $L_t$ désigne le nombre de larves à la date $t$, $F_{t - d_{\ell}}$ le nombre de femelles qu'il y avait dans le verger une durée de développement larvaire auparavant (durée qu'il y a entre la ponte des œufs et l'apparition des larves), $R$ représente la disponibilité d'inflorescences pour les cécidomyies, $E_0$ le nombre d'œufs pondus par une femelle et $\mu_{\ell}$ la probabilité de survie des œufs.
+En d'autres termes, cela signifie simplement que le nombre de larves à une certaine date résulte du nombre d'œufs pondus par les femelles, qui ont survécus et se sont développés --- sans oublier de prendre en compte que le développement dure quelques jours et que le nombre de femelles qui pond est conditionné à la disponibilité en ressources.
+
+La deuxième équation donne le nombre de femelles issues du cycle de pupaison qui émergent dans le verger :
+\begin{equation}
+F^{\text{pupe}}_{t, i} = L_{t - d_{\text{p}}, i} \times \mu_{\text{sol}} \times p_{\text{p}} \times \frac{1}{1 + \mathit{SR}}.
+\label{eq:fpupe}
+\end{equation}
+On a ici $F^{\text{pupe}}_{t}$ qui désigne le nombre de femelles issues du cycle de pupaison qui émergent à la date $t$ dans le verger, $L_{t - d_{\text{p}}}$ le nombre de larves qui sont rentrés dans le sol une durée de pupaison auparavant, $\mu_{\text{sol}}$ la probabilité pour une larve d'entrer dans le sol (qui dépend de la modalité de couverture du sol), $p_{\text{p}}$ la probabilité pour une larve d'entrer en phase de pupaison et d'y survivre et $\frac{1}{1 + \mathit{SR}}$ la proportion de larves qui se transforment en femelles (les mâles ne pondant pas, ils ne nous intéressent pas).
+Cela signifie les femelles issues de la phase de pupaison qui émergent à une certaine date correspond au nombre de larves qui ont réussies à pénétrer dans le sol, qui sont entrées en pupaison, se sont transformées en cécidomyies, ont survécues puis ont émergées --- en prenant en compte la durée de développement et la proportion de femelles chez les cécidomyies.
+
+Bien que cela soit le squelette de notre modèle, on émet quelques hypothèses afin de décrire au mieux la réalité biologique des processus, ce qui nous permettra ensuite de compléter le modèle.
+
+
 
 \section{Hypothèses}
 
-À cette fin, il convient de faire des hypothèses sur les processus biologiques qui régissent le développement des larves et des manguiers.
-Les voici :
+Les hypothèses sur les processus biologiques qui régissent le développement des larves et des manguiers, que nous faisons, sont :
 \begin{itemize}
  \item la modalité de couverture du sol n'influe pas sur le développement et la phénologie du manguier, elle n'influe pas non plus sur le déplacement des cécidomyies ;
  \item la durée de vie des femelles n'est que d'un jour, et il correspond au jour de la ponte ;
@@ -42,49 +90,100 @@ Les voici :
 
 \section{Formalisme}
 
-En reprenant les hypothèses ainsi que le cycle de développement de la cécidomyie présenté dans la partie~\ref{chap:cecido}, on peut formaliser notre modèle.
-Le modèle cherche à prédire les larves qui s'éjectent des manguiers, seule quantité observée concernant les cécidomyies, ce qui permettra donc d'évaluer notre modèle.
-
-Ainsi, le nombre de larves au jour $t$ dans la sous-parcelle $i$ est donnée par
+Maintenant que l'on a posé nos hypothèses, on peut détailler les équations~\ref{eq:larves} et~\ref{eq:fpupe}.
+Dans l'équation~\ref{eq:larves}, le coefficient $R$ est donné par
 \[
-L_{t, i} = F_{t-d_{\ell}, i} \times R \times E_0 \times \mu_{\ell},
+R = \min\!\left\{1, \frac{k I_{t, i}}{ F_{t, i}} \right\}\!.
 \]
-où $F_{t-d_{\ell}, i}$ est le nombre de femelles dans la sous-parcelle $i$ au jour $t-d_{\ell}$, $d_{\ell}$ est la durée entre la ponte et le troisième stade de développement larvaire, $R$ un indicateur de disponibilité en ressources, $E_0$ le nombre d'œufs pondus et $\mu_{\ell}$ la probabilité de survie des œufs entre la ponte et le troisième stade de développement larvaire.
-Et on a $R = \min\left\{1, k I_{t, i} / F_{t, i} \right\}$, qui dit que s'il y a \emph{significativement} plus de femelles que d'inflorescences, alors elles ne pourront pas toutes pondre. 
-Le \emph{significativement} est déterminé par le paramètre $k$.
+Ce coefficient traduit la disponibilité en ressources pour les cécidomyies, c'est-à-dire que lorsqu'il n'y a pas suffisament d'inflorescences dans le verger par rapport au nombre de femelles, alors toutes les femelles ne peuvent pas pondre.
+Il vaut 1 lorsque toutes les cécidomyies femelles peuvent pondrent ; il est compris entre 0 et 1 lorsque certaines cécidomyies femelles ne peuvent pas pondre.
+Ce coefficient $R$ dépend du paramètre $k$ qui indique combien de femelles peut acceuillir une inflorescence chaque jour.
 
-Le nombre de larves en pupaison à la date $t$ est donné par $P_{t, i} = L_{t, i} \times \mu^{1}_{\text{sol}} \times p_{\text{p}}$, où $\mu^{1}_{\text{sol}}$ est la probabilité d'une larve d'entrer dans le sol en fonction de la modalité de couverture du sol et $p_{\text{p}}$ est la probabilité pour une larve d'entrer en pupaison.
-Le nombre de larves en diapause des années précédentes qui sort au jour $t$ est donnée par $D_{t, i}$, qui sera estimé.
-
-Le nombre de femelles émergeantes du sous-bloc $i$ au jour $t$ est donnée par
+Toujours dans l'équation~\ref{eq:larves}, on peut noter que le nombre de femelles présente dans la sous-parcelle $i$ au jour $t$ est donné par
 \[
-F^{\text{endo}}_{t, i} = F^{\text{pupe}}_{t, i} + F^{\text{diap}}_{t,i},
+F_{t, i} = F^{\text{endo}}_{t, i\rightarrow i} + F^{\text{endo}}_{t, (j,k)\rightarrow i} + F^{\text{exo}}_{t, i}\!,
 \]
-avec $F^{\text{pupe}}_{t, i} = P_{t - d_{\text{p}}, i} \times \frac{1}{1 + SR} \times \mu^{2}_{\text{sol}}$ le nombre de femelles issues de la reproduction locale de l'année et $F_{t, i}^{\text{diap}} = D_{t -d_{\text{p}}} \times \frac{1}{1 + SR} \times \mu^{2}_{\text{sol}}$ le nombre de femelles issues des femelles entrées en diapause les années précédentes.
-Et on a \textit{SR} qui correspond au \emph{sex-ratio} et $\mu^{2}_{\text{sol}}$ à la probabilité pour une femelle de sortir du sol après la pupaison ou la diapause en fonction de la modalité de couverture du sol.
-
-Les femelles qui émergent dans la sous-parcelle $i$ n'y restent pas forcément, elles peuvent potentiellement aller dans la sous-parcelle $j$ ou $k$.
-Ainsi, pour $n\in \{i, j, k\}$, on a
+où $F^{\text{endo}}_{t, i\rightarrow i}$ sont les femelles qui émergent dans la sous-parcelle $i$ et qui y restent, $F^{\text{endo}}_{t, (j,k)\rightarrow i}$ sont les femelles qui ont émergées dans les sous-parcelles $j$ et $k$ et qui viennent dans la sous-parcelle $i$, $F^{\text{exo}}_{t, i}$ sont les femelles exogènes à la parcelle qui viennent dans la sous-parcelle $i$.
+Et le nombre de femelles exogènes est déterminé par
 \[
-F_{t, i \rightarrow n}^{\text{endo}} = \frac{I_{t, n} \times p_{\text{m}}^{\delta}}{\sum_{\{i,j,k\}} I_{t, n} \times p_{\text{m}}^{\delta}},
+F^{\text{exo}}_{t, i} = \gamma \times I_{t, i},
 \]
-avec $p_{\text{m}} \in [0; 1]$ et $\delta =
+avec $\gamma$ à déterminer.
+Il y a aussi des échanges, entre les différentes sous-parcelles, de femelles qui ont émergées dans la parcelle.
+Ainsi, le nombre de femelles qui ont émergées dans la sous-parcelle $i$ et qui vont dans la sous-parcelle $j$ est donné par
+\[
+F_{t, i \rightarrow j}^{\text{endo}} = \frac{I_{t, j} \times p_{\text{m}}^{\delta(i, j)}}{\sum_{n\in \{i,j,k\}} I_{t, n} \times p_{\text{m}}^{\delta(i, n)}},
+\]
+où $p_{\text{m}} \in [0; 1]$ et $\delta(i, n) =
 \begin{cases}
-0 & \text{ si } n=i \text{ (même sous-parcelle),}\\
-1 & \text{ si } n=j \text{ (sous-parcelle limitrophe),}\\
-2 & \text{ si } n=k \text{ (sous-parcelle non-limitrophe).}\\
-\end{cases}
-$
+0 & \text{ si } i=n \text{ (même sous-parcelle),}\\
+1 & \text{ si $i$ et $n$ sont des sous-parcelles limitrophes,}\\
+2 & \text{ si $i$ et $n$ sous-parcelles non-limitrophes.}\\
+\end{cases}$\\
+Le paramètre $p_{\text{m}}$ traduit l'intensité de la migration et le paramètre $\delta$ traduit «l'effet distance» (autrement dit, les cécidomyies préfèrent se déplacer le moins possible).
 
-
-Enfin, le nombre de femelles qui pond dans la sous-parcelle $i$ à la date $t$ est donné par
+On peut noter que les femelles qui émergent comprennent les femelles issues de la phase de pupaison et celles issues de la sortie de diapause. Ainsi, on a
 \[
-F_{t, i} = F^{\text{endo}}_{t, i\rightarrow i} + F^{\text{endo}}_{t, (j,k)\rightarrow i} + F^{\text{exo}}_{t, i},
+F^{\text{endo}}_{t, i} = F^{\text{pupe}}_{t, i} + F^{\text{diap}}_{t,i}.
 \]
-où $F^{\text{endo}}_{t, (j,k)\rightarrow i} = F^{\text{endo}}_{t, j\rightarrow i} + F^{\text{endo}}_{t, k\rightarrow i}$ est le nombre de femelles venant d'une autre sous-parcelle, et $F^{\text{exo}}_{t, i}$ le nombre de femelles venant de l'extérieur dans la sous-parcelle à la date $t$. Le nombre de femelles exogènes est donné par $F^{\text{exo}}_{t, i} = \gamma \times I_{t, i}$, avec $\gamma$ à déterminer.
+Comme écrit dans l'équation~\ref{eq:fpupe}, on a bien
+\[
+F^{\text{pupe}}_{t, i} = L_{t - d_{\text{p}}, i} \times \mu_{\text{sol}} \times p_{\text{p}} \times \frac{1}{1 + \mathit{SR}}.
+\]
+Il faut cependant noter que l'on a
+\[
+\mu_{\text{sol}} = \mu_{\text{sol}}^1 \times \mu_{\text{sol}}^2,
+\]
+où $\mu_{\text{sol}}^1$ correspond à la probabilité de survie d'une larve à la modalité de couverture su sol lorsqu'elle s'enfouit dans le sol et $\mu_{\text{sol}}^2$ désigne la probabilité de survie à la modalité de couverture du sol d'une femelle qui émerge du sol.
+Cette distinction est nécessaire car les femelles qui sortent de diapause ne sont impactées par la modalité de couverture du sol qu'à la sortie des femelles (les larves étant entrées dans le sol avant la mise en place du dispositif).
+Le nombre de femelles qui sortent de diapause est donné par 
+\[
+F_{t, i}^{\text{diap}} = D_{t} \times \frac{1}{1 + \mathit{SR}} \times \mu^{2}_{\text{sol}},
+\]
+où $D_{t}$ est le nombre de larves en diapause des années précédentes qui sort au jour $t$.
+
+% En reprenant les hypothèses ainsi que le cycle de développement de la cécidomyie présenté dans la partie~\ref{chap:cecido}, on peut formaliser notre modèle.
+% Le modèle cherche à prédire les larves qui s'éjectent des manguiers, seule quantité observée concernant les cécidomyies, ce qui permettra donc d'évaluer notre modèle.
+% 
+% Ainsi, le nombre de larves au jour $t$ dans la sous-parcelle $i$ est donnée par
+% \[
+% L_{t, i} = F_{t-d_{\ell}, i} \times R \times E_0 \times \mu_{\ell},
+% \]
+% où $F_{t-d_{\ell}, i}$ est le nombre de femelles dans la sous-parcelle $i$ au jour $t-d_{\ell}$, $d_{\ell}$ est la durée entre la ponte et le troisième stade de développement larvaire, $R$ un indicateur de disponibilité en ressources, $E_0$ le nombre d'œufs pondus et $\mu_{\ell}$ la probabilité de survie des œufs entre la ponte et le troisième stade de développement larvaire.
+% Et on a $R = \min\left\{1, k I_{t, i} / F_{t, i} \right\}$, qui dit que s'il y a \emph{significativement} plus de femelles que d'inflorescences, alors elles ne pourront pas toutes pondre. 
+% Le \emph{significativement} est déterminé par le paramètre $k$.
+% 
+% Le nombre de larves en pupaison à la date $t$ est donné par $P_{t, i} = L_{t, i} \times \mu^{1}_{\text{sol}} \times p_{\text{p}}$, où $\mu^{1}_{\text{sol}}$ est la probabilité d'une larve d'entrer dans le sol en fonction de la modalité de couverture du sol et $p_{\text{p}}$ est la probabilité pour une larve d'entrer en pupaison.
+% Le nombre de larves en diapause des années précédentes qui sort au jour $t$ est donnée par $D_{t, i}$, qui sera estimé.
+% 
+% Le nombre de femelles émergeantes du sous-bloc $i$ au jour $t$ est donnée par
+% \[
+% F^{\text{endo}}_{t, i} = F^{\text{pupe}}_{t, i} + F^{\text{diap}}_{t,i},
+% \]
+% avec $F^{\text{pupe}}_{t, i} = P_{t - d_{\text{p}}, i} \times \frac{1}{1 + SR} \times \mu^{2}_{\text{sol}}$ le nombre de femelles issues de la reproduction locale de l'année et $F_{t, i}^{\text{diap}} = D_{t -d_{\text{p}}} \times \frac{1}{1 + SR} \times \mu^{2}_{\text{sol}}$ le nombre de femelles issues des femelles entrées en diapause les années précédentes.
+% Et on a \textit{SR} qui correspond au \emph{sex-ratio} et $\mu^{2}_{\text{sol}}$ à la probabilité pour une femelle de sortir du sol après la pupaison ou la diapause en fonction de la modalité de couverture du sol.
+% 
+% Les femelles qui émergent dans la sous-parcelle $i$ n'y restent pas forcément, elles peuvent potentiellement aller dans la sous-parcelle $j$ ou $k$.
+% Ainsi, pour $n\in \{i, j, k\}$, on a
+% \[
+% F_{t, i \rightarrow n}^{\text{endo}} = \frac{I_{t, n} \times p_{\text{m}}^{\delta}}{\sum_{\{i,j,k\}} I_{t, n} \times p_{\text{m}}^{\delta}},
+% \]
+% avec $p_{\text{m}} \in [0; 1]$ et $\delta =
+% \begin{cases}
+% 0 & \text{ si } n=i \text{ (même sous-parcelle),}\\
+% 1 & \text{ si } n=j \text{ (sous-parcelle limitrophe),}\\
+% 2 & \text{ si } n=k \text{ (sous-parcelle non-limitrophe).}\\
+% \end{cases}
+% $
+% 
+% 
+% Enfin, le nombre de femelles qui pond dans la sous-parcelle $i$ à la date $t$ est donné par
+% \[
+% F_{t, i} = F^{\text{endo}}_{t, i\rightarrow i} + F^{\text{endo}}_{t, (j,k)\rightarrow i} + F^{\text{exo}}_{t, i},
+% \]
+% où $F^{\text{endo}}_{t, (j,k)\rightarrow i} = F^{\text{endo}}_{t, j\rightarrow i} + F^{\text{endo}}_{t, k\rightarrow i}$ est le nombre de femelles venant d'une autre sous-parcelle, et $F^{\text{exo}}_{t, i}$ le nombre de femelles venant de l'extérieur dans la sous-parcelle à la date $t$. Le nombre de femelles exogènes est donné par $F^{\text{exo}}_{t, i} = \gamma \times I_{t, i}$, avec $\gamma$ à déterminer.
 
 Le schéma conceptuel du modèle est visible sur la figure~\ref{fig:schema}. 
-
 
 %% SCHÉMA
 \begin{figure}[ht]
@@ -94,7 +193,7 @@ Le schéma conceptuel du modèle est visible sur la figure~\ref{fig:schema}.
   \draw [line width = 1.5mm, color = gray] (0.5, 0) -- (15, 0);
   % RECTANGLES
   \draw (0.7,  -1.5) rectangle (2.4,  -2.5); %diap + mort
-  \draw (8.4,  -1.5) rectangle (10.1, -2.5); % P
+%   \draw (8.4,  -1.5) rectangle (10.1, -2.5); % P
   \draw (12.5, -1.5) rectangle (14.2, -2.5); %Diap
   \draw (4.3,   1.5) rectangle (6,   2.5); % L
   \draw (9.4,   1.5) rectangle (11.1,  2.5); % N pupe
@@ -113,7 +212,7 @@ Le schéma conceptuel du modèle est visible sur la figure~\ref{fig:schema}.
   \draw (5.15,   5) node {\small $F_{i}$};
   \draw (13.35, 5) node {\small $F^\text{endo}_{i\rightarrow (j,k)}$};
   \draw (9.25,  5) node {\small $F^\text{endo}_{i\rightarrow i}$};
-  \draw (9.25, -2) node {\small $P_{i}$};
+%   \draw (9.25, -2) node {\small $P_{i}$};
   \draw (13.35,-2) node {\small $D_{i}$};
   \draw (12.35, 2) node {\small $F^{\text{diap}}_{i}$};
   \draw (10.25, 2) node {\small $F^{\text{pupe}}_{i}$};
@@ -122,7 +221,7 @@ Le schéma conceptuel du modèle est visible sur la figure~\ref{fig:schema}.
   \draw (4.4, 5.7) node {\small $\textcolor{blue}{t}$};
   \draw (4.4, 8.2) node {\small $\textcolor{blue}{t}$};
   \draw (4.8, 2.7) node {\small $\textcolor{blue}{t + d_{\ell}}$};
-  \draw (8.85, -1.3) node {\small $\textcolor{blue}{t + d_{\ell}}$};
+%   \draw (8.85, -1.3) node {\small $\textcolor{blue}{t + d_{\ell}}$};
   \draw (13, -1.3) node {\small $\textcolor{blue}{t + d_{\ell}}$};
   \draw (10, 3.65) node {\small $\textcolor{blue}{t + d_{\ell} + d_{\text{p}}}$};
   \draw (9.3, 5.75) node {\small $\textcolor{blue}{t + d_{\ell} + d_{\text{p}}}$};
@@ -130,7 +229,8 @@ Le schéma conceptuel du modèle est visible sur la figure~\ref{fig:schema}.
   % LIGNES FLECHES
   \draw [line width=0.9]     (5.1,   1.5) -- (5.1,  -2);
   \draw [->,  line width=0.9] (5.1,  -2  ) -- (2.4,  -2);
-  \draw [->,  line width=0.9] (5.1,  -2  ) -- (8.4,  -2);
+%   \draw [->,  line width=0.9] (5.1,  -2  ) -- (8.4,  -2);
+\draw [line width=0.9] (5.1,  -2  ) -- (10.8,  -2);
   \draw [line width=0.9]     (10.1, -2  ) -- (10.8, -2);
   \draw [line width=0.9]     (12.5, -2  ) -- (11.8, -2);
   \draw [->,  line width=0.9] (10.8,  -2 ) -- (10.8,  1.5);
@@ -146,9 +246,10 @@ Le schéma conceptuel du modèle est visible sur la figure~\ref{fig:schema}.
   % PARAMÈTRES
   \draw (5.6, 0.4)   node {\small $\mu_{\text{sol}}^1$};
   \draw (11.32, 0.4) node {\small $\mu_{\text{sol}}^2$};
-  \draw (6.8, -2.3)    node {\small $p_{\text{p}}$};
+%   \draw (6.8, -2.3)    node {\small $p_{\text{p}}$};
+\draw (7.9, -2.3)    node {\small $p_{\text{p}}$};
   \draw (3.8, -2.3)    node {\small $1-p_{\text{p}}$};
-  \draw (11.32, -0.42)  node {\small $\frac{1}{1 + SR}$};
+  \draw (11.32, -0.42)  node {\small $\frac{1}{1 + \mathit{SR}}$};
   \draw (5.75, 4.1)     node {\small $R$};
   \draw (5.8, 3.5)     node {\small $E_0$};
   \draw (5.8, 2.9)     node {\small $\mu_\ell$};
@@ -157,6 +258,31 @@ Le schéma conceptuel du modèle est visible sur la figure~\ref{fig:schema}.
  \label{fig:schema}
 \end{figure}
 
+
+Au final, le tableau~\ref{tab:param} recense les paramètres permettant de régler le modèle.
+
+\begin{table}
+\caption{Les différents paramètres du modèle.}
+\label{tab:param}
+\centering
+{\small
+\begin{tabular}{p{1.85cm}p{8.9cm}p{3cm}}
+\textbf{Paramètre} & \textbf{Rôle} & \textbf{\raggedright Valeur présente dans la littérature}\\
+$\gamma$ & Paramètre régulant l'arrivée des individus exogènes au verger & Non\\
+$p_{\text{m}}$ & Paramètre régulant l'intensité des échanges entre sous-parcelles & Non\\
+$\mu_{\text{sol}}$ & Probabilité de survie à la modalité de couverture du sol & Non\\
+$k$ & Paramètre quantifiant le nombre de femelles que peut acceuillir une inflorescence chaque jour & Non\\
+$D_t$ & Nombre d'individus entrés en diapause les années précédentes & {\raggedright Approximatif (voir annexe [?])} \\
+$E_0 \times \mu_{\ell}$ & Nombre d'œufs pondus qui survivent & Approximatif\\
+$\mathit{SR}$ & \textit{Sex-ratio} & Oui\\
+$p_{\text{p}}$ & Probabilité pour une larve d'entrer en phase de pupaison et d'y survivre & {\raggedright Plus ou moins (voir annexe [?])}\\
+$d_{\ell}$ & Durée (en jours) de la période entre la ponte et l'appartition du troisième stade de développement larvaire & Oui\\
+$d_{\text{p}}$ & Durée (en jours) de la phase de pupaison & Oui
+\end{tabular}
+}
+\end{table}
+
+\clearpage
 
 \section{Inflorescences}
 

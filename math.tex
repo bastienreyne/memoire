@@ -121,12 +121,12 @@ En particulier lorsque certains paramètres ne sont qu'approximatifs vis à vis 
 
 Il existe deux grandes catégories d'analyses de sensibilité, celles qui ont une approche globale et celles qui ont une approche locale (parfois appelées \emph{one-at-the-time}).
 L'approche locale consiste à étudier la sensibilité des paramètres les uns après les autres, les uns indépendamment des autres.
-Cette approche est valable si et seulement si le modèle est linéaire par rapport à chacune de ses entrées $x_i$ et qu'il n'y a aucune intéraction entre les différentes entrées du modèle \citep{saltelli2019so}.
-Dès lors qu'il y a la moindre incertitude sur la linéarité du modèle ou sur la non-intéraction entre les paramètres, il faut privilégier une approche globale.
-Notre modèle n'est pas linéaire et il n'y a dans notre cas aucune raison de supposer la non-intéraction entre nos paramètres, bien au contraire.
+Cette approche est valable si et seulement si le modèle est linéaire par rapport à chacune de ses entrées $x_i$ et qu'il n'y a aucune interaction entre les différentes entrées du modèle \citep{saltelli2019so}.
+Dès lors qu'il y a la moindre incertitude sur la linéarité du modèle ou sur la non-interaction entre les paramètres, il faut privilégier une approche globale.
+Notre modèle n'est pas linéaire et il n'y a dans notre cas aucune raison de supposer la non-interaction entre nos paramètres, bien au contraire.
 On utilisera donc une approche globale.
 
-Bien qu'il existe plusieurs méthodes ayant une approche globale, elles ont toutes en commun de fonctionner dans un cadre non-linéaire et de prendre en compte les différentes intéractions entre les différents paramètres.
+Bien qu'il existe plusieurs méthodes ayant une approche globale, elles ont toutes en commun de fonctionner dans un cadre non-linéaire et de prendre en compte les différentes interactions entre les différents paramètres.
 Parmi les méthodes les plus connues et les plus utilisées, on peut en citer qui fonctionnent par décomposition de la variance comme Sobol ou FAST (Fourier Amplitude Sensitivity Test) ou d'autres qui fonctionnent en effectuant des perturbations élémentaires des entrées du modèle comme la méthode Morris.
 Notre modèle possède moins de 20 paramètres et s'exécute en moins d'une minute, nous utiliserons alors la méthode Sobol conformément aux recommendations de \citet[chap. 6]{saltelli}.
 
@@ -137,19 +137,19 @@ Comme $X = \left( X_1, \ldots, X_n \right)$ peut prendre plein de valeurs possib
 L'objectif est alors de déterminer quelles entrées du modèle $X_i$ induisent le plus de changements dans ces résultats possibles --- dans cette variance qu'admet $Y.$
 À cette fin, on utilise les indices pricipaux de Sobol définis par
 \[
-S_i = \frac{\textbf{Var}\!\left( \mathbf{E}\left[Y|X_i\right] \right)}{\textbf{Var}\!\left( Y \right)}.
+S_i = \frac{\textbf{Var}\!\left( \mathbf{E}\!\left[Y|X_i\right] \right)}{\textbf{Var}\!\left( Y \right)}.
 \]
 % L'indice $S_i$ permet de voir l'effet du seul paramètre $X_i$ sur la variance de $Y$ relativement aux autres.
 Ici, $\textbf{Var}\!\left( \mathbf{E}\left[Y|X_i\right] \right)$ permet de voir l'effet du seul paramètre $X_i$ sur la variance de $Y.$
 Diviser par la variance totale de $Y$ permet de le faire relativement aux autres paramètres.
-Cet indice ne prend cependant pas en compte les intéractions entre $X_i$ et les autres entrées du modèle. 
+Cet indice ne prend cependant pas en compte les interactions entre $X_i$ et les autres entrées du modèle. 
 Il faut pour ça utiliser les indices totaux de Sobol définis par
 \[
-S^T_i = 1 - \frac{\textbf{Var}\!\left( \mathbf{E}\left[Y|X_{\sim i}\right] \right)}{\textbf{Var}\!\left( Y \right)},
+S^T_i = 1 - \frac{\textbf{Var}\!\left( \mathbf{E}\!\left[Y|X_{\sim i}\right] \right)}{\textbf{Var}\!\left( Y \right)},
 \]
 où $X_{\sim i} = \left(X_1, \ldots, X_{i-1}, X_{i+1}, \ldots, X_n \right)$.
-L'indice $S^T_i$ ainsi défini permet lui de prendre en compte l'impact du paramètre $X_i$ et de ses intéractions sur la variance de $Y$.
-À noter que l'intéraction entre $X_i$ et $X_j$ est à la fois prise en compte par $S^T_i$ et $S^T_j$.
+L'indice $S^T_i$ ainsi défini permet lui de prendre en compte l'impact du paramètre $X_i$ et de ses interactions sur la variance de $Y$.
+À noter que l'interaction entre $X_i$ et $X_j$ est à la fois prise en compte par $S^T_i$ et $S^T_j$.
 C'est pour cette raison qu'il est souvent pertinent d'interpréter les indices principaux et les indices totaux conjointement.
 
 Une fois que l'on connaît la sensibilité du modèle aux différents paramètres, on peut alors passer à la calibration desdits paramètres.
