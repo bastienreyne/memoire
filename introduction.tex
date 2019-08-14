@@ -3,18 +3,20 @@
 \lettrine{L}{e} Cirad --- où j'ai effectué mon stage --- est un organisme de recherche spécialisé dans l'agronomie des régions tropicales et subtropicales, et l'un de ses objectif principal est d'encourager le développement durable desdites régions.
 Cependant la notion de développement durable vient avec quelques contraintes.
 Notamment, la durabilité implique la limitation des pesticides; et le développement induit la nécessité d'une production agricole efficiente, capable de nourrir dix milliards de personnes d'ici 2050.
+L'une des missions du Cirad est de trouver des alternatives aux pesticides afin de gérer les bioagresseurs qui sont responsables de dégâts sur les cultures et engendrent des pertes de production.
 
-Ainsi, il est naturel que le sixième fruit le plus produit au monde, à savoir la mangue\footnote{La sixième production fruitière mondiale est en réalité le groupement des mangues, mangoustans et goyaves \citep{fao}}, soit un sujet de recherche.
+Ainsi, il est naturel que le sixième fruit le plus produit au monde, à savoir la mangue\footnote{La sixième production fruitière mondiale est en réalité le groupement des mangues, mangoustans et goyaves \citep{fao}}, soit l'objet de recherches visant à rendre sa culture plus durable.
 C'est d'autant plus vrai que la culture du manguier (\emph{Mangifera indica L.}) n'est pas toujours facile.
 En effet, les manguiers présentent de forts asynchronismes phénologiques, que ce soit à l'intérieur d'une même parcelle entre les différents arbres ou à l'intérieur même d'un arbre entre les différentes branches.
 Cela entraîne une floraison et une fructification étalée dans le temps, rendant la gestion des vergers plus difficile.
-Ce phénomène entraîne aussi, pour les différents organes du manguier, une fenêtre d'exposition prolongée aux bioagresseurs, ce qui favorise leur prolifération.
+Ce phénomène entraîne aussi, pour les fleurs et les fruits, une fenêtre d'exposition prolongée aux bioagresseurs, ce qui favorise leur prolifération.
 Et ils sont légion.
-On peut citer la cécidomyie des fleurs et la mouche des fruits chez les ravageurs ou encore l'oïdium, une maladie fongique.
+On peut citer la cécidomyie des fleurs et la mouche des fruits chez les ravageurs ou encore l'oïdium et l'anthracnose, des maladies fongiques.
 % Synchroniser la floraison --- à travers l'élagage --- réduirait la fenêtre d'exposition aux ravageurs et \emph{a fortiori} diminuerait leur nombre.
 
-Parmi ces ravageurs la cécidomyie des fleurs (\emph{Procontarinia mangiferae}) peut fortement impacter la production.
-Cette dernière pond ses œufs dans les inflorescences, ce qui provoque des dommages potentiellement importants voire la mort des inflorescences. 
+Parmi ces ravageurs, la cécidomyie des fleurs (\emph{Procontarinia mangiferae}) peut fortement impacter la production.
+Cette dernière pond ses œufs dans les inflorescences où elle réalise une partie de son cycle de développement, la fin du cycle se déroulant dans le sol.
+Le développement des larves dans les inflorescences provoque des dommages potentiellement importants voire la mort des inflorescences. 
 Et qui dit pas d'inflorescences, dit pas de mangues !
 Dans le contexte de développement durable, il s'agit donc de trouver des solutions alternatives aux pesticides pour gérer ce ravageur et ses dégâts.
 
@@ -24,18 +26,19 @@ Dans le contexte de développement durable, il s'agit donc de trouver des soluti
 % Ce modèle devrait permettre de tester des modes de conduites des vergers \emph{in silico} afin de voir si l'on peut fortement diminuer la population de cécidomyies sans utiliser d'intrants phytosanitaires.
 
 Pour ce faire, deux pistes sont envisagées.
-La première serait la synchronisation de la floraison, grâce à des pratiques culturales appropriées (la taille, par exemple), ce qui réduirait la fenêtre d'exposition aux ravageurs et limiterait par conséquent leur nombre, en limitant notamment le nombre de cycle de développement du ravageur à l'intérieur du verger.
+La première serait la synchronisation de la floraison, grâce à des pratiques culturales appropriées (la taille, par exemple), ce qui réduirait la fenêtre d'exposition des inflorescences aux ravageurs et limiterait par conséquent leur nombre, en limitant le nombre de cycle de développement du ravageur à l'intérieur du verger.
 %La seconde repose sur le fait que l'une des phases du cycle de développement de la cécidomyie a lieu dans le sol.
-La seconde repose sur le fait que les œufs pondus dans les inflorescences se transforment en larves qui vont ensuite s'enfouir dans le sol.
-Restreindre l'accès au sol (avec un enherbement haut par exemple,  qui augmente le trajet des larves pour atteindre la terre et favorise la présence de prédateurs) ou l'empêcher (\emph{e.g.} en utilisant une bâche) devrait \emph{a priori} permettre de réduire la présence de ces ravageurs. 
+La seconde repose sur le fait qu'une partie du cycle de développement du ravageur se passe dans le sol.
+Restreindre l'accès au sol (\emph{e.g.} avec un enherbement haut, qui augmente le trajet des larves pour atteindre la terre et favorise la présence de prédateurs) ou l'empêcher (\emph{e.g.} en utilisant une bâche) permet d'altérer ou rompre le cycle de développement du ravageur, et devrait \emph{a priori} permettre de réduire sa présence. 
 % Ainsi, empêcher une cécidomyie d'entrer dans le sol devrait \emph{a priori} permettre de réduire la présence de ces ravageurs.
 Afin de pouvoir vérifier cette hypothèse, une expérimentation sur un verger a été conduite en 2017 ; une parcelle a été divisée en trois sous-parcelles pour tester trois modalités de couverture du sol différentes : un enherbement ras, un paillage synthétique et un enherbement haut. 
 De cette expérimentation, des données ont été acquises.
-L'objectif est de modéliser les intéractions  entre les cécidomyies et les inflorescences en utilisant les données acquises pour calibrer le modèle.
+Pour aller plus loin dans la compréhension du fonctionnement du système manguier -- cécidomyies des fleurs et de sa gestion par les deux pistes envisagées, une démarche de modélisation de ce système a été engagée.
 Une première version du modèle a été réalisée lors du stage de \citet{laurie}.
 Mon stage en est la suite et a pour objectifs :
 \begin{enumerate}
- \item la compréhension du fonctionnement du système manguier -- cécidomyies ;
+ \item modéliser le système manguier -- cécidomyies des fleurs, en utilisant les données expérimentales pour le calibrer ;
+ \item analyser le fonctionnement du système manguier -- cécidomyies des fleurs ;
  \item tester \emph{in silico} l'effet de la dynamique de floraison et de conditions environnementales, telles que la pression exogène du ravageur, sur l'infestation du verger par les cécidomyies des fleurs.
 \end{enumerate}
 

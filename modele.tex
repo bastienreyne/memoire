@@ -1,19 +1,19 @@
 \chapter{Le modèle}
 
-\lettrine{O}{n} s'intéresse ici aux différentes approches possibles pour modéliser le phénomène. 
-Et il y a du choix car il y a dans la littérature quelques modèles relatifs aux manguiers et aux cécidomyies.
-On décrira la solution retenue ainsi que les hypothèses faites.
+\lettrine{O}{n} s'intéresse ici aux différentes approches possibles pour modéliser le système manguier~--~cécidomyies des fleurs. 
+Il y a dans la littérature quelques modèles relatifs aux manguiers et aux cécidomyies.
+% On décrira la solution retenue ainsi que les hypothèses faites.
 
 Concernant la modélisation en rapport avec le manguier, on peut citer le modèle \emph{Virtual Mango} développé par \citet{fred}.
-C'est un modèle qui simule le développement du manguier, notamment sa croissance et les différents stades phénologiques des unités de croissance et des inflorescences.
-Le modèle ne prend cependant pas en compte l'impact des ravageurs sur le développement de l'arbre.
+C'est un modèle qui simule le développement architectural du manguier, ainsi que la croissance et les différents stades phénologiques des unités de croissance et des inflorescences et la croissance des fruits.
+Le modèle ne prend cependant pas en compte l'impact des ravageurs sur le développement de l'arbre et sa production.
 
-Plus en rapport avec notre sujet, on peut noter l'existence d'un modèle de colonisation d'un verger par les cécidomyies \citep{paul}. 
+Concernant la modélisation en rapport avec les cécidomyies des fleurs, on peut noter l'existence d'un modèle de colonisation d'un verger par les cécidomyies \citep{paul}. 
 Les données utilisées proviennent d'une expérimentation menée sur un verger entièrement bâché. 
 C'est un modèle stochastique et spatialisé qui prend en compte l'arrivée des femelles sur le verger, leurs pontes d'œufs dans les inflorescences, le développement de ces derniers jusqu'au troisième stade de développement larvaire et enfin l'éjection des larves des inflorescences.
-Cependant, le fait que le verger modélisé est entièrement bâché implique l'abscence de cycle de développement complet pour les cécidomyies à l'intérieur du verger ainsi que l'absence d'émergence de cécidomyies dans le verger.
+Cependant, le fait que le verger modélisé est entièrement bâché implique l'abscence de cycle de développement complet pour les cécidomyies à l'intérieur du verger ainsi que l'absence d'émergence de cécidomyies issues de la diapause.
 
-On choisira ici l'approche amorcée par \citet{laurie}, qui propose une modélisation non spatialisée du verger expérimental avec à la fois venue de femelles exogènes et reproduction endogène, tout en prenant en compte les différentes modalités de couverture du sol.
+On choisira ici l'approche amorcée par \citet{laurie}, qui propose une modélisation non spatialisée du verger expérimental considérant l'infestation du verger par des femelles exogènes et la reproduction endogène, tout en prenant en compte les différentes modalités de couverture du sol.
 L'objectif sera de simuler les dynamiques de larves à l'échelle de la sous-parcelle en fonction du nombre d'inflorescences présentes.
 
 \section{Approche retenue}

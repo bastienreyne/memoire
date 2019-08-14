@@ -251,6 +251,113 @@ Le choix du jeu de paramètre sera alors plus réfléchi, bien que toujours arbi
 
 Plus précisément, on possède les valeurs de la fonction de coût de nos critères rassemblées dans un tableau $Y$.
 On possède également les jeux de paramètres (nos solutions) responsables de ces valeurs rassemblés dans un tableau $X$.
-Le but serait alors d'explorer $Y,$ pour savoir par exemple si les critères sont antagonistes (\emph{e.g.} améliorer la prédiction sur une sous-parcelle ne détériore pas la solution de la sous-parcelle voisine ?) ou alors totalement indépendant.
-Mais aussi de pouvoir dire quelles sont les valeurs pour les variables de $X$ qui minimisent quel critère de $Y$. 
+Le but serait alors d'explorer $Y,$ pour savoir par exemple si les critères sont antagonistes (\emph{e.g.} améliorer la prédiction sur une sous-parcelle ne détériore-t-elle pas la prédiction de la sous-parcelle voisine ?) ou alors totalement indépendant.
+Mais aussi de pouvoir dire quelles sont les valeurs pour les paramètres $X$ qui minimisent quel critère de $Y$. 
 À cette fin, on peut choisir entre deux méthodes : l'ACP-VI  et la régression PLS2.
+Nous choisirons la régression PLS2 qui, contrairement à l'ACP-VI, est une méthode régularisante \citep{bry}.
+Ce choix nous préserve d'un éventuel problème d'inversibilité de la matrice $X'X$.
+
+On s'intéresse au fonctionnement de la régression PLS2. 
+On considère que les tableaux $X$ et $Y$ sont centrés-réduits, $X$ est de dimension $n\times p$, $Y$ est de dimension $n\times q$ et que le rang de $X$ est égal à $a$.
+Comme l'explique \citet{tenenhaus}, l'objectif de la régression PLS2 est la «décomposition du tableau $X$ orientée vers l'explication du tableau $Y$».
+Si l'on note $\{t_1,\ldots, t_a\},$ une base orthonormée de $X,$ alors il existe des vecteurs $p_h$ tel que l'on puisse écrire
+\[
+X = \sum_{j = 1}^a t_h p_h'.
+\]
+Le but est de trouver les composantes $t_h$ qui réalisent un compromis entre deux objectifs. 
+Les premières composantes de la base doivent capturer un maximum d'inertie de $X$ en vue d'en réduire la dimension.
+Et aussi permettre de prédire au mieux le tableau $Y.$
+
+Le choix de la $h^{\text{ème}}$ composante peut se faire comme suit :
+\begin{enumerate}
+ \item On s'intéresse à l'information de $X$ qui n'est pas résumée par les $h-1$ premières composantes. 
+ Elle est donnée par les résidus de $X$ définis par
+ \[
+ X^{h-1}_{\cdot j} = X_{\cdot j} - \sum_{\ell=1}^{h-1} p_{\ell j}t_{\ell},  \quad \text{avec } j = 1,\ldots, p.
+ \]
+ On s'intéresse aussi à l'information de $Y$ qui n'est pas expliquée par les $h-1$ premières composantes de $X$. 
+ Cette information est donnée par les résidus de $Y,$
+ \[
+ Y^{h-1}_{\cdot k} = Y_{\cdot k} - \sum_{\ell=1}^{h-1} c_{\ell k}t_{\ell},  \quad \text{avec } k = 1,\ldots, q.
+ \] 
+ \item On initiale $u_h$ avec la première colonne de $Y^{h-1}$,
+ \[
+ u_h = Y^{h-1}_{\cdot 1}.
+ \]
+ \item On effectue une régression des moindres carrés ordinaires de $X^{h-1}_{\cdot j}$ sur $u_h$ qui passe par l'origine. 
+ La pente de cette droite de régression est déterminée par
+ \[
+ w_{hj} = \frac{X^{h-1'}_{\cdot j} u_h}{u_h'u_h}.
+ \]
+ On pose $w_h = (w_{h1}, \ldots, w_{hp})'$.
+ \item On effectue une régression des moindres carrés ordinaires de $X^{h-1}_{i \cdot} = X_{i\cdot} - \sum_{\ell=1}^{h-1}t_{\ell i}p_{\ell}$ sur $w_h$ qui passe par l'origine. 
+ La pente de cette droite de régression est déterminée par
+ \[
+ t_{hi} = \frac{X^{h-1'}_{i\cdot} w_h}{w_h'w_h}.
+ \]
+ On pose $t_h = (t_{h1}, \ldots, t_{hn})'$.
+ \item On réalise ensuite une régression de $Y^{h-1}_{\cdot k}$ sur $t_h$.
+ La pente de la droite de régression des moindres carrés qui passe par l'origine est donnée par
+ \[
+ c_{hk} = \frac{Y^{h-1'}_{\cdot k} t_k}{t_k't_k}.
+ \]
+ On pose $c_h = (c_{h1}, \ldots, c_{hq})'$.
+ \item On met à jour notre vecteur $u_h$ en effectuant une régression de $Y^{h-1}_{i \cdot} = Y_{i\cdot} - \sum_{\ell=1}^{h-1}t_{\ell i}c_{\ell}$ sur $c_h$.
+ La pente de la droite de régression passant par l'origine nous donne 
+ \[
+ u_{hi} = \frac{Y^{h-1'}_{i \cdot} c_h}{c_h'c_h}.
+ \]
+ On obtient ainsi notre nouveau vecteur $u_h = (u_{h1}, \ldots, u_{hn})'$.
+ \item On réitère les étapes 3 à 6 jusqu'à ce que le vecteur $w_h$ ait convergé.
+ \item Enfin, la pente de la droite de régression des moindres carrés de $X^{h-1}_{\cdot j}$ sur $t_h$ qui passe par l'origine nous donne les coefficients $p_{hj}$.
+ Ils sont définis par
+ \[
+ p_{hj} = \frac{X^{h-1'}_{\cdot j} t_h}{t_h't_h}.
+ \]
+ On en déduit le vecteur $p_h = (p_{h1}, \ldots, p_{hp})'.$
+ \end{enumerate}
+
+En plus du formalisme, \citet{tenenhaus} nous donne quelques propriétés sur les différents vecteurs :
+\begin{align}
+%  t_h't_{\ell} &= 0  &\text{si $\ell \neq h$,} \\
+ w_h'p_h &= 1,  \\
+%  w_h'X_{\cdot \ell}' &= 0 &\text{pour tout $(h, \ell)$,}\\
+ w_h'p_{\ell} &= 0 &\text{si $\ell \neq h$,}\\
+ w_h'w_{\ell} &= 0 &\text{si $\ell \neq h$,}\\
+%  t_h'X_{\cdot \ell} &= 0 &\text{pour tout $(h, \ell)$,}\\
+%  X^{h} &= X\prod_{j=1}^h\left( I - w_jp_j' \right) &\text{pour $h \geq 1$,}\\
+ t_h &= X'w_h^* &\text{avec $w_h^* = w_h (p_h'w_h)^{-1}$.} \label{txw}
+\end{align}
+Ces propriétés s'avèrent utiles pour exprimer $Y$ en fonction des composantes $t_h$, et donc \emph{a fortiori} en fonction de $X$.
+Admettons que le nombre de composantes retenues soit $H$.
+Par définition des coefficients $c_h$, on peut écrire 
+\[
+Y = t_1c_1' + \cdots + t_Hc_H' + Y^{H},
+\]
+où $Y^{H}$ représente les résidus de $Y$, \emph{i.e.} la part de $Y$ qui n'est pas prédite par les composantes $t_1,\ldots,t_H.$
+Il peut être utile d'alléger l'écriture en posant $T_H = [t_1 | \cdots | t_H]$. 
+On définit $C_H$, $P_H$, $W_H$ et $W_H^*$ de la même manière.
+Ainsi,
+\begin{align*}
+ Y &= T_HC_H' + Y^H\\
+ &= XW_H^*C_H' + Y^H & \text{en utilisant la propriété~\ref{txw},}\\
+ &= XW_H\left( P_H'W_H \right)^{-1}C_H' + Y^H
+\end{align*}
+On en déduit $B = W_H\left( P_H'W_H \right)^{-1}C_H'$ correspondant aux coefficients de la régression PLS2 de $Y$ sur $X$ effectué avec $H$ composantes.
+Ce qui donne
+\begin{align*}
+Y_{\cdot k} &\simeq c_{1k}t_1 + \cdots + c_{Hk}t_H\\
+&\simeq \left( c_{1k}w_{11}^* + \cdots + c_{Hk}w_{H1}^* \right)X_{\cdot 1} + \cdots + \left( c_{1k}w_{1p}^* + \cdots + c_{Hk}w_{Hp}^* \right)X_{\cdot p}\\
+&\simeq b_{k1}X_{\cdot 1} + \cdots + b_{kp}X_{\cdot p}.
+\end{align*}
+Les variables de $X$ étant centrées-réduites, cela signifie que plus le coefficient $b_{kj}$ sera élevé, plus le paramètre $j$ sera déterminant dans la valeur du critère $k$.
+
+
+
+
+
+
+
+
+
+
