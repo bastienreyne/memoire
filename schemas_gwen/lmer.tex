@@ -92,14 +92,22 @@ Y_{ijk\ell} = \beta_0 + D_j + V_\ell + \left( DT \right)_{jk} + \left( DV \right
 
 \[
 \begin{cases}
- \text{Block : } & \gamma_{0i} \sim \mathcal{N}\left( 0, \sigma_1^2 \right)\\
- \text{Density : } & \gamma_{0ij} \sim \mathcal{N}\left( 0, \sigma_2^2 \right)\\
- \text{Training : } & \gamma_{0ijk} \sim \mathcal{N}\left( 0, \sigma_3^2 \right)\\
+ \text{Bloc (Block) : } & \gamma_{0i} \sim \mathcal{N}\left( 0, \sigma_1^2 \right)\\
+ \text{Sous-bloc (Block\!:\,density) : } & \gamma_{0ij} \sim \mathcal{N}\left( 0, \sigma_2^2 \right)\\
+ \text{Sous-sous-bloc (Block\!:\,density\!:\,training) : } & \gamma_{0ijk} \sim \mathcal{N}\left( 0, \sigma_3^2 \right)\\
 \end{cases}
 \]
 \vspace{3cm}
 \[
 \varepsilon_{ijk\ell} \sim \mathcal{N}\left( 0, \sigma^2_\varepsilon \right)
+\]
+\vspace{2cm}
+\[
+\begin{cases}
+ \text{Bloc (Block) : } & \gamma_{0i} \sim \mathcal{N}\left( 0, \sigma_1^2 \right)\\
+ \text{Sous-bloc (Block$\times$density) : } & \gamma_{0ij} \sim \mathcal{N}\left( 0, \sigma_2^2 \right)\\
+ \text{Sous-sous-bloc (Block$\times$density$\times$training) : } & \gamma_{0ijk} \sim \mathcal{N}\left( 0, \sigma_3^2 \right)\\
+\end{cases}
 \]
 
 
@@ -194,6 +202,33 @@ Est-ce que ce ne serait pas mieux de mettre : au lieu de $\times$ pour les inté
  & + \beta_7\, \text{variety(Calypso)} \colon \! \text{treatment(5)} + \beta_8\, \text{variety(Keitt)} \colon \! \text{treatment(5)} \\
  & + \gamma_{0i} + \gamma_{0ij} + \gamma_{0ijk} + \varepsilon_{ijk\ell}
 \end{align*}
+\newpage
 
+\[
+\begin{cases}
+ \beta_j^d & \text{estimation de la densité $j$,}\\
+ \beta_\ell^v & \text{estimation de la variété $\ell$,}\\
+ \left( \beta^d\beta^t \right)_{jk} & \text{estimation de l'interaction entre la densité $j$ et le mode de conduite $k$,}\\
+ \left( \beta^d\beta^v \right)_{j\ell} & \text{estimation de l'interaction entre la densité $j$ et la variété $\ell$,}\\
+ \left( \beta^d\beta^t\beta^v \right)_{jk\ell} & \text{estimation de la triple interaction entre la densité $j$, le mode de conduite $k$ et la variété $\ell$.}
+\end{cases}
+\]
+
+\vspace{2cm}
+
+\[
+\begin{cases}
+ \beta_j^d & \text{estimation de la densité $j$,}\\
+ \beta_\ell^v & \text{estimation de la variété $\ell$,}\\
+ \left( \beta^d\beta^t \right)_{jk} & \text{estimation de l'interaction entre la densité $j$ et le mode de conduite $k$,}\\
+ \left( \beta^d\beta^v \right)_{j\ell} & \text{estimation de l'interaction entre la densité $j$ et la variété $\ell$,}\\
+ \left( \beta^d\beta^t\beta^v \right)_{jk\ell} & \text{estimation de la triple interaction entre la densité $j$, le mode}\\
+ & \text{de conduite $k$ et la variété $\ell$.}
+\end{cases}
+\]
+
+\vspace{2cm}
+
+Faudrait-pas des $\hat \beta$ si c'est des estimations ?
 \end{document}
 

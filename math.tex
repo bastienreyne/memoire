@@ -4,24 +4,24 @@
 On s'intéressera notamment à définir une fonction de coût, pour évaluer la qualité de la calibration.
 Dans cette optique, on essayera de calibrer les paramètres en utilisant uniquement les dynamiques du verger n\textdegree1 ; le deuxième servira à la validation.
 
-Il peut être utile de donner la liste des paramètres à calibrer :
-\begin{itemize}
- \item $\gamma$, le paramètre relatif à l'arrivée des femelles exogènes ;
- \item $p_{\text{m}}$, le paramètre relatif à la migration des femelles endogènes entre les sous-parcelles ;
- \item $\mu^{1}_{\text{ER}}$ et $\mu^{2}_{\text{ER}}$, les probabilité de réussir à entrer et à sortir du sol pour les cécidomyies pour la modalité «enherbement ras». Pour simplifier,
- on pose $\mu^{1}_{\text{ER}} = \mu^{2}_{\text{ER}}$;
- \item $\mu^{1}_{\text{EH}}$ et $\mu^{2}_{\text{EH}}$, les probabilité de réussir à entrer et à sortir du sol pour les cécidomyies pour la modalité «enherbement haut». Ici aussi,
- on pose $\mu^{1}_{\text{EH}} = \mu^{2}_{\text{EH}}$;
- \item $k$, le paramètre relatif à la disponibilité en ressources pour les inflorescences ;
- \item \texttt{stock}, le nombre de larves entrées en diapause les années précédentes qui décident de sortir l'année considérée ;
- \item $E_0\mu_{\ell}$, le nombre d'œufs pondus par une femelle qui survivent, se transforment en larves puis s'éjectent de l'inflorescences. 
-\end{itemize}
+% Il peut être utile de donner la liste des paramètres à calibrer :
+% \begin{itemize}
+%  \item $\gamma$, le paramètre relatif à l'arrivée des femelles exogènes ;
+%  \item $p_{\text{m}}$, le paramètre relatif à la migration des femelles endogènes entre les sous-parcelles ;
+%  \item $\mu^{1}_{\text{ER}}$ et $\mu^{2}_{\text{ER}}$, les probabilité de réussir à entrer et à sortir du sol pour les cécidomyies pour la modalité «enherbement ras». Pour simplifier,
+%  on pose $\mu^{1}_{\text{ER}} = \mu^{2}_{\text{ER}}$;
+%  \item $\mu^{1}_{\text{EH}}$ et $\mu^{2}_{\text{EH}}$, les probabilité de réussir à entrer et à sortir du sol pour les cécidomyies pour la modalité «enherbement haut». Ici aussi,
+%  on pose $\mu^{1}_{\text{EH}} = \mu^{2}_{\text{EH}}$;
+%  \item $k$, le paramètre relatif à la disponibilité en ressources pour les inflorescences ;
+%  \item \texttt{stock}, le nombre de larves entrées en diapause les années précédentes qui décident de sortir l'année considérée ;
+%  \item $E_0\mu_{\ell}$, le nombre d'œufs pondus par une femelle qui survivent, se transforment en larves puis s'éjectent de l'inflorescences. 
+% \end{itemize}
 
 
 \section{Fonction de coût}
 
-Avant une quelconque estimation des paramètres, nous avons besoin de mesurer la qualité de nos estimations.
-Pour ce faire, on utilisera une fonction pour comparer le nombre de larves estimées avec le nombre de larves observées. 
+Une étape importante pour la calibration du modèle est de définir une fonction de coût qui permet de mesurer la qualité de nos estimations.
+Pour ce faire, on utilisera une fonction permettant de comparer le nombre de larves estimées avec le nombre de larves observées. 
 Pour définir cette fonction, on pose :
 \begin{itemize}
  \item $m$, le nombre de jours entre la première observation et la dernière ;
@@ -116,8 +116,8 @@ L'analyse de sensibilité est définie par \citet{saltelli2004} comme
  «l'étude de comment l'incertitude de la sortie d'un modèle --- qu'elle soit numérique ou non --- peut être répartie entre les différentes sources d'incertitudes présentes dans les entrées du modèle.»\footnote{«The study of how uncertainty in the output of a model (numerical or otherwise) can be apportioned to different sources of uncertainty in the model input.»}
 \end{quote}
 Autrement dit, on cherche à connaître les paramètres les plus influants sur la sortie du modèle.
-La calibration comportant toujours une part d'arbitraire, cette analyse permet de prendre du recul sur les choix de paramètres, relativement à leur impact sur le modèle.
-En particulier lorsque certains paramètres ne sont qu'approximatifs vis à vis de la réalité qu'ils ont vocation à décrire, mais fortement significatifs pour la sortie du modèle.
+La calibration comportant toujours une part d'arbitraire, cette analyse permet de prendre du recul sur les choix de paramètres, relativement à leur impact sur les sorties du modèle.
+% En particulier lorsque certains paramètres ne sont qu'approximatifs vis à vis de la réalité qu'ils ont vocation à décrire, mais fortement significatifs pour la sortie du modèle.
 
 Il existe deux grandes catégories d'analyses de sensibilité, celles qui ont une approche globale et celles qui ont une approche locale (parfois appelées \emph{one-at-the-time}).
 L'approche locale consiste à étudier la sensibilité des paramètres les uns après les autres, les uns indépendamment des autres.
@@ -132,10 +132,10 @@ Notre modèle possède moins de 20 paramètres et s'exécute en moins d'une minu
 
 Le fonctionnement de cette méthode est relativement intuitif.
 On considère que la sortie de notre modèle $Y$ peut s'exprimer comme une fonction des entrées de notre modèle $X,$ c'est-à-dire $Y = f(X)$.
-Comme $X = \left( X_1, \ldots, X_n \right)$ peut prendre plein de valeurs possibles, il en résulte qu'il y a \emph{a priori} plein de résultats possibles pour $Y.$
+Comme $X = \left( X_1, \ldots, X_n \right)$ peut prendre un nombre important de valeurs possibles, il en résulte qu'il y a \emph{a priori} un nombre important de résultats possibles pour $Y.$
 % L'objectif est alors de décomposer ces résultats possibles --- cette variance qu'admet $Y$ --- en fonction de chaque entrée du modèle $X_i$.
 L'objectif est alors de déterminer quelles entrées du modèle $X_i$ induisent le plus de changements dans ces résultats possibles --- dans cette variance qu'admet $Y.$
-À cette fin, on utilise les indices pricipaux de Sobol définis par
+À cette fin, on utilise les indices principaux de Sobol définis par
 \[
 S_i = \frac{\textbf{Var}\!\left( \mathbf{E}\!\left[Y|X_i\right] \right)}{\textbf{Var}\!\left( Y \right)}.
 \]
@@ -174,12 +174,12 @@ C'est celui que l'on utilisera.
 C'est un algorithme qui ne renvoie pas une unique solution mais un ensemble de solutions. 
 Cet ensemble de solutions converge vers un sous-ensemble du front de Pareto.
 Le front de Pareto désigne l'ensemble des solutions non-dominées pour un problème donné.
-Dans $P \subset \mathbf{R}^{p}$ ($n$ > 1), une solution $x = \left( x_1, \ldots, x_p \right) \in  P$ est dite non-dominée lorsque
+Dans $P \subset \mathbf{R}^{p}$ ($p$ > 1), une solution $x^* = \left( x_1, \ldots, x_p \right) \in  P$ est dite non-dominée lorsque
 \[
-\left\{ y \in P\ |\ \forall\ i \in \{1, \ldots, p\},\ y_i \succcurlyeq x_i \text{ et } \exists\ i \text{ tel que } y_i \succ x_i \right\} = \emptyset,
+\left\{ x \in P\ |\ \forall\ i \in \{1, \ldots, p\},\ x_i \succcurlyeq x_i^* \text{ et } \exists\ i \text{ tel que } x_i \succ x_i^* \right\} = \emptyset,
 \]
 où $\succcurlyeq$ et $\succ$ veulent respectivement dire «au moins aussi bien que» et «meilleur que». 
-Dans notre cas, vu que l'on veut minimiser notre fonction de coût, $\succcurlyeq$ se traduira par $\leq$ et $\succ$ se traduira par $<$.
+Dans notre cas, vu que l'on veut minimiser notre fonction de coût, $x^* \succcurlyeq x$ se traduira par $f(x^*) \leq f(x)$ et $x^* \succ x$ se traduira par $ f(x^*) < f(x)$, où la fonction $f$ représente la composée de notre modèle suivi de notre fonction de coût.
 En d'autres termes, $x$ est non-dominée signifie qu'il n'existe pas de solution $y$ qui soit strictement meilleure sur un des critères et au moins aussi bonne sur tous les autres critères.
 
 Le front de Pareto étant un sous-ensemble de $\mathbf{R}^{p}$, il n'est (\emph{a priori}) pas dénombrable.
@@ -207,8 +207,8 @@ Et il faut plusieurs générations pour se retrouver avec des solutions non-domi
  (Autrement dit, les solutions qui se trouvent dans et uniquement dans $\bigcup_{s\in F_1} D_s$.)
  On continue de la même manière pour $F_3$ (qui contient les solutions uniquement dominées par celles de $F_1$ et $F_2$), $F_4$... jusqu'à ce que toutes les solutions de $S_t$ soient assignées à un front.
  \item On choisira alors de garder en priorité les solutions de $F_1$ puis de $F_2$ et ainsi de suite jusqu'à en obtenir $N$. 
- Il faut noter qu'il existe probablement un front $F_k$ où toutes les solutions ne pourront être garger pour ne pas dépasser la limite imposée de $N$ solutions.
- Plutôt que de choisir aléatoirement le nombre nécésaires de solutions dans $F_k$, seront sélectionnées les solutions qui maximisent une certaine distance --- the \emph{crowding distance} --- avec les autres solutions.
+ Il faut noter qu'il existe probablement un front $F_k$ où toutes les solutions ne pourront être garder pour ne pas dépasser la limite imposée de $N$ solutions.
+ Plutôt que de choisir aléatoirement le nombre nécessaires de solutions dans $F_k$, seront sélectionnées les solutions qui maximisent une certaine distance --- the \emph{crowding distance} --- avec les autres solutions.
  (On n'entrera pas dans le détail ici.)
  C'est fait pour assurer une certaine diversité entre les différentes solutions.
  Les $N$ solutions ainsi sélectionnées constitueront $P_{t+1}$, la population initiale de la génération suivante $t+1$.
@@ -218,7 +218,7 @@ Un élément important pour assurer une convergence vers le front de Pareto est 
 Pour générer une solution fille, plusieurs étapes sont là aussi nécessaires.
 Ces étapes (simplifiées) sont :
 \begin{enumerate}
- \item On selectionne deux solutions $s_1$ et $s_2$ dans $P_t$.
+ \item On sélectionne deux solutions $s_1$ et $s_2$ dans $P_t$.
  \item On construit une solution fille $f_1$ en prenant la moitié des coordonnées de $s_1$ et l'autre moitié de $s_2$. 
  On construit $f_2$ en prenant les moitiés de $s_1$ et $s_2$ inutilisées dans la construction de $f_1$.
  \item Sur chacune des solutions filles, une coordonnée choisie aléatoirement est remplacée par une valeur aléatoire choisie dans un intervalle centré sur la valeur initiale.
@@ -226,7 +226,7 @@ Ces étapes (simplifiées) sont :
 \end{enumerate}
 
 
-Et c'est ainsi qu'après un nombre suffisant d'itérations, et pour une taille de population suffisament grande, l'algorithme NSGA-II renvoie un ensemble de points suffisament proche du front de Pareto et qui en retranscrit sa diversité.
+Et c'est ainsi qu'après un nombre suffisant d'itérations, et pour une taille de population suffisamment grande, l'algorithme NSGA-II renvoie un ensemble de points suffisamment proche du front de Pareto et qui en retranscrit sa diversité.
 
 
 Dans notre cas, cela signifie que l'on possède différents jeux de paramètres et les valeurs de la fonction de coût pour les trois sous-blocs qu'ils produisent.
@@ -243,120 +243,169 @@ Il en découle que le choix sera forcément arbitraire.
 
 Plusieurs approches sont possibles.
 On peut par exemple choisir au hasard un nombre restreint de solutions possibles, les tester puis sélectionner celle qui semble la plus pertinente.
-On peut aussi sélectionner la solution associée aux trois critères qui minimisent une distance à 0, en estimant qu'elle représente un bon compromis entre les différents critères.
+On peut aussi sélectionner la solution qui minimise une norme sur nos trois critères, en estimant qu'elle représente un bon compromis entre les différents critères.
 
-Ou alors on essaye d'avoir une vision globale de l'ensemble des solutions.
-Il peut même être pertinent de comprendre voire d'\emph{expliquer} quel jeu de paramètres génère quelle solution.
-Le choix du jeu de paramètre sera alors plus réfléchi, bien que toujours arbitraire.
+On préférera une autre approche. 
+Puisque NSGA-II essaye de renvoyer des solutions couvrant au maximum le front de Pareto, cela implique que certaines solutions seront proches en termes de valeurs pour nos paramètres.
+Et qu'elles renverront donc des dynamiques similaires.
+Il peut être donc pertinent d'effectuer une classification non-supervisée de nos solutions afin de recenser les différentes solutions-types.
+Pour ce faire, on peut effectuer une classification ascendante hiérarchique (CAH).
 
-Plus précisément, on possède les valeurs de la fonction de coût de nos critères rassemblées dans un tableau $Y$.
-On possède également les jeux de paramètres (nos solutions) responsables de ces valeurs rassemblés dans un tableau $X$.
-Le but serait alors d'explorer $Y,$ pour savoir par exemple si les critères sont antagonistes (\emph{e.g.} améliorer la prédiction sur une sous-parcelle ne détériore-t-elle pas la prédiction de la sous-parcelle voisine ?) ou alors totalement indépendant.
-Mais aussi de pouvoir dire quelles sont les valeurs pour les paramètres $X$ qui minimisent quel critère de $Y$. 
-À cette fin, on peut choisir entre deux méthodes : l'ACP-VI  et la régression PLS2.
-Nous choisirons la régression PLS2 qui, contrairement à l'ACP-VI, est une méthode régularisante \citep{bry}.
-Ce choix nous préserve d'un éventuel problème d'inversibilité de la matrice $X'X$.
-
-On s'intéresse au fonctionnement de la régression PLS2. 
-On considère que les tableaux $X$ et $Y$ sont centrés-réduits, $X$ est de dimension $n\times p$, $Y$ est de dimension $n\times q$ et que le rang de $X$ est égal à $a$.
-Comme l'explique \citet{tenenhaus}, l'objectif de la régression PLS2 est la «décomposition du tableau $X$ orientée vers l'explication du tableau $Y$».
-Si l'on note $\{t_1,\ldots, t_a\},$ une base orthonormée de $X,$ alors il existe des vecteurs $p_h$ tel que l'on puisse écrire
+Le principe est le suivant.
+On traduit nos solutions centrées -- réduites dans un espace métrique. On choisira $\mathbf{R}^p$ muni de la distance euclidienne.
+% Plus deux solutions seront proches du point de vue de la distance euclidienne, plus elles seront semblables et appartiendront \emph{a priori} à la même classe de solutions.
+On cherche à rassembler les différentes solutions en différentes classes.
+Les classes se doivent de contenir des individus aussi proches que possible (\emph{i.e.} la distance euclidienne entre un individu de la classe et l'individu moyen de la classe doit être petite), et être aussi différentes des autres classes que possible (\emph{i.e.} la distance entre l'individu moyen de la classe et l'individu moyen de la classe la plus proche doit être grande).
+D'un point de vue formel, cela peut s'exprimer par la décomposition de l'inertie totale en inertie externe des classes et en inertie interne des classes.
+Cette décomposition est donnée par
 \[
-X = \sum_{j = 1}^a t_h p_h'.
+\underbrace{\frac{1}{n}\sum_{i=1}^{n} \lVert x_i \rVert^2}_{\text{inertie totale}} = \underbrace{\sum_{k=1}^{K}w^k\lVert \overline{x}^{k} \rVert^2}_{\text{inertie externe}} +
+\underbrace{\sum_{k=1}^{K} \sum_{x_i\in C_k} \frac{1}{n} \lVert x_i - \overline{x}^k \rVert^2}_{\text{inertie interne}},
 \]
-Le but est de trouver les composantes $t_h$ qui réalisent un compromis entre deux objectifs. 
-Les premières composantes de la base doivent capturer un maximum d'inertie de $X$ en vue d'en réduire la dimension.
-Et aussi permettre de prédire au mieux le tableau $Y.$
+où $K$ représente le nombre de classes, $w^k$ le poids de la classe $C_k$ et $\overline{x}^{k}$ l'individu moyen de la classe $C_k$.
+L'objectif est alors de trouver les classes $C_k$ qui minimisent l'inertie interne et qui maximise l'inertie externe.
+Cependant, les classes $C_k$ dépendent du nombre de classes $K$, et ce nombre est choisi par l'utilisateur de la méthode.
+Il est évident que plus il y a de classes, plus l'inertie intra-classe sera faible ; néanmoins la classification a pour but de rassembler les individus, avoir maintes classes n'est alors pas très pertinent.
+On reviendra sur le choix de $K$ plus tard.
 
-Le choix de la $h^{\text{ème}}$ composante peut se faire comme suit :
-\begin{enumerate}
- \item On s'intéresse à l'information de $X$ qui n'est pas résumée par les $h-1$ premières composantes. 
- Elle est donnée par les résidus de $X$ définis par
- \[
- X^{h-1}_{\cdot j} = X_{\cdot j} - \sum_{\ell=1}^{h-1} p_{\ell j}t_{\ell},  \quad \text{avec } j = 1,\ldots, p.
- \]
- On s'intéresse aussi à l'information de $Y$ qui n'est pas expliquée par les $h-1$ premières composantes de $X$. 
- Cette information est donnée par les résidus de $Y,$
- \[
- Y^{h-1}_{\cdot k} = Y_{\cdot k} - \sum_{\ell=1}^{h-1} c_{\ell k}t_{\ell},  \quad \text{avec } k = 1,\ldots, q.
- \] 
- \item On initiale $u_h$ avec la première colonne de $Y^{h-1}$,
- \[
- u_h = Y^{h-1}_{\cdot 1}.
- \]
- \item On effectue une régression des moindres carrés ordinaires de $X^{h-1}_{\cdot j}$ sur $u_h$ qui passe par l'origine. 
- La pente de cette droite de régression est déterminée par
- \[
- w_{hj} = \frac{X^{h-1'}_{\cdot j} u_h}{u_h'u_h}.
- \]
- On pose $w_h = (w_{h1}, \ldots, w_{hp})'$.
- \item On effectue une régression des moindres carrés ordinaires de $X^{h-1}_{i \cdot} = X_{i\cdot} - \sum_{\ell=1}^{h-1}t_{\ell i}p_{\ell}$ sur $w_h$ qui passe par l'origine. 
- La pente de cette droite de régression est déterminée par
- \[
- t_{hi} = \frac{X^{h-1'}_{i\cdot} w_h}{w_h'w_h}.
- \]
- On pose $t_h = (t_{h1}, \ldots, t_{hn})'$.
- \item On réalise ensuite une régression de $Y^{h-1}_{\cdot k}$ sur $t_h$.
- La pente de la droite de régression des moindres carrés qui passe par l'origine est donnée par
- \[
- c_{hk} = \frac{Y^{h-1'}_{\cdot k} t_k}{t_k't_k}.
- \]
- On pose $c_h = (c_{h1}, \ldots, c_{hq})'$.
- \item On met à jour notre vecteur $u_h$ en effectuant une régression de $Y^{h-1}_{i \cdot} = Y_{i\cdot} - \sum_{\ell=1}^{h-1}t_{\ell i}c_{\ell}$ sur $c_h$.
- La pente de la droite de régression passant par l'origine nous donne 
- \[
- u_{hi} = \frac{Y^{h-1'}_{i \cdot} c_h}{c_h'c_h}.
- \]
- On obtient ainsi notre nouveau vecteur $u_h = (u_{h1}, \ldots, u_{hn})'$.
- \item On réitère les étapes 3 à 6 jusqu'à ce que le vecteur $w_h$ ait convergé.
- \item Enfin, la pente de la droite de régression des moindres carrés de $X^{h-1}_{\cdot j}$ sur $t_h$ qui passe par l'origine nous donne les coefficients $p_{hj}$.
- Ils sont définis par
- \[
- p_{hj} = \frac{X^{h-1'}_{\cdot j} t_h}{t_h't_h}.
- \]
- On en déduit le vecteur $p_h = (p_{h1}, \ldots, p_{hp})'.$
- \end{enumerate}
-
-En plus du formalisme, \citet{tenenhaus} nous donne quelques propriétés sur les différents vecteurs :
-\begin{align}
-%  t_h't_{\ell} &= 0  &\text{si $\ell \neq h$,} \\
- w_h'p_h &= 1,  \\
-%  w_h'X_{\cdot \ell}' &= 0 &\text{pour tout $(h, \ell)$,}\\
- w_h'p_{\ell} &= 0 &\text{si $\ell \neq h$,}\\
- w_h'w_{\ell} &= 0 &\text{si $\ell \neq h$,}\\
-%  t_h'X_{\cdot \ell} &= 0 &\text{pour tout $(h, \ell)$,}\\
-%  X^{h} &= X\prod_{j=1}^h\left( I - w_jp_j' \right) &\text{pour $h \geq 1$,}\\
- t_h &= X'w_h^* &\text{avec $w_h^* = w_h (p_h'w_h)^{-1}$.} \label{txw}
-\end{align}
-Ces propriétés s'avèrent utiles pour exprimer $Y$ en fonction des composantes $t_h$, et donc \emph{a fortiori} en fonction de $X$.
-Admettons que le nombre de composantes retenues soit $H$.
-Par définition des coefficients $c_h$, on peut écrire 
+Initialement, la CAH commence avec $n$ classes : chaque individu se trouve dans une classe ne contenant que lui.
+Et à chaque étape, on regroupe deux classes similaires jusqu'à n'en avoir plus qu'une unique contenant tous les individus.
+Les deux classes qui sont regroupées à chaque étape sont choisies car elles minimisent un \emph{indice d'agrégation}.
+Il en existe un certain nombre, nous choisirons comme indice d'agrégation l'indice de Ward.
+Il est défini par
 \[
-Y = t_1c_1' + \cdots + t_Hc_H' + Y^{H},
+\mu\left( C_k, C_{\ell} \right) = \frac{w^kw^{\ell}}{w^k + w^{\ell}}\lVert \overline{x}^k - \overline{x}^{\ell} \rVert^2,
 \]
-où $Y^{H}$ représente les résidus de $Y$, \emph{i.e.} la part de $Y$ qui n'est pas prédite par les composantes $t_1,\ldots,t_H.$
-Il peut être utile d'alléger l'écriture en posant $T_H = [t_1 | \cdots | t_H]$. 
-On définit $C_H$, $P_H$, $W_H$ et $W_H^*$ de la même manière.
-Ainsi,
-\begin{align*}
- Y &= T_HC_H' + Y^H\\
- &= XW_H^*C_H' + Y^H & \text{en utilisant la propriété~\ref{txw},}\\
- &= XW_H\left( P_H'W_H \right)^{-1}C_H' + Y^H
-\end{align*}
-On en déduit $B = W_H\left( P_H'W_H \right)^{-1}C_H'$ correspondant aux coefficients de la régression PLS2 de $Y$ sur $X$ effectué avec $H$ composantes.
-Ce qui donne
-\begin{align*}
-Y_{\cdot k} &\simeq c_{1k}t_1 + \cdots + c_{Hk}t_H\\
-&\simeq \left( c_{1k}w_{11}^* + \cdots + c_{Hk}w_{H1}^* \right)X_{\cdot 1} + \cdots + \left( c_{1k}w_{1p}^* + \cdots + c_{Hk}w_{Hp}^* \right)X_{\cdot p}\\
-&\simeq b_{k1}X_{\cdot 1} + \cdots + b_{kp}X_{\cdot p}.
-\end{align*}
-Les variables de $X$ étant centrées-réduites, cela signifie que plus le coefficient $b_{kj}$ sera élevé, plus le paramètre $j$ sera déterminant dans la valeur du critère $k$.
+où $w^k$ est le poids de la classe $k$ et $\overline{x}^k$ est l'individu moyen de la classe $k$.
+Cet indice a l'avantage d'être exprimable en fonction de l'inertie, et notamment de l'inertie intra-classes que l'on souhaite minimiser \citep{bry}.
+% Lorsque l'on a qu'une unique classe, l'inertie intra-classe est égale à l'inertie totale, et lorsque l'on a 
+
+Ainsi, la CAH donne les classes $C_k$ pour tous les nombres de classes possibles, \emph{i.e.} $K = 1,\ldots, n$.
+Il ne reste plus qu'à choisir $K$.
+Agréger deux classes a un certain coût qui se traduit par une augmentation de l'inertie intra-classes.
+Donc \emph{a fortiori}, réduire le nombre de classes est une bonne chose si l'augmentation de l'inertie intra-classes est minime.
+En pratique, on choisira un nombre de classes $K^*$ qui minimisera significativement l'inertie intra-classes par rapport à celle obtenue avec $K^* -1$ classes.
+
+Il faut aussi noter que dans notre cas précis, cette classification est faite dans un but exploratoire. 
+Il vaudra mieux avoir un nombre de classes délibérément grand, quitte à avoir des classes semblables, afin de ne pas passer à côté d'une catégorie de solutions intéressante.
 
 
 
 
 
 
+% Ou alors on essaye d'avoir une vision globale de l'ensemble des solutions.
+% Il peut même être pertinent de comprendre voire d'\emph{expliquer} quel jeu de paramètres génère quelle solution.
+% Le choix du jeu de paramètre sera alors plus réfléchi, bien que toujours arbitraire.
+% 
+% Plus précisément, on possède les valeurs de la fonction de coût de nos critères rassemblées dans un tableau $Y$.
+% On possède également les jeux de paramètres (nos solutions) responsables de ces valeurs rassemblés dans un tableau $X$.
+% Le but serait alors d'explorer $Y,$ pour savoir par exemple si les critères sont antagonistes (\emph{e.g.} améliorer la prédiction sur une sous-parcelle ne détériore-t-elle pas la prédiction de la sous-parcelle voisine ?) ou alors totalement indépendant.
+% Mais aussi de pouvoir dire quelles sont les valeurs pour les paramètres $X$ qui minimisent quel critère de $Y$. 
+% À cette fin, on peut choisir entre deux méthodes : l'ACP-VI  et la régression PLS2.
+% Nous choisirons la régression PLS2 qui, contrairement à l'ACP-VI, est une méthode régularisante \citep{bry}.
+% Ce choix nous préserve d'un éventuel problème d'inversibilité de la matrice $X'X$.
+% 
+% On s'intéresse au fonctionnement de la régression PLS2. 
+% On considère que les tableaux $X$ et $Y$ sont centrés-réduits, $X$ est de dimension $n\times p$, $Y$ est de dimension $n\times q$ et que le rang de $X$ est égal à $a$.
+% Comme l'explique \citet{tenenhaus}, l'objectif de la régression PLS2 est la «décomposition du tableau $X$ orientée vers l'explication du tableau $Y$».
+% Si l'on note $\{t_1,\ldots, t_a\},$ une base orthonormée de $X,$ alors il existe des vecteurs $p_h$ tel que l'on puisse écrire
+% \[
+% X = \sum_{j = 1}^a t_h p_h'.
+% \]
+% Le but est de trouver les composantes $t_h$ qui réalisent un compromis entre deux objectifs. 
+% Les premières composantes de la base doivent capturer un maximum d'inertie de $X$ en vue d'en réduire la dimension.
+% Et aussi permettre de prédire au mieux le tableau $Y.$
+% 
+% Le choix de la $h^{\text{ème}}$ composante peut se faire comme suit :
+% \begin{enumerate}
+%  \item On s'intéresse à l'information de $X$ qui n'est pas résumée par les $h-1$ premières composantes. 
+%  Elle est donnée par les résidus de $X$ définis par
+%  \[
+%  X^{h-1}_{\cdot j} = X_{\cdot j} - \sum_{\ell=1}^{h-1} p_{\ell j}t_{\ell},  \quad \text{avec } j = 1,\ldots, p.
+%  \]
+%  On s'intéresse aussi à l'information de $Y$ qui n'est pas expliquée par les $h-1$ premières composantes de $X$. 
+%  Cette information est donnée par les résidus de $Y,$
+%  \[
+%  Y^{h-1}_{\cdot k} = Y_{\cdot k} - \sum_{\ell=1}^{h-1} c_{\ell k}t_{\ell},  \quad \text{avec } k = 1,\ldots, q.
+%  \] 
+%  \item On initiale $u_h$ avec la première colonne de $Y^{h-1}$,
+%  \[
+%  u_h = Y^{h-1}_{\cdot 1}.
+%  \]
+%  \item On effectue une régression des moindres carrés ordinaires de $X^{h-1}_{\cdot j}$ sur $u_h$ qui passe par l'origine. 
+%  La pente de cette droite de régression est déterminée par
+%  \[
+%  w_{hj} = \frac{X^{h-1'}_{\cdot j} u_h}{u_h'u_h}.
+%  \]
+%  On pose $w_h = (w_{h1}, \ldots, w_{hp})'$.
+%  \item On effectue une régression des moindres carrés ordinaires de $X^{h-1}_{i \cdot} = X_{i\cdot} - \sum_{\ell=1}^{h-1}t_{\ell i}p_{\ell}$ sur $w_h$ qui passe par l'origine. 
+%  La pente de cette droite de régression est déterminée par
+%  \[
+%  t_{hi} = \frac{X^{h-1'}_{i\cdot} w_h}{w_h'w_h}.
+%  \]
+%  On pose $t_h = (t_{h1}, \ldots, t_{hn})'$.
+%  \item On réalise ensuite une régression de $Y^{h-1}_{\cdot k}$ sur $t_h$.
+%  La pente de la droite de régression des moindres carrés qui passe par l'origine est donnée par
+%  \[
+%  c_{hk} = \frac{Y^{h-1'}_{\cdot k} t_k}{t_k't_k}.
+%  \]
+%  On pose $c_h = (c_{h1}, \ldots, c_{hq})'$.
+%  \item On met à jour notre vecteur $u_h$ en effectuant une régression de $Y^{h-1}_{i \cdot} = Y_{i\cdot} - \sum_{\ell=1}^{h-1}t_{\ell i}c_{\ell}$ sur $c_h$.
+%  La pente de la droite de régression passant par l'origine nous donne 
+%  \[
+%  u_{hi} = \frac{Y^{h-1'}_{i \cdot} c_h}{c_h'c_h}.
+%  \]
+%  On obtient ainsi notre nouveau vecteur $u_h = (u_{h1}, \ldots, u_{hn})'$.
+%  \item On réitère les étapes 3 à 6 jusqu'à ce que le vecteur $w_h$ ait convergé.
+%  \item Enfin, la pente de la droite de régression des moindres carrés de $X^{h-1}_{\cdot j}$ sur $t_h$ qui passe par l'origine nous donne les coefficients $p_{hj}$.
+%  Ils sont définis par
+%  \[
+%  p_{hj} = \frac{X^{h-1'}_{\cdot j} t_h}{t_h't_h}.
+%  \]
+%  On en déduit le vecteur $p_h = (p_{h1}, \ldots, p_{hp})'.$
+%  \end{enumerate}
+% 
+% En plus du formalisme, \citet{tenenhaus} nous donne quelques propriétés sur les différents vecteurs :
+% \begin{align}
+% %  t_h't_{\ell} &= 0  &\text{si $\ell \neq h$,} \\
+%  w_h'p_h &= 1,  \\
+% %  w_h'X_{\cdot \ell}' &= 0 &\text{pour tout $(h, \ell)$,}\\
+%  w_h'p_{\ell} &= 0 &\text{si $\ell \neq h$,}\\
+%  w_h'w_{\ell} &= 0 &\text{si $\ell \neq h$,}\\
+% %  t_h'X_{\cdot \ell} &= 0 &\text{pour tout $(h, \ell)$,}\\
+% %  X^{h} &= X\prod_{j=1}^h\left( I - w_jp_j' \right) &\text{pour $h \geq 1$,}\\
+%  t_h &= X'w_h^* &\text{avec $w_h^* = w_h (p_h'w_h)^{-1}$.} \label{txw}
+% \end{align}
+% Ces propriétés s'avèrent utiles pour exprimer $Y$ en fonction des composantes $t_h$, et donc \emph{a fortiori} en fonction de $X$.
+% Admettons que le nombre de composantes retenues soit $H$.
+% Par définition des coefficients $c_h$, on peut écrire 
+% \[
+% Y = t_1c_1' + \cdots + t_Hc_H' + Y^{H},
+% \]
+% où $Y^{H}$ représente les résidus de $Y$, \emph{i.e.} la part de $Y$ qui n'est pas prédite par les composantes $t_1,\ldots,t_H.$
+% Il peut être utile d'alléger l'écriture en posant $T_H = [t_1 | \cdots | t_H]$. 
+% On définit $C_H$, $P_H$, $W_H$ et $W_H^*$ de la même manière.
+% Ainsi,
+% \begin{align*}
+%  Y &= T_HC_H' + Y^H\\
+%  &= XW_H^*C_H' + Y^H & \text{en utilisant la propriété~\ref{txw},}\\
+%  &= XW_H\left( P_H'W_H \right)^{-1}C_H' + Y^H
+% \end{align*}
+% On en déduit $B = W_H\left( P_H'W_H \right)^{-1}C_H'$ correspondant aux coefficients de la régression PLS2 de $Y$ sur $X$ effectué avec $H$ composantes.
+% Ce qui donne
+% \begin{align*}
+% Y_{\cdot k} &\simeq c_{1k}t_1 + \cdots + c_{Hk}t_H\\
+% &\simeq \left( c_{1k}w_{11}^* + \cdots + c_{Hk}w_{H1}^* \right)X_{\cdot 1} + \cdots + \left( c_{1k}w_{1p}^* + \cdots + c_{Hk}w_{Hp}^* \right)X_{\cdot p}\\
+% &\simeq b_{k1}X_{\cdot 1} + \cdots + b_{kp}X_{\cdot p}.
+% \end{align*}
+% Les variables de $X$ étant centrées-réduites, cela signifie que plus le coefficient $b_{kj}$ sera élevé, plus le paramètre $j$ sera déterminant dans la valeur du critère $k$.
+% 
+% 
+% 
+% 
+% 
+% 
 
 
 
