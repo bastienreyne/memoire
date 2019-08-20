@@ -132,7 +132,7 @@ Notre modèle possède moins de 20 paramètres et s'exécute en moins d'une minu
 
 Le fonctionnement de cette méthode est relativement intuitif.
 On considère que la sortie de notre modèle $Y$ peut s'exprimer comme une fonction des entrées de notre modèle $X,$ c'est-à-dire $Y = f(X)$.
-Comme $X = \left( X_1, \ldots, X_n \right)$ peut prendre un nombre important de valeurs possibles, il en résulte qu'il y a \emph{a priori} un nombre important de résultats possibles pour $Y.$
+Comme $X = \left( X_1, \ldots, X_p \right)$ peut prendre un nombre important de valeurs possibles, il en résulte qu'il y a \emph{a priori} un nombre important de résultats possibles pour $Y.$
 % L'objectif est alors de décomposer ces résultats possibles --- cette variance qu'admet $Y$ --- en fonction de chaque entrée du modèle $X_i$.
 L'objectif est alors de déterminer quelles entrées du modèle $X_i$ induisent le plus de changements dans ces résultats possibles --- dans cette variance qu'admet $Y.$
 À cette fin, on utilise les indices principaux de Sobol définis par
@@ -147,7 +147,7 @@ Il faut pour ça utiliser les indices totaux de Sobol définis par
 \[
 S^T_i = 1 - \frac{\textbf{Var}\!\left( \mathbf{E}\!\left[Y|X_{\sim i}\right] \right)}{\textbf{Var}\!\left( Y \right)},
 \]
-où $X_{\sim i} = \left(X_1, \ldots, X_{i-1}, X_{i+1}, \ldots, X_n \right)$.
+où $X_{\sim i} = \left(X_1, \ldots, X_{i-1}, X_{i+1}, \ldots, X_p \right)$.
 L'indice $S^T_i$ ainsi défini permet lui de prendre en compte l'impact du paramètre $X_i$ et de ses interactions sur la variance de $Y$.
 À noter que l'interaction entre $X_i$ et $X_j$ est à la fois prise en compte par $S^T_i$ et $S^T_j$.
 C'est pour cette raison qu'il est souvent pertinent d'interpréter les indices principaux et les indices totaux conjointement.
@@ -242,19 +242,19 @@ En effet, parmi les solutions possibles, aucune n'est objectivement meilleure qu
 Il en découle que le choix sera forcément arbitraire.
 
 Plusieurs approches sont possibles.
-On peut par exemple choisir au hasard un nombre restreint de solutions possibles, les tester puis sélectionner celle qui semble la plus pertinente.
-On peut aussi sélectionner la solution qui minimise une norme sur nos trois critères, en estimant qu'elle représente un bon compromis entre les différents critères.
+On peut par exemple choisir au hasard un nombre restreint de jeux de paramètres possibles, les tester puis sélectionner celui qui semble le plus pertinent.
+On peut aussi sélectionner le jeu de paramètre qui minimise une norme sur nos trois critères, en estimant qu'il représente un bon compromis entre les différents critères.
 
 On préférera une autre approche. 
-Puisque NSGA-II essaye de renvoyer des solutions couvrant au maximum le front de Pareto, cela implique que certaines solutions seront proches en termes de valeurs pour nos paramètres.
+Puisque NSGA-II essaye de renvoyer des solutions couvrant au maximum le front de Pareto, cela implique que certains de nos jeux de paramètres auront des valeurs proches.
 Et qu'elles renverront donc des dynamiques similaires.
 Il peut être donc pertinent d'effectuer une classification non-supervisée de nos solutions afin de recenser les différentes solutions-types.
 Pour ce faire, on peut effectuer une classification ascendante hiérarchique (CAH).
 
 Le principe est le suivant.
-On traduit nos solutions centrées -- réduites dans un espace métrique. On choisira $\mathbf{R}^p$ muni de la distance euclidienne.
+On traduit nos jeux de paramètres centrés -- réduits dans un espace métrique. On choisira $\mathbf{R}^p$ muni de la distance euclidienne.
 % Plus deux solutions seront proches du point de vue de la distance euclidienne, plus elles seront semblables et appartiendront \emph{a priori} à la même classe de solutions.
-On cherche à rassembler les différentes solutions en différentes classes.
+On cherche à rassembler les différents jeux de paramètres en différentes classes.
 Les classes se doivent de contenir des individus aussi proches que possible (\emph{i.e.} la distance euclidienne entre un individu de la classe et l'individu moyen de la classe doit être petite), et être aussi différentes des autres classes que possible (\emph{i.e.} la distance entre l'individu moyen de la classe et l'individu moyen de la classe la plus proche doit être grande).
 D'un point de vue formel, cela peut s'exprimer par la décomposition de l'inertie totale en inertie externe des classes et en inertie interne des classes.
 Cette décomposition est donnée par

@@ -109,11 +109,16 @@ Il faut cependant noter que l'on a
 \]
 où $\mu_{\text{sol}}^1$ correspond à la probabilité de survie d'une larve à la modalité de couverture du sol lorsqu'elle s'enfouit dans le sol et $\mu_{\text{sol}}^2$ désigne la probabilité de survie à la modalité de couverture du sol d'une femelle qui émerge du sol.
 Cette distinction est nécessaire car les femelles qui sortent de diapause ne sont impactées par la modalité de couverture du sol qu'à la sortie des femelles (les larves étant entrées dans le sol avant la mise en place du dispositif).
+On posera néanmoins, par souci de simplicité, $\mu_{\text{sol}}^1 = \mu_{\text{sol}}^2$.
 Le nombre de femelles qui sortent de diapause est donné par 
 \[
 F_{t, i}^{\text{diap}} = D_{t} \times \frac{1}{1 + \mathit{SR}} \times \mu^{2}_{\text{sol}},
 \]
 où $D_{t}$ est le nombre de larves en diapause des années précédentes qui sort au jour $t$.
+Le stock total de larves en diapause est donné par
+\[
+\texttt{stock} = \sum_t D_t.
+\]
 
 
 %% SCHÉMA
@@ -208,7 +213,7 @@ $p_{\text{m}}$ & Paramètre régulant l'intensité des échanges entre sous-parc
 $\mu_{\text{sol}}^1$ & Probabilité de survie des larves lorsqu'elles s'enfouissent dans le sol à la modalité de couverture du sol & Calibration\\
 $\mu_{\text{sol}}^2$ & Probabilité de survie des femelles qui émergent (de pupaison ou de diapause) la modalité de couverture du sol & Calibration\\
 $k$ & Paramètre quantifiant le nombre de femelles que peut acceuillir une inflorescence chaque jour & Calibration\\
-$D_t$ & Nombre d'individus entrés en diapause les années précédentes qui émergent l'année considérée & Calibration  \\
+\texttt{stock} & Nombre d'individus entrés en diapause les années précédentes qui émergent l'année considérée & Calibration  \\
 $E_0$ & Nombre maximal d'œufs pondus par une femelle & $\sim\!150$ \citep{paul}\\
 $\mu_{\ell}$ & Probabilité de survie des œufs et des larves & $\sim\!0.04$ \citep{paul}\\
 $\mathit{SR}$ & \textit{Sex-ratio} & 0.5 \citep{paul}\\
