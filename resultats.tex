@@ -1,10 +1,13 @@
 \chapter{Mise en œuvre et résultats} 
 
-\lettrine{M}{aintenant} que le modèle est posé et que l'on sait quelles méthodes utiliser pour la calibration et le choix des solutions, on peut procéder.
+\lettrine{M}{aintenant} que le modèle est posé et que l'on sait quelles méthodes utiliser pour la calibration et le choix des solutions, on peut calibrer le modèle et présenter quelques solutions.
+
+
+\subsubsection{Analyse de sensibilité}
 
 La première étape à effectuer est l'analyse de sensibilité.
 Il faut cependant au préalable définir les intervalles dans lesquels évoluent nos paramètres.
-Si pour certains paramètres, les intervalles semblent naturels à choisir comme l'intervalle $[0; 1]$ pour les probabilités, le choix d'intervalles pour certains paramètres comme $\gamma$ s'avère plus hasardeux.
+Si pour certains paramètres, les intervalles semblent naturels à choisir comme l'intervalle $[0; 1]$ pour les probabilités, le choix d'intervalles pour certains paramètres comme $\gamma$ s'avère plus délicat.
 Procédons paramètre par paramètre.
 
 En premier lieu, le paramètre $\gamma$ qui, rappelons-le, correspond au coefficient de proportionnalité sur les inflorescences vivantes qui permet de déterminer le nombre de femelles exogènes arrivant dans chaque sous-parcelle à chaque date.
@@ -16,8 +19,8 @@ Ensuite, par définition du paramètre $p_{\text{m}}$ (qui régule les échanges
 De la même manière, $\mu_{\text{ER}}$ et $\mu_{\text{EH}}$ désignent les probabilités de survie aux modalités de couverture du sol ER et EH.
 Leurs intervalles seront donc aussi $[0;1]$.
 
-Le paramètre $k$ relatif à la disponibilité en ressources gère le nombre d'attaques de cécidomyies que peut subir une attaque chaque jour.
-Une inflorescence ne peut pas supporter trop d'attaques pour qu'elle ait une durée de vie qui ne soit pas extrêmement courte. On fixera le seuil supérieur à 2.
+Le paramètre $k$ relatif à la disponibilité en ressources gère le nombre d'attaques de cécidomyies que peut subir une inflorescence chaque jour.
+Une inflorescence ne peut pas supporter trop d'attaques pour qu'elle ait une durée de vie qui ne soit pas extrêmement courte. On fixera le seuil supérieur à 10 attaques par jour.
 On sait aussi que quand l'inflorescence est jeune, elle particulièrement sensible aux attaques.
 On fixera le seuil inférieur à 0.01.
 
@@ -36,37 +39,66 @@ Les intervalles étant définis, on peut maintenant faire l'analyse de sensibili
  \label{fig:sa}
 \end{figure}
 
-On s'aperçoit que le paramètre apportant le plus de variance à la sortie de notre modèle (effet principal) est $E_0\mu_\ell$, et ce pour chacun des trois sous-parcelles.
-Viennent ensuite les probabilités de survie à la modalité de couverture du sol.
-Sans surprise, le paramètre $\mu_{\text{EH}}$ apporte beaucoup de variance à la sous-parcelle avec la modalité de couverture de sol correspondante.
-De façon moins intuitive, ce paramètre apporte aussi beaucoup de variance à la sous-parcelle avec un enherbement haut.
-Il y apporte même plus de variance que le paramètre $\mu_{\text{EH}}$, bien que ce dernier en apporte aussi une part importante.
-Concernant la sous-parcelle avec un paillage synthétique, les probabilités de survie aux modalités de couverture du sol apporte aussi de la variance, avec un avantage pour $\mu_{\text{EH}}$.
-À noter que le paramètre $\gamma$ n'est pas en reste non plus, induisant une part non-négligeable de variance sur chacune des trois-sous-parcelles.
-Les paramètres $p_{\text{m}}, k$ et \texttt{stock} n'apportent en eux-mêmes que peu de variance.
+On obtient ainsi les effets principaux et les effets totaux de Sobol pour chaque sous-parcelle.
 
-On remarque également que les paramètres qui apportent le plus de variance sont aussi ceux dont les interactions induisent le plus de variance. (La variance apportée par les interactions d'un paramètre correspond à la différence entre l'effet total et l'effet principal).
+Pour l'enherbement ras, le paramètre qui induit le plus de variance (effet principal) est $E_0\mu_\ell$ qui donne le nombre d'œufs arrivant au troisième stade de développement larvaire.
+Sans surprise le probabilité de survie à la modalité de couverture du sol ER apporte aussi beaucoup de variance à cette sous-parcelle.
+Ensuite, l'apport en variance du paramètre $\gamma$ n'est pas négligeable non plus.
+En revanche, les quatre autres paramètres n'apportent en eux-même que peu de variance relativement aux trois autres nommés ci-dessus.
+On remarque également que les paramètres qui apportent le plus de variance sont aussi ceux dont les interactions induisent le plus de variance.
+(La variance apportée par les interactions d'un paramètre correspond à la différence entre l'effet total et l'effet principal).
 
-Certains de ces résultats ne sont pas surprenants outre-mesure.
+Pour le paillage synthétique, c'est aussi $E_0\mu_\ell$ qui apporte le plus de variance.
+Viennent ensuite $\mu_{\text{EH}}, \gamma$ et $\mu_{\text{ER}}$.
+Les paramètres $p_{\text{m}}, k$ et \texttt{stock} n'apportent pas de variance.
+Il est intéressant de noter que la probabilité de survie à la modalité de couverture du sol de la sous-parcelle EH a plus d'impact que celle de la sous-parcelle ER.
+Ici aussi, ce sont les paramètres qui apportent le plus de variance qui ont le plus d'interactions.
+
+Pour l'enherbement haut, c'est la probabilité de survie à la modalité de couverture du sol ER $\mu_{\text{ER}}$ qui apporte le plus de variance, ce qui est assez peu intuitif.
+Il est suivi de près par deux autres paramètres : $\mu_{\text{EH}}$ et $E_0\mu_{\ell}$.
+La part de variance apportée par le paramètre $\gamma$ n'est pas négligeable.
+Celle apportée par $p_{\text{m}}, k$ et \texttt{stock} est négligeable.
+Et une fois encore, ce sont les paramètres qui apportent le plus de variance qui ont le plus d'interactions.
+% On s'aperçoit que le paramètre apportant le plus de variance à la sortie de notre modèle (effet principal) est $E_0\mu_\ell$, et ce pour chacune des trois sous-parcelles.
+% Viennent ensuite les probabilités de survie à la modalité de couverture du sol.
+% Sans surprise, le paramètre $\mu_{\text{EH}}$ apporte beaucoup de variance à la sous-parcelle avec la modalité de couverture de sol correspondante.
+% De façon moins intuitive, ce paramètre apporte aussi beaucoup de variance à la sous-parcelle avec un enherbement haut.
+% Il y apporte même plus de variance que le paramètre $\mu_{\text{EH}}$, bien que ce dernier en apporte aussi une part importante.
+% Concernant la sous-parcelle avec un paillage synthétique, les probabilités de survie aux modalités de couverture du sol apporte aussi de la variance, avec un avantage pour $\mu_{\text{EH}}$.
+% À noter que le paramètre $\gamma$ n'est pas en reste non plus, induisant une part non-négligeable de variance sur chacune des trois-sous-parcelles.
+% Les paramètres $p_{\text{m}}, k$ et \texttt{stock} n'apportent en eux-mêmes que peu de variance.
+% 
+% On remarque également que les paramètres qui apportent le plus de variance sont aussi ceux dont les interactions induisent le plus de variance. (La variance apportée par les interactions d'un paramètre correspond à la différence entre l'effet total et l'effet principal).
+
+Certains de ces résultats ne sont pas surprenants.
 Il faut notamment se rappeler que le modèle est évalué sur l'estimation du nombre de larves, et que $E_0\mu_\ell$ intervient dans l'équation du modèle donnant le nombre de larves.
 Ainsi, ce paramètre seul --- à valeur entre 1 et 11 --- peut facilement doubler le nombre de larves en fonction de sa valeur. Et induit donc naturellement une forte variance dans le modèle.
 Et ce paramètre n'est interprétable que si l'on considère la valeur des autres paramètres.
 Car un nombre élevé d'œufs pondus qui survivent peut être compensé par une faible probabilité de survie aux modalités de couverture de sol et une faible arrivée d'individus exogènes --- et vice-versa.
 Ce qui peut expliquer ses fortes interactions.
-Ce qu'il est bon de retenir de cette analyse de sensibilité concerne plutôt l'impact des probabilités de survie aux modalités de couverture du sol en fonction de chaque sous-parcelles, qui ne respecte pas ce que l'on pourrait s'imaginer \emph{a priori}.
-Il est également bon de retenir que trois de paramètres ($p_{\text{m}}, k$ et \texttt{stock}) n'ont qu'un impact très limité --- comparativement aux autres --- sur la sortie du modèle.
+Cette analyse de sensibilité montre surtout l'impact des probabilités de survie aux modalités de couverture du sol en fonction de chaque sous-parcelles, qui ne respecte pas ce que l'on pourrait s'imaginer \emph{a priori}.
+On retiendra également que trois de nos paramètres ($p_{\text{m}}, k$ et \texttt{stock}) n'ont qu'un impact très limité --- comparativement aux autres --- sur la sortie du modèle.
+
+\subsection{Calibration}
 
 Sachant cela, on peut utiliser NSGA-II pour obtenir un sous-ensemble du front de Pareto contenant des jeux de paramètres produisant des solutions non-dominées.
 L'algorithme est cependant stochastique, il ne renvoie jamais exactement deux fois les mêmes résultats.
 Pour pallier cet aspect, on exécute trente fois la fonction \texttt{nsga2} \citep{nsga} (avec une taille de population de 200, et 200 générations).
 Cela nous donne ainsi 6000 solutions. Mais parmi ces 6000 solutions certaines sont peut-être dominées par d'autres solutions provenant d'une exécution de \texttt{nsga2} différente.
 On ne récupère alors que les solutions non-dominées (et les jeux de paramètres correspondants) grâce à la fonction \texttt{is\textunderscore dominated} \citep{emoa}.
-On obtient ainsi 842 jeux de paramètres produisant autant de solutions non-dominées.
+On obtient ainsi 842 jeux de paramètres produisant autant de solutions non-dominées, parmi lesquelles on peut sélectionner des solutions.
+
+\subsection{Choix de solutions}
 
 On peut maintenant essayer de repérer différentes solutions--types reproduisant les quantités de larves observées.
-On utilisera la fonction \texttt{hclust} \citep{R}.
+On effectue une CAH avec l'indice de Ward en utilisant la fonction \texttt{hclust} \citep{R}.
+
 Il faut dans un premier temps choisir un nombre de classes.
 À cette fin, on regarde l'inertie intra-classes en fonction du nombre de classes (voir figure~\ref{fig:caha}).
+Dans une optique de classification «classique», choisir 2, 3, 6 ou 8 classes pourrait s'avérer pertinent.
+(Ces nombres de classes produisant une minimisation relativement importante de l'inertie intra-classes.)
+Nous préférons cependant ne pas risquer de passer à côté d'une catégorie de solution potentiellement intéressante.
+Nous choisirons 16 classes.
 
 \begin{figure}[ht]
  \centering
@@ -75,16 +107,21 @@ Il faut dans un premier temps choisir un nombre de classes.
  \label{fig:caha}
 \end{figure}
 
-Dans une optique de classification «classique», choisir 2, 3, 6 ou 8 classes pourrait s'avérer pertinent.
-(Ces nombres de classes produisant une minimisation relativement importante de l'inertie intra-classes.)
-Nous préférons cependant ne pas risquer de passer à côté d'une catégorie de solution potentiellement intéressante.
-Nous choisirons 16 classes.
 
-Parmi les 16 classes, on distingue trois principales catégories de solutions.
-Les voicis :
+Parmi les 16 classes, trois solutions--types se distinguent.
+Les solutions sont visibles sur la figure~\ref{fig:A1}.
+On peut voir sur la figure la décomposition du nombre de larves en fonction de la provenance des femelles qui ont pondus les œufs.
+Par exemple, si l'aire sous la courbe est essentiellement rouge, alors cela voudrait dire qu'il y a une forte proportion de femelles exogènes.
+Et si elle est principalement verte, cela veut dire que la majorité des femelles qui pondent sont des femelles qui ont émergées dans une autre sous-parcelle. 
+Cela peut questionner la pertinence biologique de la solution proposée, indépendamment de la qualité d'ajustement de la dynamique.
+
+On détaille les trois solutions--types :
 \begin{itemize}
- \item \textbf{Scénario 1 :} On observe des dynamiques (figure~\ref{fig:A1}) reproduisant grossièrement les dynamiques observées. 
- On observe une forte proportion de femelles exogènes, en particulier sur les sous-parcelles PS et EH, ce qui peut sembler invraisemblable.
+ \item \textbf{Solution--type 1 :} 
+ Pour les sous-parcelles PS et EH, les dynamiques simulées ne captent que très grossièrement les dynamiques observées.
+ La dynamique simulée pour la sous-parcelle ER est mauvaise.
+ De plus, on observe une quantité non-négligeable de larves pondus par des femelles exogènes (aire rouge), ce qui d'un point de vue biologique n'est très crédible.
+ 
  Les paramètres associées à ces trois dynamiques sont :
  \begin{center}
 \begin{tabular}{lllllll}
@@ -92,12 +129,14 @@ $\gamma$ & $p_{\text{m}}$ & $\mu_{\text{ER}}$ & $\mu_{\text{EH}}$ & $k$ & \textt
 0.08 & 0.494 & 0.976 & 0.046 & 1.928 & 5600 & 3.084
  \end{tabular}
  \end{center}
-Les valeurs confirment le ressenti que l'on pouvait avoir. 
-À savoir qu'il y a peu d'individus endogènes (les seuls présents sont issus de la sous-parcelle avec un enherbement ras).
-\item \textbf{Scénario 2 :} C'est une solution sans femelles exogènes.
-On remarque cependant que là encore, les individus endogènes ne proviennent que de la sous-parcelle ER.
-Il en résulte que la simulation sur cette sous-parcelle est mauvaise. 
-Il semble qu'elle ne sert uniquement de fournisseur de ravageurs aux deux autres parcelles, dont les dynamiques sont plus ou moins bien captées par le modèle.
+L'abscence d'individus qui émergent de la sous-parcelle EH s'explique par $\mu_{\text{EH}}$ qui est fixé à 0.046, ce qui veut dire que 95\% des larves meurent en essayant de s'enfouir dans la sous-parcelle ainsi que 95\% des femelles issues de pupaison ou de diapause qui essayent d'en émerger.
+À la différence de la sous-parcelle ER où il n'y a pratiquement aucune mortalité induite par l'enherbement ras ($\mu_{\text{ER}} = 0.976$).
+La valeur 0.8 attribuée à $\gamma$ est élevée (chose qui se confirmera empiriquement par les simulations qui suivront et qui peut déjà se voir sur la figure~\ref{fig:A1}).
+
+\item \textbf{Solution--type 2 :} Contrairement à la solution précédente qui avait trop d'individus exogènes, cette solution n'en a pas du tout.
+Cependant, la qualité d'ajustement des dynamiques est pareille que précedemment : grossièrement captée pour les sous-parcelles PS et EH et mauvaise pour la sous-parcelle ER.
+On remarque également que les dynamiques des sous-parcelles PS et EH se composent uniquement de larves provenant d'œufs pondus par des femelles issues de la sous-parcelle ER.
+
 Les paramètres sont :
  \begin{center}
 \begin{tabular}{lllllll}
@@ -105,11 +144,13 @@ $\gamma$ & $p_{\text{m}}$ & $\mu_{\text{ER}}$ & $\mu_{\text{EH}}$ & $k$ & \textt
 0 & 0.968 & 1 & 0.025 & 0.1 & 14483 & 6.26
  \end{tabular}
  \end{center}
-Ce jeu de paramètres confirme la forte proportion d'individus exogènes dans la sous-parcelle ER avec une probabilité de de survie à ladite modalité égale à 1 et un gros stock d'individus en diapause.
-Son rôle de fournisseur est confirmé avec un $p_{\text{m}}$ proche de 1.
-Si l'absence totale d'individus exogènes est probablement erronée, ce qui reste le plus invraisemblable est cette absence d'individus qui émergent de la sous-parcelle avec un enherbement haut.
-\item \textbf{Scénario 3 :} Il y a ici des individus exogènes dans la sous-parcelle EH.
-Il faut cependant reconnaître que les dynamiques sont assez mal captées.
+ Ici aussi, il y a une abscence totale d'individus qui émergent de la sous-parcelle avec un enherbement haut ($\mu_{\text{EH}} = 0.025$)
+ L'absence d'individus exogènes se compensent par un nombre d'œufs pondus plus élevé que précedemment (6.26 contre 3.08) et un stock de larves diapausante significatif (\texttt{stock} $=14483$).
+ 
+\item \textbf{Solution--type 3 :}
+Contrairement aux deux premières solutions, il y a ici des femelles qui émergent de la sous-parcelle EH.
+Il faut cependant reconnaître que les dynamiques sont très mal captées.
+
 Les paramètres sont :
  \begin{center}
 \begin{tabular}{lllllll}
@@ -117,31 +158,197 @@ $\gamma$ & $p_{\text{m}}$ & $\mu_{\text{ER}}$ & $\mu_{\text{EH}}$ & $k$ & \textt
 0.026 & 0.93 & 0.565 & 0.647 & 0.174 & 13823 & 4.818
  \end{tabular}
  \end{center}
+On observe que l'émergence d'individus dans la sous-parcelle EH ($\mu_{\text{EH}} = 0.647$ contre 0 précedemment) a entrainé une baisse d'émergence des individus dans la sous-parcelle ER ($\mu_{\text{ER}} = 0.565$ contre 0.97 et 1 pour les deux solutions précédentes)
+ 
 \end{itemize}
 
-Ces trois scnénarios semblent tous montrer que le modèle tel qui est n'est pas suffisament complet pour capter le phénomène observé.
-Il fait soit appel à trop d'exogènes, soit il n'y a aucun individus qui émergnent de la sous-parcelle EH, soit les deux.
-Et lorsqu'il y a des indivdus qui émergent de la sous-parcelle EH, le modèle ne parvient pas à recréer les dynamiques observées.
-
-Cela peut s'expliquer par l'incapacité pour le modèle d'arrêter la reproduction des femelles et donc de stopper la dynamique en fin de saison induisant la baisse du nombre de larves observé.
 
 
 \begin{figure}
  \centering
- \textbf{Scénario 1}
+ \textbf{Solution--type 1}
  
- \epsfig{file = plots/A1.eps, scale = 0.55}
+ \epsfig{file = plots/A1.eps, scale = 0.52}
  
- \textbf{Scénario 2}
+ \textbf{Solution--type 2}
  
- \epsfig{file = plots/A3.eps, scale = 0.55}
+ \epsfig{file = plots/A2.eps, scale = 0.52}
  
- \textbf{Scénario 3}
+ \textbf{Solution--type 3}
  
- \epsfig{file = plots/A2.eps, scale = 0.55}
+ \epsfig{file = plots/A3.eps, scale = 0.52}
  \caption{Dynamiques observées et simulées pour chacun des trois scénarios. La décomposition indiquant la provenance des femelles qui ont pondus les œufs est disponible pour les dynamiques simulées.}
  \label{fig:A1}
 \end{figure}
+
+Ces trois scénarios semblent tous montrer que le modèle actuel n'est pas suffisament complet pour capter le phénomène observé.
+Il fait soit appel à trop d'exogènes, soit il n'y a aucun individus qui émergnent de la sous-parcelle EH, soit les deux.
+Et lorsqu'il y a des indivdus qui émergent de la sous-parcelle EH, le modèle ne parvient pas à recréer les dynamiques observées.
+
+Cela peut s'expliquer par l'incapacité pour le modèle d'arrêter la reproduction des femelles et donc de stopper la dynamique en fin de saison induisant la baisse du nombre de larves observé.
+Il y a dans le modèle actuel un problème de décroissance en fin de saison.
+
+Le modèle peut néanmoins être utilisé pour tester des hypothèses qui viendraient compléter ou remplacer les hypothèses initiales.
+Et si en testant une de ces hypothèses, on trouve une solution qui permet d'ajuster convenablement les dynamiques, on pourra alors essayer de valider la solution sur le verger n\textdegree2.
+
+
+ 
+ \clearpage
+
+\section{Prise en compte de la température}
+
+Si l'on sait déjà que la température a un impact sur la sortie des individus en diapause, \citet{pauldiap} indique qu'elle a également un impact sur la probabilité d'entrer en pupaison.
+Intégrer cet aspect au modèle pourrait potentiellement permettre de réduire la reproduction de femelles endogènes en fin de saison, si la probabilité d'entrer en pupaison chute significativement.
+
+On décide alors d'exprimer la probabilité d'entrer en pupaison et d'y survivre en fonction de la température.
+L'annexe~\ref{chap:pupaison} détaille la méthode utilisée.
+On se retrouve avec $p_{\text{p}}$ qui varie chaque jour et qui prend en compte la moyenne des températures quotidiennes sur quinze jours (de sept jours avant à sept jours après l'enfouissement).
+La différence produite avec une probabilité constante fixée à 0.77 est visible sur la figure~\ref{fig:pupaison}.
+
+\begin{figure}[ht]
+ \centering
+ \epsfig{file = plots/pupaison.eps, scale = 0.55}
+ \caption{Différence entre la probabilité d'entrer en pupaison et d'y survivre constante (égale à 0.77) et celle qui est fonction de la température moyenne sur la quinzaine.}
+ \label{fig:pupaison}
+\end{figure}
+
+On remarque peu de différences, c'est d'autant plus vrai en fin de saison où les deux probabilités sont très proches.
+Ce n'est donc pas l'effet de la température sur la phase de pupaison qui peut expliquer la diminution du nombre de larves observé en fin de saison.
+
+On peut s'en convaincre en recalibrant le modèle avec cette nouvelle probabilité variable.
+On permet même au modèle «d'amplifier» la variabilité de la probabilité de pupaison en lui laissant le choix d'un certain coefficient $\varpi \in [1; 4]$ qui intervient comme suit :
+\[
+\widetilde p_{\text{p}} = \left( p_{\text{p}} - \overline{p_{\text{p}}} \right) \times \varpi + \overline{p_{\text{p}}},
+\]
+où $\widetilde p_{\text{p}}$ sera la probabilité d'entrer en pupaison et d'y survivre utilisée par le modèle.
+
+Après obtention des résultats, on retrouve nos trois scénarios déjà présent dans la première version du modèle (voir figure~\ref{fig:B}).
+On peut noter que la calibration ne renvoie pas de valeur de $\varpi$ supérieure à 1.5, montrant que des variations dans la probabilité de rentrer en pupaison n'aide pas à améliorer l'ajustement des dynamiques.
+
+\begin{figure}[h]
+ \centering
+ \textbf{Scénario 1}
+ 
+ \epsfig{file = plots/B1.eps, scale = 0.46}
+ 
+ \textbf{Scénario 2}
+ 
+ \epsfig{file = plots/B2.eps, scale = 0.46}
+ 
+ \textbf{Scénario 3}
+ 
+ \epsfig{file = plots/B3.eps, scale = 0.46}
+ \caption{Dynamiques observées et simulées pour chacun des trois scénarios. La décomposition indiquant la provenance des femelles qui ont pondus les œufs est disponible pour les dynamiques simulées.}
+ \label{fig:B}
+\end{figure}
+
+\clearpage
+\section{Contraintes liées aux ressources}
+
+Puisque la température n'explique pas le phénomène observé en fin de saison, on s'intéresse aux ressources.
+L'intérêt pour les ressources est motivé par le fait que, sur les figures~\ref{fig:larves} et~\ref{fig:larves2}, les dynamiques de larves semblent corrélées avec les dynamiques d'inflorescences vivantes.
+Les coefficients de corrélations de Spearman (du verger n\textdegree1) confirment plus ou moins cette intuition :
+\[
+\rho^{\text{ER}}\left( L_t, I_t  \right) =0.46,  \qquad \rho^{\text{PS}}\left( L_t, I_t  \right) =0.68, \qquad \rho^{\text{EH}}\left( L_t, I_t  \right) =0.76.
+\]
+On pourrait s'attendre à un décalage entre les dynamiques de larves et d'inflorescences, correspondant à la durée de développement qu'il faut entre la ponte et l'apparition du troisième stade larvaire.
+Pour expliquer cette absence de décalage, on émet une hypothèse.
+Une inflorescence n'est pas attractive pour une cécidomyie de son débourrement jusqu'à la fin de sa vie mais uniquement lors des premiers stades phénologiques de l'inflorescence.
+
+Afin de pouvoir tester cette hypothèse au sein de notre modèle, il faut être capable de simuler des dynamiques d'inflorescences attractives.
+Pour cela, on a besoin des débourrements des inflorescences (voir annexe~\ref{chap:deb}) ainsi que de la loi de mortalité des inflorescences.
+On suppose que la durée de vie d'une inflorescence suit une loi normale.
+Le \emph{dataset 1} contient les durées de vie effective des inflorescences.
+En fixant le risque de première espèce à $\alpha = 5\%$, un test de normalité de Shapiro--Wilk nous confirme la normalité ($p$-valeur de 0.05447).
+Ensuite, on observe une durée de vie effective moyenne de 29 jours (avec un écart-type de 14).
+
+Ces inflorescences \emph{attractives} peuvent alors se calculer en utilisant la formule
+\[
+I_{t}^{a} = B_t + \sum_{t = 1}^{d_A} B_{t-j} \times \left( 1 - F(j) \right), \qquad \text{ avec } B_{t} = 0 \text{ si } t \leq 0. 
+\]
+Ici, $B_t$ représente le nombre de débourrements à la date $t$, $d_A$ la durée d'attractivité et $F$ la fonction de répartition d'une $\mathcal{N}\left( 29; 14 \right)$.
+
+Nous ferons ici l'hypothèse que la durée d'attractivité est de seize jours ($d_A = 16$), ce qui correspond à la durée théorique des stades phénologiques C, D et E.
+La différence entre les inflorescences vivantes et attractives est visible sur la figure~\ref{fig:CDE}.
+
+\begin{figure}[ht]
+ \centering
+ \epsfig{file = plots/inflos_CDE.eps, scale = 0.53}
+ \caption{Différence entre les inflorescences vivantes et les inflorescences attractives.}
+ \label{fig:CDE}
+\end{figure}
+
+Les deux premiers scénarios correspondent à ceux trouvés précedemment.
+Les dynamiques sont visibles sur la figure~\ref{fig:C}.
+On observe une amélioration sur les sous-parcelles PS et EH, notamment en ce qui concerne la fin de dynamique en fin de saison.
+La parcelle ER est en revanche toujours aussi mal captée.
+\begin{figure}[ht]
+ \centering
+ 
+  \centering
+ \textbf{Scénario 1}
+ 
+ \epsfig{file = plots/C1.eps, scale = 0.46}
+ 
+ \textbf{Scénario 2}
+ 
+ \epsfig{file = plots/C2.eps, scale = 0.46}
+ 
+ \textbf{Scénario 3}
+ 
+ \epsfig{file = plots/C3.eps, scale = 0.46}
+ 
+ 
+ \caption{Dynamiques observées et simulées pour chacun des trois scénarios. La décomposition indiquant la provenance des femelles qui ont pondus les œufs est disponible pour les dynamiques simulées.}
+ \label{fig:C}
+\end{figure}
+
+
+On remarquera que la prédiction sur le troisième scénario (également présent sur la figure~\ref{fig:C}) est toujours aussi mauvaise.
+
+La prise en compte de l'attractivité des inflorescences ne permet toujours pas la baisse des dynamiques observées en fin de saison.
+
+\section{Introduction d'un paramètre de saisonnalité}
+
+Ce que l'on observe sur les dynamiques de larves, c'est qu'il semble y avoir une forte baisse de la population de larves qui s'amorce aux alentours du 15 septembre (sur le verger n\textdegree1).
+On émet l'hypothèse qu'un phénomène intervient à cette date.
+Ce phénomène non-observé caractériserait un changement de la conjoncture sur le verger et induirait une baisse du nombre de larves.
+
+Pour tester cette hypothèse, on introduit dans le donc un paramètre de saisonnalité $\xi \in [0;1]$ sur le nombre de femelles dans le verger à partir du 15 septembre.
+Concrètement, si le modèle décide de mettre une valeur éloignée de 1, cela signifie qu'à partir du 15 septembre que l'aspect ponte/reproduction du cycle de développement de la cécidomyie subit des perturbations qui entraînent une baisse du nombre de larves produites.
+
+Après calibration du modèle, un scénario se dégage des autres.
+Il est visible sur la figure~\ref{fig:D}.
+Les paramètres associés sont les suivants :
+\begin{center}
+\begin{tabular}{llllllll}
+$\gamma$ & $p_{\text{m}}$ & $\mu_{\text{ER}}$ & $\mu_{\text{EH}}$ & $k$ & \texttt{stock} & $E_0\mu_{\ell}$ & $\xi$\\
+0.021 & 0.105 & 0.938 & 0.916 & 1.992 & 516 & 6.018 & 0.004
+\end{tabular}
+\end{center}
+
+
+\begin{figure}[ht]
+ \centering
+ \epsfig{file = plots/D1.eps, scale = 0.59}
+ \caption{Dynamiques observées et simulées. La décomposition indiquant la provenance des femelles qui ont pondus les œufs est disponible pour les dynamiques simulées.}
+ \label{fig:D}
+\end{figure}
+
+
+Les dynamiques sont ici très bien captées pour les sous-parcelles PS et EH.
+La dynamique de la sous-parcelle ER est plutôt bien captée, surtout si l'on relativise vis à vis des des estimations précédentes qui ont toujours étés mauvaises.
+Les paramètres montrent (et le graphique aussi) qu'il y a principalement des femelles endogènes, ce qui est loin d'être invraisemblable.
+La principale critique que l'on puisse faire à cette estimation est d'avoir un paramètre $\xi$ fixé à 0.004, ce qui signifie l'impossibilité pour les femelles de pondre le moindre œuf passé le 15 septembre.
+Cela semble très exagéré.
+
+
+
+
+
+
+
+
 
 
 

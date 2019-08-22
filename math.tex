@@ -1,6 +1,6 @@
 \chapter{Calibration du modèle} 
 
-\lettrine{I}{l} est question ici de définir la méthodologie afin de calibrer les paramètres libres du modèle.
+\lettrine{O}{n} détaille dans ce chapitre la méthodologie utilisée pour calibrer les paramètres libres du modèle.
 On s'intéressera notamment à définir une fonction de coût, pour évaluer la qualité de la calibration.
 Dans cette optique, on essayera de calibrer les paramètres en utilisant uniquement les dynamiques du verger n\textdegree1 ; le deuxième servira à la validation.
 
@@ -21,25 +21,13 @@ Dans cette optique, on essayera de calibrer les paramètres en utilisant uniquem
 \section{Fonction de coût}
 
 Une étape importante pour la calibration du modèle est de définir une fonction de coût qui permet de mesurer la qualité de nos estimations.
-Pour ce faire, on utilisera une fonction permettant de comparer le nombre de larves estimées avec le nombre de larves observées. 
-Pour définir cette fonction, on pose :
-\begin{itemize}
- \item $m$, le nombre de jours entre la première observation et la dernière ;
- \item $n$, le nombre de relevés effectif;
- \item $t$, le nombre de jours passés depuis la première observation ;
- \item $t^j$, le nombre de jours entre la première observation et le $j^{\text{ème}}$ relevé.
-\end{itemize}
-(On a donc $t^1 = 0$ et $t^n = m$.)
+Pour ce faire, on utilisera une fonction permettant de comparer le nombre de larves estimées avec le nombre de larves observées.
 
-La fonction est alors définie par
-$$
-f(y, \hat y) = \frac{\sqrt{\frac{1}{n-1}\sum_{j=2}^n\left( y^*_j - \hat y^*_j \right)^2}}{\max(y^*) - \min(y^*)},
-$$
-où 
-$$y^*_j =  y_{t^j} \qquad \text{ et } \qquad \hat y^*_j = \frac{1}{t^j - t^{j-1}}\sum_{k=t^{j-1}}^{t^j} \hat y_k.$$
-La figure~\ref{fig:calib} illustre le fonctionnement de la fonction.
-Appliquer la fonction à $n-1$ valeurs (correspondant aux relevés sur le terrain) plutôt qu'à chacun des $m$ jours (correspondant à l'étendue des relevés) est motivé par le fait que les relevés ne furent pas fait à des intervalles de temps régulier.
-Ce faisant, on évite d'attribuer plus d'importance aux relevés qui ont eu un écart relativement important avec le relevé précédent.
+Il faut cependant noter qu'il n'y a que 20 relevés effectifs, et qu'ils ne furent pas fait à intervalles très réguliers.
+Si l'on appliquait notre fonction de coût à chacun des jours de la période considérée, on attribuerait plus d'importance aux relevés qui ont eu un écart relativement important avec le relevé précédent.
+Pour pallier ce problème, on comparera uniquement la moyenne des estimations correspondant à un relevé avec l'observation correspondante.
+Notre propos est illustré sur la figure~\ref{fig:calib}.
+% La comparaison se fera grâce à la fonction NRMSE (Normalized Root Mean Square Error).
 
 \begin{figure}[ht]
 \centering
@@ -105,6 +93,26 @@ Et pour chacune de ces périodes, on calcule la moyenne des valeurs estimées (l
 \label{fig:calib}
 \end{figure}
 
+Pour définir la fonction de coût, on pose :
+\begin{itemize}
+ \item $m$, le nombre de jours entre la première observation et la dernière ;
+ \item $n$, le nombre de relevés effectif;
+ \item $t$, le nombre de jours passés depuis la première observation ;
+ \item $t^j$, le nombre de jours entre la première observation et le $j^{\text{ème}}$ relevé.
+\end{itemize}
+(On a donc $t^1 = 0$ et $t^n = m$.)
+
+Si l'on note les observations $y$ et les estimations $\hat y$, notre fonction de coût peut s'écrire
+$$
+f(y, \hat y) = \frac{\sqrt{\frac{1}{n-1}\sum_{j=2}^n\left( y^*_j - \hat y^*_j \right)^2}}{\max_j(y^*_j) - \min_j(y^*_j)},
+$$
+où 
+$$y^*_j =  y_{t^j}, \qquad \text{ et } \qquad \hat y^*_j = \frac{1}{t^j - t^{j-1}}\sum_{k=t^{j-1}}^{t^j} \hat y_k.$$
+Concrètement $\hat y^*_j$ donne la moyenne des estimations correspondant à un relevé et $y^*_j$ donne la valeur observé associée.
+Appliquer la fonction à $n-1$ valeurs (correspondant aux relevés sur le terrain) plutôt qu'à chacun des $m$ jours (correspondant à l'étendue des relevés) de ne pas attribuer plus d'importance aux relevés qui ont eu un écart relativement important avec le relevé précédent.
+
+
+
 
 Par la suite, l'objectif sera de minimiser cette fonction pour chacune des trois sous-parcelles.
 
@@ -158,18 +166,18 @@ Une fois que l'on connaît la sensibilité du modèle aux différents paramètre
 \section{Algorithme d'optimisation}
 
 L'objectif de l'optimisation est de trouver les jeux de paramètres qui minimisent notre fonction de coût, ceux qui permettent d'ajuster au mieux les dynamiques de larves simulées aux dynamiques observées.
-Pour ce faire, on a besoin d'un algorithme d'optimisation.
-Et il y a du choix.
+Pour ce faire, un algorithme d'optimisation est nécessaire.
+
 
 On peut déjà noter que nous avons sept paramètres à calibrer, et qu'ils évoluent tous dans des intervalles (que l'on définira plus tard).
-Il apparaît évident que toutes les solutions ne pourront pas être testées.
-Une solution peut être d'utiliser un algorithme basé sur une méthode MCMC comme l'algorithme du recuit simulé.
+Il apparaît évident qu'un test de exhaustif de toutes les valeurs de paramètres est trop coûteux.
+Une approche peut être d'utiliser un algorithme basé sur une méthode MCMC comme l'algorithme du recuit simulé.
 Nous avons cependant trois dynamiques à ajuster (une pour chaque sous-parcelle), il faudrait alors minimiser la somme (ou la moyenne) des trois fonctions objectifs.
-Ou alors on peut directement utiliser un algorithme d'optimisation multicritères.
 
+Une alternative est d'utiliser un algorithme d'optimisation multicritères.
 Ces algorithmes ont l'avantage de pouvoir optimiser simultanément des objectifs qui ne sont pas toujours comparables --- à des échelles différentes, par exemple.
-Un des plus connus est sans conteste NSGA-II (Nondominated Sorting Genetic Algorithm II) \citep{deb}.
-C'est celui que l'on utilisera.
+Un des plus connus est sans conteste l'algorithme génétique NSGA-II (Nondominated Sorting Genetic Algorithm II) \citep{deb}.
+C'est celui que nous avons testé.
 
 C'est un algorithme qui ne renvoie pas une unique solution mais un ensemble de solutions. 
 Cet ensemble de solutions converge vers un sous-ensemble du front de Pareto.
@@ -178,45 +186,47 @@ Dans $P \subset \mathbf{R}^{p}$ ($p$ > 1), une solution $x^* = \left( x_1, \ldot
 \[
 \left\{ x \in P\ |\ \forall\ i \in \{1, \ldots, p\},\ x_i \succcurlyeq x_i^* \text{ et } \exists\ i \text{ tel que } x_i \succ x_i^* \right\} = \emptyset,
 \]
-où $\succcurlyeq$ et $\succ$ veulent respectivement dire «au moins aussi bien que» et «meilleur que». 
+où $\succcurlyeq$ et $\succ$ veulent respectivement dire «est préféré à» et «est strictement préféré à». 
 Dans notre cas, vu que l'on veut minimiser notre fonction de coût, $x^* \succcurlyeq x$ se traduira par $f(x^*) \leq f(x)$ et $x^* \succ x$ se traduira par $ f(x^*) < f(x)$, où la fonction $f$ représente la composée de notre modèle suivi de notre fonction de coût.
 En d'autres termes, $x$ est non-dominée signifie qu'il n'existe pas de solution $y$ qui soit strictement meilleure sur un des critères et au moins aussi bonne sur tous les autres critères.
 
 Le front de Pareto étant un sous-ensemble de $\mathbf{R}^{p}$, il n'est (\emph{a priori}) pas dénombrable.
 De ce fait, NSGA-II ne peut pas renvoyer le front tout entier mais seulement un sous-ensemble.
-C'est un algorithme itératif, les itérations seront appelées ici \emph{générations}.
-Et il faut plusieurs générations pour se retrouver avec des solutions non-dominées.
+C'est un algorithme itératif, et les itérations seront appelées ici \emph{générations}.
+C'est un algorithme convergent, plus il y a de générations, plus les solutions proposées sont proches du front de Pareto.
+En pratique, il ne renvoie donc pas un sous-ensemble du front de Pareto mais un ensemble de solutions se rapprochant d'un sous-ensemble du front de Pareto.
+
 À la génération $t$, l'algorithme effectue plusieurs opérations.
 \begin{enumerate}
  \item On possède un ensemble de solutions potentielles que l'on nommera \emph{population}.
  La taille de la population $N$ est fixée arbitrairement.
- \item À chaque solution de cette population $P_t$, on attribue une solution fille (on verra plus tard comment). 
+ \item À chaque solution de cette population $P_t$, on attribue une solution fille (on verra la suite comment). 
 \end{enumerate}
 
- Avec la population $P_t$ et les solutions filles associées $F_t$, cela forme un ensemble de solutions potentielles $S_t$ de taille $2N$. 
- On va alors sélectionner parmi ces solutions les $N$ solutions qui nous intéressent le plus.
+ Avec la population $P_t$ et les solutions filles associées $O_t$ (\emph{offspring} en anglais), cela forme un ensemble de solutions potentielles $S_t$ de taille $2N$. 
+ On va alors sélectionner parmi ces solutions les $N$ solutions les moins dominées possibles.
 \begin{enumerate}[resume]
  \item Pour ce faire, pour chaque solution potentielle $s\in S_t$ :
  \begin{itemize}
-  \item on calcule le nombre $n_s$ d'éléments de $S_t$ qui domine qui domine $s$ ;
-  \item on établit l'ensemble $D_s$ des autres solutions de $S_t$ qui sont dominées par la solution $s$.
+  \item on établit l'ensemble $D_s$ d'élément de $S_t$ qui sont dominées par $s$. On note $n_s$ son cardinal ;
+  \item on établit l'ensemble $E_s$ des autres solutions de $S_t$ qui sont dominées par la solution $s$.
  \end{itemize}
  \item On répartit alors nos solutions en plusieurs groupes, en plusieurs \emph{fronts}.
- Vont ainsi dans le premier front $F_1$ les solutions $s$ qui vérifient $n_s = 0$, qui ne sont donc pas dominées par d'autres solutions de $S_t$. 
- Dans le deuxième front $F_2$ se trouvent les solutions qui sont dominées uniquement par les solutions présentes dans $F_1$.
- (Autrement dit, les solutions qui se trouvent dans et uniquement dans $\bigcup_{s\in F_1} D_s$.)
- On continue de la même manière pour $F_3$ (qui contient les solutions uniquement dominées par celles de $F_1$ et $F_2$), $F_4$... jusqu'à ce que toutes les solutions de $S_t$ soient assignées à un front.
- \item On choisira alors de garder en priorité les solutions de $F_1$ puis de $F_2$ et ainsi de suite jusqu'à en obtenir $N$. 
- Il faut noter qu'il existe probablement un front $F_k$ où toutes les solutions ne pourront être garder pour ne pas dépasser la limite imposée de $N$ solutions.
- Plutôt que de choisir aléatoirement le nombre nécessaires de solutions dans $F_k$, seront sélectionnées les solutions qui maximisent une certaine distance --- the \emph{crowding distance} --- avec les autres solutions.
+ Vont ainsi dans le premier front $F^1$ les solutions $s$ qui vérifient $n_s = 0$, qui ne sont donc pas dominées par d'autres solutions de $S_t$. 
+ Dans le deuxième front $F^2$ se trouvent les solutions qui sont dominées uniquement par les solutions présentes dans $F^1$.
+ (Autrement dit, les solutions qui se trouvent dans et uniquement dans $\bigcup_{s\in F_1} E_s$.)
+ On continue de la même manière pour $F^3$ qui contient les solutions uniquement dominées par celles de $F^2$ (et \emph{a fortiori} par $F^1$), $F^4$... jusqu'à ce que toutes les solutions de $S_t$ soient assignées à un front.
+ \item On choisira alors de garder en priorité les solutions de $F^1$ puis de $F^2$ et ainsi de suite jusqu'à en obtenir $N$. 
+ Il faut noter qu'il existe probablement un front $F^k$ où toutes les solutions ne pourront être garder pour ne pas dépasser la limite imposée de $N$ solutions.
+ Plutôt que de choisir aléatoirement le nombre nécessaires de solutions dans $F^k$, seront sélectionnées les solutions qui maximisent une certaine distance --- the \emph{crowding distance} --- avec les autres solutions.
  (On n'entrera pas dans le détail ici.)
  C'est fait pour assurer une certaine diversité entre les différentes solutions.
  Les $N$ solutions ainsi sélectionnées constitueront $P_{t+1}$, la population initiale de la génération suivante $t+1$.
 \end{enumerate}
 
-Un élément important pour assurer une convergence vers le front de Pareto est le choix des solutions filles $F_t$ effectué à chaque génération.
+Un élément important pour assurer une convergence vers le front de Pareto est le choix des solutions filles $O_t$ effectué à chaque génération.
 Pour générer une solution fille, plusieurs étapes sont là aussi nécessaires.
-Ces étapes (simplifiées) sont :
+Ces étapes simplifiées sont :
 \begin{enumerate}
  \item On sélectionne deux solutions $s_1$ et $s_2$ dans $P_t$.
  \item On construit une solution fille $f_1$ en prenant la moitié des coordonnées de $s_1$ et l'autre moitié de $s_2$. 
@@ -255,7 +265,7 @@ Le principe est le suivant.
 On traduit nos jeux de paramètres centrés -- réduits dans un espace métrique. On choisira $\mathbf{R}^p$ muni de la distance euclidienne.
 % Plus deux solutions seront proches du point de vue de la distance euclidienne, plus elles seront semblables et appartiendront \emph{a priori} à la même classe de solutions.
 On cherche à rassembler les différents jeux de paramètres en différentes classes.
-Les classes se doivent de contenir des individus aussi proches que possible (\emph{i.e.} la distance euclidienne entre un individu de la classe et l'individu moyen de la classe doit être petite), et être aussi différentes des autres classes que possible (\emph{i.e.} la distance entre l'individu moyen de la classe et l'individu moyen de la classe la plus proche doit être grande).
+Les classes se doivent de contenir des individus aussi proches que possible (\emph{i.e.} la distance entre un individu de la classe et l'individu moyen de la classe doit être petite), et être aussi différentes des autres classes que possible (\emph{i.e.} la distance entre l'individu moyen de la classe et l'individu moyen de la classe la plus proche doit être grande).
 D'un point de vue formel, cela peut s'exprimer par la décomposition de l'inertie totale en inertie externe des classes et en inertie interne des classes.
 Cette décomposition est donnée par
 \[
@@ -289,7 +299,7 @@ En pratique, on choisira un nombre de classes $K^*$ qui minimisera significative
 Il faut aussi noter que dans notre cas précis, cette classification est faite dans un but exploratoire. 
 Il vaudra mieux avoir un nombre de classes délibérément grand, quitte à avoir des classes semblables, afin de ne pas passer à côté d'une catégorie de solutions intéressante.
 
-
+La pertinence biologique des classes de paramètres trouvées sera finalement validé par des experts.
 
 
 

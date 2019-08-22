@@ -1,0 +1,33 @@
+\chapter{Expression de la pupaison en fonction de la température}
+\label{chap:pupaison}
+
+Jusqu'à présent nous avions dans notre modèle $p_{\text{p}}$ fixé à 0.77. 
+En utilisant une constante, on ne prend pas du tout en compte les conditions externes qui pourrait influencer sur le cycle de développement des cécidomyies (\emph{e.g.} les conditions météorologiques).
+ 
+Le but est ici d'obtenir une valeur de $p_{\text{pup}}$ qui dépendrait de la température. On choisit la température car cette variable est accesible et qu'elle a, \emph{a minima}, un effet sur la durée de la diapause \citep{pauldiap}.
+
+On récupère les données de l'article de \citet{pauldiap} pour essayer de voir s'il y a un lien entre température et durée de pupaison.
+
+À chaque date --- pour lesquelles on a des données sur le nombre de larves et le nombre de larves en pupaison --- on calcule la proportion de larves en pupaison.
+On extrait ensuite les températures moyennes sur 15 jours (de 7 jours avant jusqu'à 7 jours après) pour chaque jour où l'on a des données disponibles.
+Le choix de prendre la température moyenne sur 15 jours est fait pour prendre au mieux en compte les conditions climatiques qu'il y a eu avant l'enfouissement (et notamment au moment de la ponte) et après l'enfouissement (durant la pépriode de pupaison).
+On effectue une régression linéaire simple de la proportion de larves en pupaison par la température.
+
+On fixera le seuil du risque de première espèce à $\alpha = 5\%$ pour le test de non-nullité des coefficients.
+Les résultats sont visibles dans la table~\ref{tab:lm2}.
+On en conclut que les coefficients associés à l'ordonnée à l'origine et à la température ne sont pas nuls et que l'on peut écrire
+\[
+p_{\text{p}} = 1.9555 - 0.055\times t_{15j}.
+\]
+
+\begin{table}[hb]
+\centering
+\caption{Régression linéaire simple de la proportion d'individus en pupaison par la température moyenne sur 15 jours}
+\label{tab:lm2}
+\begin{tabular}{rrrrr}
+ & Estimate & Std. Error & t value & Pr($>$$|$t$|$) \\ 
+  \hline
+(Intercept) & 1.9555 & 0.3665 & 5.34 & 0.0002 \\ 
+  temp15j & -0.0550 & 0.0160 & -3.43 & 0.0050 \\ 
+\end{tabular}
+\end{table}

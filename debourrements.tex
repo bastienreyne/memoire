@@ -1,0 +1,24 @@
+\chapter{Simulation de débourrements} 
+\label{chap:deb}
+
+On émet également l'hypothèse que les cécidomyies n'attaquent non pas les toutes les inflorescences mais uniquement celles se situant dans leurs premiers jours.
+Pour parvenir à avoir lesdites dynamiques, on a besoin de la date de débourrements des inflorescences avant d'avoir une estimation des dynamiques voulues.
+
+Dans le verger n\textdegree1, les dynamiques pour les modalités «enherbement ras» et «paillage synthétique» issues des deux jeux de données ont des dynamiques plutôt similaires ; on pourrait donc utiliser les débourrements du \emph{dataset 1} mis à l'échelle.
+En revanche, pour la modalité «enherbement haut», on observe des dynamiques très différentes. 
+Et comme l'on souhaite privilégier les dynamiques issues du \emph{dataset 2} (qui sont associées aux dynamiques de larves), il faut procéder autrement.
+(Il en va de même pour les modalités «enherbement ras» et «paillage synthétique» du verger n\textdegree2.)
+ 
+L'objectif est alors de simuler les dates de débourrements qui permettent de produire la dynamique d'inflorescences vivantes du \emph{dataset 2}.
+Pour cela, on suppose que la durée de vie effective d'une inflorescence suit une loi normale.
+On possède les durées de vies effectives dans le \emph{dataset 1}.
+Premièrement, en fixant le risque de première espèce à $\alpha = 5\%$, un test de normalité de Shapiro--Wilk nous confirme la normalité ($p$-valeur de 0.05447, on ne rejette donc pas l'hypothèse de normalité).
+Deuxièmement, on observe une durée de vie effective moyenne de 29 jours (avec un écart-type de 14).
+Ainsi, il faut donc simuler des débourrements, pour que des inflorescences ayant une durée de vie qui suit une $\mathcal{N}\left( 29; 14 \right)$, donne la dynamique d'inflorescences vivantes du \emph{dataset 2}.
+Il faut donc trouver les $B_t$ tels que 
+\[
+I_{t}^{2} = B_t + \sum_{j = 1}^{50} B_{t - j} \times \left( 1 - F\left( j \right) \right),  \qquad \text{ avec } B_{t} = 0 \text{ si } t \leq 0,
+\]
+où $F$ est la fonction de répartition d'une $\mathcal{N}\left( 29;14 \right)$ et 50 la durée de vie théorique d'une inflorescence.
+ 
+Par souci d'homogénéïté, on utilisera les débourrements simulés pour les trois modalités, et ce pour les deux vergers.
