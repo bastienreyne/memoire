@@ -1,0 +1,40 @@
+\chapter{Discussion} 
+
+\lettrine{O}{n} revient dans ce chapitre sur les résultats obtenus, les hypothèses faites et les méthodes employées.
+
+Commençons par l'aspect biologique.
+Bien que l'on ait pas de résultats très pertinents, on peut faire quelques commentaires.
+Notamment sur certaines hypothèses qui ont pu être faites.
+En premier lieu, le fait que la venue de femelles exogènes se fasse proportionnellement aux inflorescences est une hypothèse forte.
+Ce n'est pas très grave dans le cas des solutions--types qui privilégient les individus endogènes, où les femelles exogènes sont peu nombreuses.
+Mais cela devient difficile à justifier lorsque les femelles exogènes contribuent fortement aux dynamiques de larves.
+
+Concernant l'hypothèse d'attractivité des inflorescences, ne prendre en compte que les stades phénologiques C, D et E est peut-être un peu radical.
+En effet, si le début du stade F commence avec l'apparition de la première fleur cela ne veut pas dire que l'inflorescence devient subitement inattractive pour les cécidomyies.
+Si cette attractivité existe bien en réalité, alors ce serait probablement un phénomène plus progressif et le début de la période d'inattractivité interviendrait au milieu du stade F.
+
+La mise en place d'un paramètre de saisonnalité telle que nous l'avons faite est sans doute trop extrême.
+Car en pratique, cela revient à éradiquer toutes les femelles (ou les empêcher de pondre) du jour au lendemain, ce qui semble irréaliste.
+
+Bien que l'on ne puisse rien affirmer avec certitude (notamment dû à une absence de validation sur le verger n\textdegree2), ce modèle semble indiquer que quelque chose se produit en fin de saison.
+Or, aucune connaissance présente dans la littérature n'explique l'absence de reproduction des cécidomyies autrement que par un changement conséquent de température ou une absence de ressources.
+On peut cependant émettre des hypothèses comme, par exemple, une compétition entre la cécidomyie et un autre ravageur qui s'en prendraient aux fleurs des inflorescences et apparaîtraient ainsi qu'à partir du stade phénologique F.
+
+Il faut aussi appuyer sur le fait que la floraison du manguier présente une grande variabilité.
+Nous avons pu observer des dynamiques d'inflorescences très différentes au sein d'une même sous-parcelle suite à un échantillonage différent (voir figure~\ref{fig:inflos}).
+Il est alors difficile de juger la pertinence du modèle en se basant sur si peu d'observations.
+En effet, il suffit que les dynamiques sur lesquelles on calibre le modèle soient atypiques pour que le modèle ne puisse pas se généraliser à d'autres cas.
+Difficile de conclure.
+
+On peut également émettre quelques remarques concernant la méthodologie employée.
+Concernant l'algorithme d'optimisation, seul NSGA-II a été utilisé.
+Et il fonctionne, c'est pourquoi l'on n'en a pas essayé d'autre.
+On aurait probablement pu trouver un autre algorithme multicritères qui converge plus vite ou plus près du front de Pareto.
+Cependant la diversité des solutions proposées par NSGA-II est déjà grande.
+Et avoir des paramètres plus précis n'est peut-être pas pertinent dans la mesure où le phénomène modélisé est très variable et que l'on calibre le modèle sur des données qui ne sont pas elles-mêmes extrêmement précises.
+
+On peut aussi remettre en question la classification effectuée.
+Et surtout le choix d'effectuer la classification sur les valeurs de paramètres.
+On part ici du principe que deux jeux de valeurs de paramètres dont les valeurs sont proches produiront des dynamiques similaires.
+Ce principe ne s'applique pas tous le temps, notamment dans les systèmes chaotiques, où des valeurs initiales très proches peuvent aboutir à des résultats très différents.
+Peut-être que dans notre modèle, il se produit --- dans une certaine mesure --- un phénomène similaire, avec notamment la possibilité d'un «effet seuil» chez certains paramètres, qui pourrait produire des dynamiques très différentes malgré des valeurs de paramètres proches.

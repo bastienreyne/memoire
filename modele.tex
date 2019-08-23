@@ -19,8 +19,8 @@ L'objectif sera de simuler les dynamiques de larves à l'échelle de la sous-par
 \section{Approche retenue et hypothèses}
 
 L'approche retenue se veut simple.
-On considèrera les populations (de cécidomyies et d'inflorescences vivantes) dans chaque sous-parcelle et non les individus.
-Concrètement, cela veut dire que l'on ne considèrera que les nombres totaux d'inflorescences vivantes et de cécidomyies qu'il y a chaque jour dans chaque sous-parcelle.
+On considérera les populations (de cécidomyies et d'inflorescences vivantes) dans chaque sous-parcelle et non les individus.
+Concrètement, cela veut dire que l'on ne considérera que les nombres totaux d'inflorescences vivantes et de cécidomyies qu'il y a chaque jour dans chaque sous-parcelle.
 Par ailleurs, la période considérée est la saison de floraison et le modèle n'est pas pluriannuel.
 
 Les hypothèses sur les processus biologiques qui régissent le système, que nous faisons, sont :
@@ -121,7 +121,7 @@ Le schéma conceptuel du modèle est visible sur la figure~\ref{fig:schema}.
 Ce schéma traduit le cycle de développement de la cécidomyie détaillé dans la partie~\ref{chap:cecido}.
 Les femelles présentes dans la sous-parcelle $i$ sont représentées par $F_i$.
 Les femelles sont soit exogènes, soit endogènes.
-On dinstinguera les femelles endogènes en fonction de la sous-parcelle dans laquelles elles émergent.
+On distinguera les femelles endogènes en fonction de la sous-parcelle dans laquelle elles émergent.
 Il en résulte que dans la sous-parcelle $i$, les femelles ayant pondus les larves sont celles qui viennent de l'extérieur du verger, celles qui ont émergées dans la sous-parcelle considérée et qui y restent et celles qui ont émergées dans la sous-parcelle $j$ ou $k$ et qui viennent dans la sous-parcelle $i$.
 
 Les œufs, pondus par les femelles $F_i$, permettent l'émergence des larves $L_i$, après la durée de développement nécessaire, notée $d_{\ell}$.
@@ -147,13 +147,13 @@ Formellement, cela peut se traduire par
 \end{align}
 Ici, $L_{t,i}$ désigne le nombre de larves qui s'éjectent des inflorescences à la date $t$ dans la sous-parcelle $i$, $F_{t - d_{\ell}, i}$ le nombre de femelles qu'il y avait dans la sous-parcelle $i$ une durée de développement larvaire auparavant (durée qu'il y a entre la ponte des œufs et l'apparition du dernier stade larvaire où les larves s'éjectent des inflorescences pour s'enfouir dans le sol), $R$ représente la disponibilité d'inflorescences pour les cécidomyies, $E_0$ le nombre maximal d'œufs pondus par une femelle et $\mu_{\ell}$ la probabilité de survie des œufs et larves.
 
-Le coefficient $R$ repésentant la disponibilité en ressources traduit le fait que lorsqu'il n'y a pas suffisament d'inflorescences dans le verger par rapport au nombre de femelles, alors il y a une compétition entre cécidomyies pour ces ressources. Seulement une proportion des femelles pourra alors accéder aux ressources et pondre.
+Le coefficient $R$ représentant la disponibilité en ressources traduit le fait que lorsqu'il n'y a pas suffisamment d'inflorescences dans le verger par rapport au nombre de femelles, alors il y a une compétition entre cécidomyies pour ces ressources. Seulement une proportion des femelles pourra alors accéder aux ressources et pondre.
 Cette idée sera prise en compte comme suit :
 \[
 R = \min\!\left\{1, \frac{k I_{t, i}}{ F_{t, i}} \right\}\!.
 \]
-$R$ vaut 1 lorsque toutes les cécidomyies femelles peuvent pondrent ; il est compris entre 0 et 1 lorsque le ratio entre nombre d'inflorescences et nombre de cécidomyie est insuffisant.
-Ce coefficient $R$ dépend du paramètre $k$ qui indique combien de femelles peut acceuillir une inflorescence chaque jour.
+$R$ vaut 1 lorsque toutes les cécidomyies femelles peuvent pondre ; il est compris entre 0 et 1 lorsque le ratio entre nombre d'inflorescences et nombre de cécidomyie est insuffisant.
+Ce coefficient $R$ dépend du paramètre $k$ qui indique combien de femelles peut accueillir une inflorescence chaque jour.
 
 Dans l'équation \ref{eq:larves}, on peut noter que le nombre de larves dépend du nombre de femelles présentes dans la sous-parcelle $i$ au jour $t$.
 Ces femelles sont composées de femelles exogènes et de femelles endogènes.
@@ -169,7 +169,7 @@ F^{\text{exo}}_{t, i} = \gamma \times I_{t, i},
 \]
 avec $\gamma$ à déterminer.
 
-Les échanges de femelles entre les différentes sous-parcelles est basé sur l'hypothèse qu'elles préfèrent rester dans la sous-parcelle de laquelles elles émergent plutôt que d'aller ailleurs.
+Les échanges de femelles entre les différentes sous-parcelles est basé sur l'hypothèse qu'elles préfèrent rester dans la sous-parcelle de laquelle elles émergent plutôt que d'aller ailleurs.
 Ainsi, le nombre de femelles qui ont émergées dans la sous-parcelle $i$ et qui vont dans la sous-parcelle $j$ est donné par
 \[
 F_{t, i \rightarrow j}^{\text{endo}} = \frac{I_{t, j} \times p_{\text{m}}^{\delta(i, j)}}{\sum_{n\in \{i,j,k\}} I_{t, n} \times p_{\text{m}}^{\delta(i, n)}}\times F_{t, i}^{\text{endo}},
@@ -232,13 +232,13 @@ $\gamma$ & Paramètre régulant l'arrivée des individus exogènes au verger & C
 $p_{\text{m}}$ & Paramètre régulant l'intensité des échanges entre sous-parcelles & Calibration\\
 $\mu_{\text{sol}}^1$ & Probabilité de survie des larves lorsqu'elles s'enfouissent dans le sol à la modalité de couverture du sol & Calibration\\
 $\mu_{\text{sol}}^2$ & Probabilité de survie des femelles qui émergent (de pupaison ou de diapause) la modalité de couverture du sol & Calibration\\
-$k$ & Paramètre quantifiant le nombre de femelles que peut acceuillir une inflorescence chaque jour & Calibration\\
+$k$ & Paramètre quantifiant le nombre de femelles que peut accueillir une inflorescence chaque jour & Calibration\\
 \texttt{stock} & Nombre d'individus entrés en diapause les années précédentes qui émergent l'année considérée & Calibration  \\
 $E_0$ & Nombre maximal d'œufs pondus par une femelle & $\sim\!150$ \citep{paul}\\
 $\mu_{\ell}$ & Probabilité de survie des œufs et des larves & $\sim\!0.04$ \citep{paul}\\
 $\mathit{SR}$ & \textit{Sex-ratio} & 0.5 \citep{paul}\\
 $p_{\text{p}}$ & Probabilité pour une larve d'entrer en phase de pupaison et d'y survivre & $\sim\! 0.77$ \citep{pauldiap}\\
-$d_{\ell}$ & Durée (en jours) de la période entre la ponte et l'appartition du troisième stade de développement larvaire & 7 à 12 \citep{paul} \\
+$d_{\ell}$ & Durée (en jours) de la période entre la ponte et l'apparition du troisième stade de développement larvaire & 7 à 12 \citep{paul} \\
 $d_{\text{p}}$ & Durée (en jours) de la phase de pupaison & 4 à 6 \citep{paul}
 \end{tabular}
 }

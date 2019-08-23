@@ -129,12 +129,12 @@ $\gamma$ & $p_{\text{m}}$ & $\mu_{\text{ER}}$ & $\mu_{\text{EH}}$ & $k$ & \textt
 0.08 & 0.494 & 0.976 & 0.046 & 1.928 & 5600 & 3.084
  \end{tabular}
  \end{center}
-L'abscence d'individus qui émergent de la sous-parcelle EH s'explique par $\mu_{\text{EH}}$ qui est fixé à 0.046, ce qui veut dire que 95\% des larves meurent en essayant de s'enfouir dans la sous-parcelle ainsi que 95\% des femelles issues de pupaison ou de diapause qui essayent d'en émerger.
+L'absence d'individus qui émergent de la sous-parcelle EH s'explique par $\mu_{\text{EH}}$ qui est fixé à 0.046, ce qui veut dire que 95\% des larves meurent en essayant de s'enfouir dans la sous-parcelle ainsi que 95\% des femelles issues de pupaison ou de diapause qui essayent d'en émerger.
 À la différence de la sous-parcelle ER où il n'y a pratiquement aucune mortalité induite par l'enherbement ras ($\mu_{\text{ER}} = 0.976$).
 La valeur 0.8 attribuée à $\gamma$ est élevée (chose qui se confirmera empiriquement par les simulations qui suivront et qui peut déjà se voir sur la figure~\ref{fig:A1}).
 
 \item \textbf{Solution--type 2 :} Contrairement à la solution précédente qui avait trop d'individus exogènes, cette solution n'en a pas du tout.
-Cependant, la qualité d'ajustement des dynamiques est pareille que précedemment : grossièrement captée pour les sous-parcelles PS et EH et mauvaise pour la sous-parcelle ER.
+Cependant, la qualité d'ajustement des dynamiques est pareille que précédemment : grossièrement captée pour les sous-parcelles PS et EH et mauvaise pour la sous-parcelle ER.
 On remarque également que les dynamiques des sous-parcelles PS et EH se composent uniquement de larves provenant d'œufs pondus par des femelles issues de la sous-parcelle ER.
 
 Les paramètres sont :
@@ -144,8 +144,8 @@ $\gamma$ & $p_{\text{m}}$ & $\mu_{\text{ER}}$ & $\mu_{\text{EH}}$ & $k$ & \textt
 0 & 0.968 & 1 & 0.025 & 0.1 & 14483 & 6.26
  \end{tabular}
  \end{center}
- Ici aussi, il y a une abscence totale d'individus qui émergent de la sous-parcelle avec un enherbement haut ($\mu_{\text{EH}} = 0.025$)
- L'absence d'individus exogènes se compensent par un nombre d'œufs pondus plus élevé que précedemment (6.26 contre 3.08) et un stock de larves diapausante significatif (\texttt{stock} $=14483$).
+ Ici aussi, il y a une absence totale d'individus qui émergent de la sous-parcelle avec un enherbement haut ($\mu_{\text{EH}} = 0.025$)
+ L'absence d'individus exogènes se compensent par un nombre d'œufs pondus plus élevé que précédemment (6.26 contre 3.08) et un stock de larves diapausantes significatif (\texttt{stock} $=14483$).
  
 \item \textbf{Solution--type 3 :}
 Contrairement aux deux premières solutions, il y a ici des femelles qui émergent de la sous-parcelle EH.
@@ -158,13 +158,13 @@ $\gamma$ & $p_{\text{m}}$ & $\mu_{\text{ER}}$ & $\mu_{\text{EH}}$ & $k$ & \textt
 0.026 & 0.93 & 0.565 & 0.647 & 0.174 & 13823 & 4.818
  \end{tabular}
  \end{center}
-On observe que l'émergence d'individus dans la sous-parcelle EH ($\mu_{\text{EH}} = 0.647$ contre 0 précedemment) a entrainé une baisse d'émergence des individus dans la sous-parcelle ER ($\mu_{\text{ER}} = 0.565$ contre 0.97 et 1 pour les deux solutions précédentes)
+On observe que l'émergence d'individus dans la sous-parcelle EH ($\mu_{\text{EH}} = 0.647$ contre 0 précédemment) a entraîné une baisse d'émergence des individus dans la sous-parcelle ER ($\mu_{\text{ER}} = 0.565$ contre 0.97 et 1 pour les deux solutions précédentes)
  
 \end{itemize}
 
 
 
-\begin{figure}
+\begin{figure}[ht]
  \centering
  \textbf{Solution--type 1}
  
@@ -177,19 +177,20 @@ On observe que l'émergence d'individus dans la sous-parcelle EH ($\mu_{\text{EH
  \textbf{Solution--type 3}
  
  \epsfig{file = plots/A3.eps, scale = 0.52}
- \caption{Dynamiques observées et simulées pour chacun des trois scénarios. La décomposition indiquant la provenance des femelles qui ont pondus les œufs est disponible pour les dynamiques simulées.}
+ \caption{Dynamiques observées et simulées pour chacune des trois solutions--types. La décomposition indiquant la provenance des femelles qui ont pondus les œufs est disponible pour les dynamiques simulées.}
  \label{fig:A1}
 \end{figure}
 
-Ces trois scénarios semblent tous montrer que le modèle actuel n'est pas suffisament complet pour capter le phénomène observé.
-Il fait soit appel à trop d'exogènes, soit il n'y a aucun individus qui émergnent de la sous-parcelle EH, soit les deux.
-Et lorsqu'il y a des indivdus qui émergent de la sous-parcelle EH, le modèle ne parvient pas à recréer les dynamiques observées.
+Ces trois scénarios semblent tous montrer que le modèle actuel n'est pas suffisamment complet pour capter le phénomène observé.
+Il fait soit appel à trop d'exogènes, soit il n'y a aucun individus qui émergent de la sous-parcelle EH, soit les deux.
+Et lorsqu'il y a des individus qui émergent de la sous-parcelle EH, le modèle ne parvient pas à recréer les dynamiques observées.
 
 Cela peut s'expliquer par l'incapacité pour le modèle d'arrêter la reproduction des femelles et donc de stopper la dynamique en fin de saison induisant la baisse du nombre de larves observé.
-Il y a dans le modèle actuel un problème de décroissance en fin de saison.
+C'est peut-être l'une des raisons pour laquelle le modèle fait appel  à beaucoup de femelles exogènes : elles sont proportionnelles aux inflorescences (dont la population baisse en fin de saison), ce qui entraîne donc une baisse du nombre de femelles et \emph{a fortiori} une baisse du nombre de larves.
+Il y a dans le modèle un problème de décroissance en fin de saison.
 
 Le modèle peut néanmoins être utilisé pour tester des hypothèses qui viendraient compléter ou remplacer les hypothèses initiales.
-Et si en testant une de ces hypothèses, on trouve une solution qui permet d'ajuster convenablement les dynamiques, on pourra alors essayer de valider la solution sur le verger n\textdegree2.
+Et si en testant une de ces hypothèses, on trouve une solution qui permet d'ajuster convenablement les dynamiques et qui ne soit pas aberrante d'un point de vue biologique, on pourra alors essayer de valider la solution sur le verger n\textdegree2.
 
 
  
@@ -197,13 +198,49 @@ Et si en testant une de ces hypothèses, on trouve une solution qui permet d'aju
 
 \section{Prise en compte de la température}
 
-Si l'on sait déjà que la température a un impact sur la sortie des individus en diapause, \citet{pauldiap} indique qu'elle a également un impact sur la probabilité d'entrer en pupaison.
-Intégrer cet aspect au modèle pourrait potentiellement permettre de réduire la reproduction de femelles endogènes en fin de saison, si la probabilité d'entrer en pupaison chute significativement.
+La première hypothèse à laquelle on s'intéresse est le lien entre la température et la probabilité d'entrer en pupaison.
+En effet, si la probabilité de pupaison était amenée à être réduite en fin de saison, alors cela permettrait potentiellement au modèle d'avoir une diminution du nombre de larves en fin de saison sans avoir recours à trop de femelles exogènes.
 
-On décide alors d'exprimer la probabilité d'entrer en pupaison et d'y survivre en fonction de la température.
-L'annexe~\ref{chap:pupaison} détaille la méthode utilisée.
-On se retrouve avec $p_{\text{p}}$ qui varie chaque jour et qui prend en compte la moyenne des températures quotidiennes sur quinze jours (de sept jours avant à sept jours après l'enfouissement).
-La différence produite avec une probabilité constante fixée à 0.77 est visible sur la figure~\ref{fig:pupaison}.
+On sait, d'après~\citet{pauldiap}, que la probabilité d'entrer en diapause et d'entrer en pupaison varie tout au long de l'année, et dépend de la température.
+On espère ici qu'il y ait au cours de notre saison considérée (de juillet à octobre 2017) des variations de température pouvant expliquer une chute de la probabilité d'entrer en pupaison en fin de saison.
+
+On choisira cependant la simplicité en essayant de trouver une relation linéaire permettant d'exprimer la probabilité d'entrer en pupaison en fonction de la température.
+Pour réaliser ceci, on récupère les données de l'article de~\citet{pauldiap}.
+Et à chaque taux de pupaison, on fait correspondre la température moyenne sur une quinzaine de jours (de 7 jours avant à 7 jours après).
+On fait cela pour prendre en compte l'effet la température sur le cycle de développement complet de la cécidomyie --- depuis la ponte des œufs jusqu'à l'émergence des femelles issues de pupaison.
+
+
+On effectue une régression linéaire simple de la probabilité d'entrer en pupaison en fonction de la température sur la quinzaine.
+On fixera le seuil du risque de première espèce à $\alpha = 5\%$ pour le test de non-nullité des coefficients.
+Les résultats sont visibles dans la table~\ref{tab:lm2}.
+
+\begin{table}[hb]
+\centering
+\caption{Régression linéaire simple de la proportion d'individus en pupaison par la température moyenne sur 15 jours}
+\label{tab:lm2}
+\begin{tabular}{rrrrr}
+ & Estimate & Std. Error & t value & Pr($>$$|$t$|$) \\ 
+  \hline
+(Intercept) & 1.9555 & 0.3665 & 5.34 & 0.0002 \\ 
+  temp15j & -0.0550 & 0.0160 & -3.43 & 0.0050 \\ 
+\end{tabular}
+\end{table}
+
+On en conclut que les coefficients associés à l'ordonnée à l'origine et à la température ne sont pas nuls et que l'on peut écrire
+\[
+p_{\text{p}} = 1.9555 - 0.055\times t_{15j}.
+\]
+La différence produite avec une probabilité constante fixée à 0.77, comme auparavant, est visible sur la figure~\ref{fig:pupaison}.
+La différence en fin de saison est faible (environ 2\%), cela ne permettra pas \emph{a priori} d'améliorer le problème de la fin de saison.
+En revanche, il y a des différences plus importantes au début de la saison de floraison qui pourraient peut-être améliorer l'ajustement général des dynamiques.
+
+Les données utilisées proviennent d'observations effectuées en condition de laboratoire.
+On laissera alors au modèle la possibilité d'amplifier la variation de la probabilité de pupaison afin de prendre en compte d'éventuelles conditions climatiques qu'il y aurait pu avoir sur le verger.
+On peut faire ceci en utilisant un coefficient $\varpi\in [1;4]$ qui intervient comme suit :
+\[
+\widetilde p_{\text{p}} = \left( p_{\text{p}} - \overline{p_{\text{p}}} \right) \times \varpi + \overline{p_{\text{p}}},
+\]
+où $\widetilde p_{\text{p}}$ sera la probabilité d'entrer en pupaison et d'y survivre utilisée par le modèle et $\overline{p_{\text{p}}}$ la moyenne de la probabilité de pupaison.
 
 \begin{figure}[ht]
  \centering
@@ -211,65 +248,115 @@ La différence produite avec une probabilité constante fixée à 0.77 est visib
  \caption{Différence entre la probabilité d'entrer en pupaison et d'y survivre constante (égale à 0.77) et celle qui est fonction de la température moyenne sur la quinzaine.}
  \label{fig:pupaison}
 \end{figure}
+%
 
-On remarque peu de différences, c'est d'autant plus vrai en fin de saison où les deux probabilités sont très proches.
-Ce n'est donc pas l'effet de la température sur la phase de pupaison qui peut expliquer la diminution du nombre de larves observé en fin de saison.
+% Si l'on sait déjà que la température a un impact sur la sortie des individus en diapause, \citet{pauldiap} indique qu'elle a également un impact sur la probabilité d'entrer en pupaison.
+% Intégrer cet aspect au modèle pourrait potentiellement permettre de réduire la reproduction de femelles endogènes en fin de saison, si la probabilité d'entrer en pupaison chute significativement.
+% 
+% On décide alors d'exprimer la probabilité d'entrer en pupaison et d'y survivre en fonction de la température.
+% L'annexe~\ref{chap:pupaison} détaille la méthode utilisée.
+% On se retrouve avec $p_{\text{p}}$ qui varie chaque jour et qui prend en compte la moyenne des températures quotidiennes sur quinze jours (de sept jours avant à sept jours après l'enfouissement).
+% La différence produite avec une probabilité constante fixée à 0.77 est visible sur la figure~\ref{fig:pupaison}.
+% 
+% \begin{figure}[ht]
+%  \centering
+%  \epsfig{file = plots/pupaison.eps, scale = 0.55}
+%  \caption{Différence entre la probabilité d'entrer en pupaison et d'y survivre constante (égale à 0.77) et celle qui est fonction de la température moyenne sur la quinzaine.}
+%  \label{fig:pupaison}
+% \end{figure}
+% 
+% On remarque peu de différences, c'est d'autant plus vrai en fin de saison où les deux probabilités sont très proches.
+% Ce n'est donc pas l'effet de la température sur la phase de pupaison qui peut expliquer la diminution du nombre de larves observé en fin de saison.
+% 
+% On peut s'en convaincre en recalibrant le modèle avec cette nouvelle probabilité variable.
+% On permet même au modèle «d'amplifier» la variabilité de la probabilité de pupaison en lui laissant le choix d'un certain coefficient $\varpi \in [1; 4]$ qui intervient comme suit :
+% \[
+% \widetilde p_{\text{p}} = \left( p_{\text{p}} - \overline{p_{\text{p}}} \right) \times \varpi + \overline{p_{\text{p}}},
+% \]
+% où $\widetilde p_{\text{p}}$ sera la probabilité d'entrer en pupaison et d'y survivre utilisée par le modèle.
+% 
+% Après obtention des résultats, on retrouve nos trois scénarios déjà présent dans la première version du modèle (voir figure~\ref{fig:B}).
+% On peut noter que la calibration ne renvoie pas de valeur de $\varpi$ supérieure à 1.5, montrant que des variations dans la probabilité de rentrer en pupaison n'aide pas à améliorer l'ajustement des dynamiques.
 
-On peut s'en convaincre en recalibrant le modèle avec cette nouvelle probabilité variable.
-On permet même au modèle «d'amplifier» la variabilité de la probabilité de pupaison en lui laissant le choix d'un certain coefficient $\varpi \in [1; 4]$ qui intervient comme suit :
-\[
-\widetilde p_{\text{p}} = \left( p_{\text{p}} - \overline{p_{\text{p}}} \right) \times \varpi + \overline{p_{\text{p}}},
-\]
-où $\widetilde p_{\text{p}}$ sera la probabilité d'entrer en pupaison et d'y survivre utilisée par le modèle.
+Après calibration du modèle et classification des solutions, on trouve trois solutions--types, qui sont très similaires à celles trouvées avec le modèle initial.
+Les voici :
+\begin{itemize}
+ \item \textbf{Solution--type 1 :} 
+ Une solution faisant appel à beaucoup d'individus exogènes.
+ 
+ Les paramètres sont :
+ \begin{center}
+\begin{tabular}{llllllll}
+$\gamma$ & $p_{\text{m}}$ & $\mu_{\text{ER}}$ & $\mu_{\text{EH}}$ & $k$ & \texttt{stock} & $E_0\mu_{\ell}$ & $\varpi$\\
+0.044 & 0.715 & 0.998 & 0.002 & 0.143 & 1548 & 4.202 & 1.167
+ \end{tabular}
+ \end{center}
 
-Après obtention des résultats, on retrouve nos trois scénarios déjà présent dans la première version du modèle (voir figure~\ref{fig:B}).
-On peut noter que la calibration ne renvoie pas de valeur de $\varpi$ supérieure à 1.5, montrant que des variations dans la probabilité de rentrer en pupaison n'aide pas à améliorer l'ajustement des dynamiques.
+\item \textbf{Solution--type 2 :} 
+Une solution sans individus exogènes ni sans individus qui émergent de la sous-parcelle EH.
+
+Les paramètres sont :
+ \begin{center}
+\begin{tabular}{llllllll}
+$\gamma$ & $p_{\text{m}}$ & $\mu_{\text{ER}}$ & $\mu_{\text{EH}}$ & $k$ & \texttt{stock} & $E_0\mu_{\ell}$ & $\varpi$\\
+0 & 1 & 1 & 0.001 & 0.1 & 17188 & 6.3 & 1.036
+ \end{tabular}
+ \end{center}
+ 
+\item \textbf{Solution--type 3 :}
+Une solution avec des femelles qui émergent de la sous-parcelle EH.
+
+Les paramètres sont :
+ \begin{center}
+\begin{tabular}{llllllll}
+$\gamma$ & $p_{\text{m}}$ & $\mu_{\text{ER}}$ & $\mu_{\text{EH}}$ & $k$ & \texttt{stock} & $E_0\mu_{\ell}$ & $\varpi$\\
+0.002 & 0.280 & 0.923 & 0.986 & 0.177 & 20066 & 3.288 & 1.110
+ \end{tabular}
+ \end{center}
+\end{itemize}
+
+Il n'est probablement pas très pertinent de s'étendre longuement sur ces trois nouvelles solutions, dans la mesure où elles sont très similaires aux solutions trouvées avec le modèle initial.
+On peut remarquer que le paramètre $\varpi$ ne dépasse jamais 1.5, ce qui semble indiquer que la prise en compte de l'effet de la température sur la probabilité d'entrer en pupaison ne semble pas améliorer le modèle.
 
 \begin{figure}[h]
  \centering
- \textbf{Scénario 1}
+ \textbf{Solution--type 1}
  
- \epsfig{file = plots/B1.eps, scale = 0.46}
+ \epsfig{file = plots/B1.eps, scale = 0.52}
  
- \textbf{Scénario 2}
+ \textbf{Solution--type 2}
  
- \epsfig{file = plots/B2.eps, scale = 0.46}
+ \epsfig{file = plots/B2.eps, scale = 0.52}
  
- \textbf{Scénario 3}
+ \textbf{Solution--type 3}
  
- \epsfig{file = plots/B3.eps, scale = 0.46}
- \caption{Dynamiques observées et simulées pour chacun des trois scénarios. La décomposition indiquant la provenance des femelles qui ont pondus les œufs est disponible pour les dynamiques simulées.}
+ \epsfig{file = plots/B3.eps, scale = 0.52}
+ \caption{Dynamiques observées et simulées pour chacune des trois solutions--types. La décomposition indiquant la provenance des femelles qui ont pondus les œufs est disponible pour les dynamiques simulées.}
  \label{fig:B}
 \end{figure}
 
 \clearpage
 \section{Contraintes liées aux ressources}
 
-Puisque la température n'explique pas le phénomène observé en fin de saison, on s'intéresse aux ressources.
+Puisque la température n'explique pas le phénomène observé en fin de saison, on teste une autre hypothèse.
+On s'intéresse aux ressources.
 L'intérêt pour les ressources est motivé par le fait que, sur les figures~\ref{fig:larves} et~\ref{fig:larves2}, les dynamiques de larves semblent corrélées avec les dynamiques d'inflorescences vivantes.
 Les coefficients de corrélations de Spearman (du verger n\textdegree1) confirment plus ou moins cette intuition :
 \[
 \rho^{\text{ER}}\left( L_t, I_t  \right) =0.46,  \qquad \rho^{\text{PS}}\left( L_t, I_t  \right) =0.68, \qquad \rho^{\text{EH}}\left( L_t, I_t  \right) =0.76.
 \]
 On pourrait s'attendre à un décalage entre les dynamiques de larves et d'inflorescences, correspondant à la durée de développement qu'il faut entre la ponte et l'apparition du troisième stade larvaire.
+Or, sur les figures~\ref{fig:larves} et~\ref{fig:larves2}, cela ne s'observe pas.
+
 Pour expliquer cette absence de décalage, on émet une hypothèse.
 Une inflorescence n'est pas attractive pour une cécidomyie de son débourrement jusqu'à la fin de sa vie mais uniquement lors des premiers stades phénologiques de l'inflorescence.
+Lorsqu'elle atteint le stade phénologique F, la tige se durcit progressivement, rendant peut-être plus difficile la ponte pour les cécidomyies.
+Notre hypothèse est que seules les inflorescences aux stades phénologiques C, D et E sont considérées comme attractives par les cécidomyies.
 
-Afin de pouvoir tester cette hypothèse au sein de notre modèle, il faut être capable de simuler des dynamiques d'inflorescences attractives.
-Pour cela, on a besoin des débourrements des inflorescences (voir annexe~\ref{chap:deb}) ainsi que de la loi de mortalité des inflorescences.
-On suppose que la durée de vie d'une inflorescence suit une loi normale.
-Le \emph{dataset 1} contient les durées de vie effective des inflorescences.
-En fixant le risque de première espèce à $\alpha = 5\%$, un test de normalité de Shapiro--Wilk nous confirme la normalité ($p$-valeur de 0.05447).
-Ensuite, on observe une durée de vie effective moyenne de 29 jours (avec un écart-type de 14).
+On détaille dans l'annexe~\ref{chap:deb} comment nous sommes capables de simuler des dynamiques d'inflorescences aux stades C, D et E.
 
-Ces inflorescences \emph{attractives} peuvent alors se calculer en utilisant la formule
-\[
-I_{t}^{a} = B_t + \sum_{t = 1}^{d_A} B_{t-j} \times \left( 1 - F(j) \right), \qquad \text{ avec } B_{t} = 0 \text{ si } t \leq 0. 
-\]
-Ici, $B_t$ représente le nombre de débourrements à la date $t$, $d_A$ la durée d'attractivité et $F$ la fonction de répartition d'une $\mathcal{N}\left( 29; 14 \right)$.
-
-Nous ferons ici l'hypothèse que la durée d'attractivité est de seize jours ($d_A = 16$), ce qui correspond à la durée théorique des stades phénologiques C, D et E.
-La différence entre les inflorescences vivantes et attractives est visible sur la figure~\ref{fig:CDE}.
+Nous ferons ici l'hypothèse que la durée d'attractivité est de seize jours, ce qui correspond à la durée théorique des stades phénologiques C, D et E.
+La différence entre les inflorescences vivantes et les inflorescences attractives est visible sur la figure~\ref{fig:CDE}.
 
 \begin{figure}[ht]
  \centering
@@ -278,43 +365,47 @@ La différence entre les inflorescences vivantes et attractives est visible sur 
  \label{fig:CDE}
 \end{figure}
 
-Les deux premiers scénarios correspondent à ceux trouvés précedemment.
+
+Sur les trois solutions--types trouvées après la calibration du modèle, deux correspondent à celles trouvées précédemment.
 Les dynamiques sont visibles sur la figure~\ref{fig:C}.
 On observe une amélioration sur les sous-parcelles PS et EH, notamment en ce qui concerne la fin de dynamique en fin de saison.
 La parcelle ER est en revanche toujours aussi mal captée.
+Et la pertinence biologique des solutions reste toujours très discutable.
 \begin{figure}[ht]
  \centering
  
   \centering
- \textbf{Scénario 1}
+ \textbf{Solution--type 1}
  
- \epsfig{file = plots/C1.eps, scale = 0.46}
+ \epsfig{file = plots/C1.eps, scale = 0.52}
  
- \textbf{Scénario 2}
+ \textbf{Solution--type 2}
  
- \epsfig{file = plots/C2.eps, scale = 0.46}
+ \epsfig{file = plots/C2.eps, scale = 0.52}
  
- \textbf{Scénario 3}
+ \textbf{Solution--type 3}
  
- \epsfig{file = plots/C3.eps, scale = 0.46}
+ \epsfig{file = plots/C3.eps, scale = 0.52}
  
  
- \caption{Dynamiques observées et simulées pour chacun des trois scénarios. La décomposition indiquant la provenance des femelles qui ont pondus les œufs est disponible pour les dynamiques simulées.}
+ \caption{Dynamiques observées et simulées pour chacune des trois solutions--types. La décomposition indiquant la provenance des femelles qui ont pondus les œufs est disponible pour les dynamiques simulées.}
  \label{fig:C}
 \end{figure}
 
 
-On remarquera que la prédiction sur le troisième scénario (également présent sur la figure~\ref{fig:C}) est toujours aussi mauvaise.
+On remarquera que la prédiction sur la troisième solution--type est toujours aussi mauvaise.
+La prise en compte de l'attractivité des inflorescences ne permet toujours pas la baisse des dynamiques observées en fin de saison lorsqu'il y a des individus endogènes dans la sous-parcelle EH.
 
-La prise en compte de l'attractivité des inflorescences ne permet toujours pas la baisse des dynamiques observées en fin de saison.
-
+\clearpage
 \section{Introduction d'un paramètre de saisonnalité}
 
+Les hypothèses émises jusqu'à présent n'ont pas permis d'expliquer ce qu'il se produit en fin de saison.
+Aux hypothèses déjà faites, on en rajoute une autre.
 Ce que l'on observe sur les dynamiques de larves, c'est qu'il semble y avoir une forte baisse de la population de larves qui s'amorce aux alentours du 15 septembre (sur le verger n\textdegree1).
-On émet l'hypothèse qu'un phénomène intervient à cette date.
+On émet alors l'hypothèse qu'un phénomène intervient à cette date.
 Ce phénomène non-observé caractériserait un changement de la conjoncture sur le verger et induirait une baisse du nombre de larves.
 
-Pour tester cette hypothèse, on introduit dans le donc un paramètre de saisonnalité $\xi \in [0;1]$ sur le nombre de femelles dans le verger à partir du 15 septembre.
+Et on modélise cette hypothèse de manière radicale en introduisant un paramètre de saisonnalité $\xi \in [0;1]$ sur le nombre de femelles dans le verger à partir du 15 septembre.
 Concrètement, si le modèle décide de mettre une valeur éloignée de 1, cela signifie qu'à partir du 15 septembre que l'aspect ponte/reproduction du cycle de développement de la cécidomyie subit des perturbations qui entraînent une baisse du nombre de larves produites.
 
 Après calibration du modèle, un scénario se dégage des autres.
@@ -343,14 +434,24 @@ La principale critique que l'on puisse faire à cette estimation est d'avoir un 
 Cela semble très exagéré.
 
 
+Néanmoins, cela semble être une bonne estimation.
+On procède à la validation sur le verger n\textdegree2.
+Il faut cependant noter que le phénomène de saisonnalité a lieu sur ce verger aux alentours du 23 août.
+
+Les résultats produits sur le verger n\textdegree2 sont visibles sur la figure~\ref{fig:D2}.
+Et ces résultats sont mauvais.
+\begin{figure}[ht]
+ \centering
+ \epsfig{file = plots/D2.eps, scale = 0.59}
+ \caption{Dynamiques observées et simulées sur le verger n\textdegree2. La décomposition indiquant la provenance des femelles qui ont pondus les œufs est disponible pour les dynamiques simulées.
+ Les paramètres utilisés sont ceux calibrés par le modèle sur le verger n\textdegree1.}
+ \label{fig:D2}
+\end{figure}
 
 
 
-
-
-
-
-
+% Le fait que les paramètres trouvés par le modèle en calibrant sur le verger n\textdegree1 ne s'applique pas au verger n\textdegree2 peut s'expliquer par la forte variabilité du phénomène observé.
+% En effet, si l'une des deux dynamiques observées est très atypiques par rapport au comportement moyen, 
 
 
 

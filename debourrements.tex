@@ -1,9 +1,11 @@
-\chapter{Simulation de débourrements} 
+\chapter{Simulation d'inflorescences attractives} 
 \label{chap:deb}
 
-On émet également l'hypothèse que les cécidomyies n'attaquent non pas les toutes les inflorescences mais uniquement celles se situant dans leurs premiers jours.
-Pour parvenir à avoir lesdites dynamiques, on a besoin de la date de débourrements des inflorescences avant d'avoir une estimation des dynamiques voulues.
+On détaille dans cette annexe comment simuler des dynamiques d'inflorescences attractives.
+Pour ce faire, nous avons besoin des dates de débourrements des inflorescences ainsi que de la loi de mortalité des inflorescences.
 
+
+Le \emph{dataset 1} contient des dates de débourrements. On ne pourra cependant pas les utiliser.
 Dans le verger n\textdegree1, les dynamiques pour les modalités «enherbement ras» et «paillage synthétique» issues des deux jeux de données ont des dynamiques plutôt similaires ; on pourrait donc utiliser les débourrements du \emph{dataset 1} mis à l'échelle.
 En revanche, pour la modalité «enherbement haut», on observe des dynamiques très différentes. 
 Et comme l'on souhaite privilégier les dynamiques issues du \emph{dataset 2} (qui sont associées aux dynamiques de larves), il faut procéder autrement.
@@ -21,4 +23,14 @@ I_{t}^{2} = B_t + \sum_{j = 1}^{50} B_{t - j} \times \left( 1 - F\left( j \right
 \]
 où $F$ est la fonction de répartition d'une $\mathcal{N}\left( 29;14 \right)$ et 50 la durée de vie théorique d'une inflorescence.
  
-Par souci d'homogénéïté, on utilisera les débourrements simulés pour les trois modalités, et ce pour les deux vergers.
+Par souci d'homogénéité, on utilisera les débourrements simulés pour les trois modalités, et ce pour les deux vergers.
+
+
+
+Les inflorescences \emph{attractives} peuvent alors se calculer en utilisant la formule
+\[
+I_{t}^{a} = B_t + \sum_{t = 1}^{d_A} B_{t-j} \times \left( 1 - F(j) \right), \qquad \text{ avec } B_{t} = 0 \text{ si } t \leq 0. 
+\]
+Ici, $B_t$ représente le nombre de débourrements à la date $t$, $d_A$ la durée d'attractivité voulue et $F$ la fonction de répartition d'une $\mathcal{N}\left( 29; 14 \right)$.
+
+Dans notre cas, on choisira $d_A = 16$ jours.

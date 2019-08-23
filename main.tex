@@ -76,19 +76,27 @@
 \pagestyle{plain}
 \usepackage[colorlinks=true, citecolor=blue, linkcolor=., urlcolor = blue]{hyperref}
 \usepackage{adjustbox}
-
+\usepackage{pdfpages}
 
 \begin{document}
 
 \frontmatter
 
+% \includepdf{garde_iae.pdf}
 % Page de garde
 % \hypersetup{pageanchor=false}
 \input{titlepage}
 % \hypersetup{pageanchor=true}
 
 \begin{abstract}
- Résumé en francais
+Le manguier est un arbre qui présente des asynchronismes phénologiques.
+Ces asynchronismes entraînent une floraison et une fructification étalée dans le temps, ce qui rend la gestion des vergers difficiles.
+Cela produit des conditions favorables au développement des ravageurs, dont la cécidomyie des fleurs qui s'attaque aux inflorescences.
+Une expérimentation a été menée sur des vergers en 2017 pour tester différentes modalités de couverture du sol (car la cécidomyie se développe en partie dans le sol), des données ont été acquises.
+À partir de ces données et des connaissances présentes dans la littérature, un modèle décrivant la population de cécidomyie des fleurs en fonction de la population d'inflorescences a été établi.
+Le modèle n'a pas permis de trouver un mode de conduite des vergers précis qui puisse limiter l'impact de la cécidomyie des fleurs.
+En revanche, le modèle semble indiquer que les cécidomyies sont soumises à phénomène de saisonnalité, autre que l'absence de ressources ou un changement de température, qui met un terme à leur prolifération en fin de saison.
+Ce phénomène n'est pas connu de la littérature.
 \end{abstract}
 
 \include{thanks}
@@ -116,6 +124,8 @@
 % Chapitre 6
 \include{resultats}
 
+\include{discussion}
+
 % Chapitre 7
 \include{conclusion}
 
@@ -130,7 +140,7 @@
 \include{graphiques_bloc2}
 
 % Pupaison
-\include{pupaison}
+% \include{pupaison}
 
 % Débourrements
 \include{debourrements}
