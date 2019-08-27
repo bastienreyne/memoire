@@ -1,6 +1,6 @@
 \chapter{Mise en œuvre et résultats} 
 
-\lettrine{M}{aintenant} que le modèle est posé et que l'on sait quelles méthodes utiliser pour la calibration et le choix des solutions, on peut calibrer le modèle et présenter quelques solutions.
+\lettrine{M}{aintenant} que le modèle est posé et que l'on sait quelles méthodes utiliser pour la calibration et le choix des solutions, on peut calibrer le modèle et présenter et explorer les solutions optimales.
 
 
 \subsubsection{Analyse de sensibilité}
@@ -120,7 +120,7 @@ On détaille les trois solutions--types :
  \item \textbf{Solution--type 1 :} 
  Pour les sous-parcelles PS et EH, les dynamiques simulées ne captent que très grossièrement les dynamiques observées.
  La dynamique simulée pour la sous-parcelle ER est mauvaise.
- De plus, on observe une quantité non-négligeable de larves pondus par des femelles exogènes (aire rouge), ce qui d'un point de vue biologique n'est très crédible.
+ De plus, on observe une quantité non-négligeable de larves pondus par des femelles exogènes (aire rouge), ce qui d'un point de vue biologique n'est pas très crédible.
  
  Les paramètres associées à ces trois dynamiques sont :
  \begin{center}
@@ -235,8 +235,8 @@ La différence en fin de saison est faible (environ 2\%), cela ne permettra pas 
 En revanche, il y a des différences plus importantes au début de la saison de floraison qui pourraient peut-être améliorer l'ajustement général des dynamiques.
 
 Les données utilisées proviennent d'observations effectuées en condition de laboratoire.
-On laissera alors au modèle la possibilité d'amplifier la variation de la probabilité de pupaison afin de prendre en compte d'éventuelles conditions climatiques qu'il y aurait pu avoir sur le verger.
-On peut faire ceci en utilisant un coefficient $\varpi\in [1;4]$ qui intervient comme suit :
+On laissera alors au modèle la possibilité d'amplifier la variation de la probabilité de pupaison afin de prendre en compte au mieux les conditions climatiques qu'il y aurait pu avoir sur le verger.
+On peut faire ceci en utilisant la relation linéaire de la probabilité de pupaison en fonction de la température (donné ci-dessus par $p_{\text{p}}$) et un coefficient $\varpi\in [1;4]$ qui intervient comme suit :
 \[
 \widetilde p_{\text{p}} = \left( p_{\text{p}} - \overline{p_{\text{p}}} \right) \times \varpi + \overline{p_{\text{p}}},
 \]
@@ -429,20 +429,20 @@ $\gamma$ & $p_{\text{m}}$ & $\mu_{\text{ER}}$ & $\mu_{\text{EH}}$ & $k$ & \textt
 
 Les dynamiques sont ici très bien captées pour les sous-parcelles PS et EH.
 La dynamique de la sous-parcelle ER est plutôt bien captée, surtout si l'on relativise vis à vis des des estimations précédentes qui ont toujours étés mauvaises.
-Les paramètres montrent (et le graphique aussi) qu'il y a principalement des femelles endogènes, ce qui est loin d'être invraisemblable.
-La principale critique que l'on puisse faire à cette estimation est d'avoir un paramètre $\xi$ fixé à 0.004, ce qui signifie l'impossibilité pour les femelles de pondre le moindre œuf passé le 15 septembre.
-Cela semble très exagéré.
+Les paramètres montrent (et le graphique aussi) qu'il y a principalement des femelles endogènes, ce qui semble vraisemblable.
 
 
-Néanmoins, cela semble être une bonne estimation.
+
+Cela semble être une bonne estimation.
 On procède à la validation sur le verger n\textdegree2.
-Il faut cependant noter que le phénomène de saisonnalité a lieu sur ce verger aux alentours du 23 août.
+Il faut cependant noter que le phénomène de saisonnalité a lieu sur ce verger aux alentours du 23 août pour les modalités PS et EH et aux alentours du 7 septembre pour la modalité ER.
 
 Les résultats produits sur le verger n\textdegree2 sont visibles sur la figure~\ref{fig:D2}.
-Et ces résultats sont mauvais.
+On remarque que les dynamiques des modalités ER et EH sont plus ou moins captées.
+En revanche, si la temporalité de la dynamique de la sous-parcelle PS semble correcte, son intensité n'est pas restituée correctement.
 \begin{figure}[ht]
  \centering
- \epsfig{file = plots/D2.eps, scale = 0.59}
+ \epsfig{file = plots/D_b2.eps, scale = 0.59}
  \caption{Dynamiques observées et simulées sur le verger n\textdegree2. La décomposition indiquant la provenance des femelles qui ont pondus les œufs est disponible pour les dynamiques simulées.
  Les paramètres utilisés sont ceux calibrés par le modèle sur le verger n\textdegree1.}
  \label{fig:D2}

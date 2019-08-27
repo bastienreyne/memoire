@@ -108,7 +108,7 @@ f(y, \hat y) = \frac{\sqrt{\frac{1}{n-1}\sum_{j=2}^n\left( y^*_j - \hat y^*_j \r
 $$
 où 
 $$y^*_j =  y_{t^j}, \qquad \text{ et } \qquad \hat y^*_j = \frac{1}{t^j - t^{j-1}}\sum_{k=t^{j-1}}^{t^j} \hat y_k.$$
-Concrètement $\hat y^*_j$ donne la moyenne des estimations correspondant à un relevé et $y^*_j$ donne la valeur observé associée.
+Concrètement $\hat y^*_j$ donne la moyenne des estimations correspondant à un relevé et $y^*_j$ donne la valeur observée associée.
 Appliquer la fonction à $n-1$ valeurs (correspondant aux relevés sur le terrain) plutôt qu'à chacun des $m$ jours (correspondant à l'étendue des relevés) de ne pas attribuer plus d'importance aux relevés qui ont eu un écart relativement important avec le relevé précédent.
 
 
@@ -225,15 +225,20 @@ En pratique, il ne renvoie donc pas un sous-ensemble du front de Pareto mais un 
 \end{enumerate}
 
 Un élément important pour assurer une convergence vers le front de Pareto est le choix des solutions filles $O_t$ effectué à chaque génération.
-Pour générer une solution fille, plusieurs étapes sont là aussi nécessaires.
-Ces étapes simplifiées sont :
-\begin{enumerate}
- \item On sélectionne deux solutions $s_1$ et $s_2$ dans $P_t$.
- \item On construit une solution fille $f_1$ en prenant la moitié des coordonnées de $s_1$ et l'autre moitié de $s_2$. 
- On construit $f_2$ en prenant les moitiés de $s_1$ et $s_2$ inutilisées dans la construction de $f_1$.
- \item Sur chacune des solutions filles, une coordonnée choisie aléatoirement est remplacée par une valeur aléatoire choisie dans un intervalle centré sur la valeur initiale.
- \item On réitère ces étapes jusqu'à avoir $N$ solutions filles.
-\end{enumerate}
+Bon nombres d'algorithmes génétiques (dont NSGA-II) utilisent la \emph{sélection}, le \emph{crossover} et la \emph{mutation} pour générer une solution fille.
+La sélection consiste à choisir certaines solutions mères qui seront les mieux à même de produire une bonne solution fille.
+Dans notre cas, les solutions du front $F^1$ seront choisies avec une plus grande probabilité que les autres
+Le crossover consiste à créer une solution fille en mélangeant des coordonnées de deux solutions mères sélectionnées.
+La mutation effectue un changement aléatoire sur une des coordonnées, ce qui favorise la diversité des solutions.
+
+% Ces étapes simplifiées sont :
+% \begin{enumerate}
+%  \item On sélectionne deux solutions $s_1$ et $s_2$ dans $P_t$.
+%  \item On construit une solution fille $f_1$ en prenant la moitié des coordonnées de $s_1$ et l'autre moitié de $s_2$. 
+%  On construit $f_2$ en prenant les moitiés de $s_1$ et $s_2$ inutilisées dans la construction de $f_1$.
+%  \item Sur chacune des solutions filles, une coordonnée choisie aléatoirement est remplacée par une valeur aléatoire choisie dans un intervalle centré sur la valeur initiale.
+%  \item On réitère ces étapes jusqu'à avoir $N$ solutions filles.
+% \end{enumerate}
 
 
 Et c'est ainsi qu'après un nombre suffisant d'itérations, et pour une taille de population suffisamment grande, l'algorithme NSGA-II renvoie un ensemble de points suffisamment proche du front de Pareto et qui en retranscrit sa diversité.
