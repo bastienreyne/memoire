@@ -35,7 +35,7 @@ Les intervalles étant définis, on peut maintenant faire l'analyse de sensibili
 \begin{figure}
  \centering
  \epsfig{file = plots/sensitivity_analysis_A.eps, scale = 0.59}
- \caption{Analyse de sensitivité de notre modèle avec la méthode Sobol.}
+ \caption{Analyse de sensibilité de notre modèle avec la méthode Sobol.}
  \label{fig:sa}
 \end{figure}
 
@@ -406,6 +406,13 @@ On émet alors l'hypothèse qu'un phénomène intervient à cette date.
 Ce phénomène non-observé caractériserait un changement de la conjoncture sur le verger et induirait une baisse du nombre de larves.
 
 Et on modélise cette hypothèse de manière radicale en introduisant un paramètre de saisonnalité $\xi \in [0;1]$ sur le nombre de femelles dans le verger à partir du 15 septembre.
+Cela donne en pratique
+\[
+F_{t,i} := \begin{cases}
+            F_{t, i} & \text{si $t<$ 15 septembre,}\\
+            \xi \, F_{t, i} & \text{si $t\geq$ 15 septembre.}
+           \end{cases}
+\]
 Concrètement, si le modèle décide de mettre une valeur éloignée de 1, cela signifie qu'à partir du 15 septembre que l'aspect ponte/reproduction du cycle de développement de la cécidomyie subit des perturbations qui entraînent une baisse du nombre de larves produites.
 
 Après calibration du modèle, un scénario se dégage des autres.
