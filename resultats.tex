@@ -2,6 +2,9 @@
 
 \lettrine{M}{aintenant} que le modèle est posé et que l'on sait quelles méthodes utiliser pour la calibration et le choix des solutions, on peut calibrer le modèle et présenter et explorer les solutions optimales.
 
+\section{Solutions pour le modèle initial}
+
+On présente dans cette section des solutions pour le modèle initial, avant de tester d'autres hypothèses.
 
 \subsubsection{Analyse de sensibilité}
 
@@ -19,10 +22,8 @@ Ensuite, par définition du paramètre $p_{\text{m}}$ (qui régule les échanges
 De la même manière, $\mu_{\text{ER}}$ et $\mu_{\text{EH}}$ désignent les probabilités de survie aux modalités de couverture du sol ER et EH.
 Leurs intervalles seront donc aussi $[0;1]$.
 
-Le paramètre $k$ relatif à la disponibilité en ressources gère le nombre d'attaques de cécidomyies que peut subir une inflorescence chaque jour.
-Une inflorescence ne peut pas supporter trop d'attaques pour qu'elle ait une durée de vie qui ne soit pas extrêmement courte. On fixera le seuil supérieur à 10 attaques par jour.
-On sait aussi que quand l'inflorescence est jeune, elle particulièrement sensible aux attaques.
-On fixera le seuil inférieur à 0.01.
+Le paramètre $k$ relatif à la disponibilité en ressources gère le nombre d'attaques de cécidomyies que peut subir une inflorescence chaque jour sans qu'il n'y ait de compétition pour la ressource.
+En l'absence d'estimation ou de référence sur la valeur de ce paramètre, il sera fixé de manière assez large en 0.01 et 10.
 
 Le \texttt{stock} d'individus en diapause sera fixé de manière assez large, dû à une absence d'estimation, entre 500 et 20000.
 
@@ -79,21 +80,22 @@ Ce qui peut expliquer ses fortes interactions.
 Cette analyse de sensibilité montre surtout l'impact des probabilités de survie aux modalités de couverture du sol en fonction de chaque sous-parcelles, qui ne respecte pas ce que l'on pourrait s'imaginer \emph{a priori}.
 On retiendra également que trois de nos paramètres ($p_{\text{m}}, k$ et \texttt{stock}) n'ont qu'un impact très limité --- comparativement aux autres --- sur la sortie du modèle.
 
-\subsection{Calibration}
+\subsection{Calibration et choix des solutions}
 
-Sachant cela, on peut utiliser NSGA-II pour obtenir un sous-ensemble du front de Pareto contenant des jeux de paramètres produisant des solutions non-dominées.
-L'algorithme est cependant stochastique, il ne renvoie jamais exactement deux fois les mêmes résultats.
-Pour pallier cet aspect, on exécute trente fois la fonction \texttt{nsga2} \citep{nsga} (avec une taille de population de 200, et 200 générations).
-Cela nous donne ainsi 6000 solutions. Mais parmi ces 6000 solutions certaines sont peut-être dominées par d'autres solutions provenant d'une exécution de \texttt{nsga2} différente.
-On ne récupère alors que les solutions non-dominées (et les jeux de paramètres correspondants) grâce à la fonction \texttt{is\textunderscore dominated} \citep{emoa}.
-On obtient ainsi 842 jeux de paramètres produisant autant de solutions non-dominées, parmi lesquelles on peut sélectionner des solutions.
-
-\subsection{Choix de solutions}
-
-On peut maintenant essayer de repérer différentes solutions--types reproduisant les quantités de larves observées.
-On effectue une CAH avec l'indice de Ward en utilisant la fonction \texttt{hclust} \citep{R}.
-
-Il faut dans un premier temps choisir un nombre de classes.
+En utilisant les mêmes intervalles pour les paramètres que ceux utilisés par l'analyse de sensibilité, on peut utiliser NSGA-II.
+% pour obtenir un sous-ensemble du front de Pareto contenant des jeux de paramètres produisant des solutions non-dominées.
+% L'algorithme est cependant stochastique, il ne renvoie jamais exactement deux fois les mêmes résultats.
+% Pour pallier cet aspect, on exécute trente fois la fonction \texttt{nsga2} \citep{nsga} (avec une taille de population de 200, et 200 générations).
+% Cela nous donne ainsi 6000 solutions. Mais parmi ces 6000 solutions certaines sont peut-être dominées par d'autres solutions provenant d'une exécution de \texttt{nsga2} différente.
+% On ne récupère alors que les solutions non-dominées (et les jeux de paramètres correspondants) grâce à la fonction \texttt{is\textunderscore dominated} \citep{emoa}.
+% Après avoir exécuté trente fois la fonction \texttt{nsga2} \citep{nsga} suivie de la fonction \texttt{is\textunderscore dominated} \citep{emoa} pour récupérer les solutions non-dominées.
+% 
+% on obtient ainsi 842 jeux de paramètres produisant autant de solutions non-dominées, parmi lesquelles on peut sélectionner des solutions.
+% \subsection{Choix de solutions}
+% On peut maintenant essayer de repérer différentes solutions--types reproduisant les quantités de larves observées.
+% On effectue une CAH avec l'indice de Ward en utilisant la fonction \texttt{hclust} \citep{R}.
+Parmi les 6000 solutions générées par la calibration du modèle avec l'algorithme d'optimisation NSGA-II, on a obtenu 842 jeux de paramètres produisant des solutions non-dominées.
+Pour repérer par CAH les différentes solutions types parmi ces 842 solutions non-dominées, il faut dans un premier temps choisir un nombre de classes.
 À cette fin, on regarde l'inertie intra-classes en fonction du nombre de classes (voir figure~\ref{fig:caha}).
 Dans une optique de classification «classique», choisir 2, 3, 6 ou 8 classes pourrait s'avérer pertinent.
 (Ces nombres de classes produisant une minimisation relativement importante de l'inertie intra-classes.)
@@ -118,9 +120,10 @@ Cela peut questionner la pertinence biologique de la solution proposée, indépe
 On détaille les trois solutions--types :
 \begin{itemize}
  \item \textbf{Solution--type 1 :} 
- Pour les sous-parcelles PS et EH, les dynamiques simulées ne captent que très grossièrement les dynamiques observées.
- La dynamique simulée pour la sous-parcelle ER est mauvaise.
- De plus, on observe une quantité non-négligeable de larves pondus par des femelles exogènes (aire rouge), ce qui d'un point de vue biologique n'est pas très crédible.
+ Les dynamiques pour les trois sous-parcelles sont grossièrement captées.
+ Le modèle permet de simuler la présence plus précoce de cécidomyies sur la sous-parcelle ER et plus tardive sur les sous-parcelles PS et EH. 
+ Il simule également un plus faible nombre de cécidomyies sur la sous-parcelle PS.
+ Cependant le double pic caractérisant la dynamique des cécidomyies sur ER n'est pas capté, et la forte décroissance du nombre de cécidomyies en fin de saison est mal simulé.
  
  Les paramètres associées à ces trois dynamiques sont :
  \begin{center}
@@ -129,12 +132,12 @@ $\gamma$ & $p_{\text{m}}$ & $\mu_{\text{ER}}$ & $\mu_{\text{EH}}$ & $k$ & \textt
 0.08 & 0.494 & 0.976 & 0.046 & 1.928 & 5600 & 3.084
  \end{tabular}
  \end{center}
+ Pour cette solution-type, on observe une quantité non négligeable de larves pondus par des femelles exogène (aire rouge), ce qui d'un point de vue biologique parait discutable.
 L'absence d'individus qui émergent de la sous-parcelle EH s'explique par $\mu_{\text{EH}}$ qui est fixé à 0.046, ce qui veut dire que 95\% des larves meurent en essayant de s'enfouir dans la sous-parcelle ainsi que 95\% des femelles issues de pupaison ou de diapause qui essayent d'en émerger.
 À la différence de la sous-parcelle ER où il n'y a pratiquement aucune mortalité induite par l'enherbement ras ($\mu_{\text{ER}} = 0.976$).
 La valeur 0.8 attribuée à $\gamma$ est élevée (chose qui se confirmera empiriquement par les simulations qui suivront et qui peut déjà se voir sur la figure~\ref{fig:A1}).
 
-\item \textbf{Solution--type 2 :} Contrairement à la solution précédente qui avait trop d'individus exogènes, cette solution n'en a pas du tout.
-Cependant, la qualité d'ajustement des dynamiques est pareille que précédemment : grossièrement captée pour les sous-parcelles PS et EH et mauvaise pour la sous-parcelle ER.
+\item \textbf{Solution--type 2 :} La qualité d'ajustement des dynamiques est assez similaire à celle de la première solution-type. Seule la décroissance en fin de saison est un peu mieux captée. Cependant, contrairement à la solution précédente qui avait trop d'individus exogènes, cette solution n'en a pas du tout.
 On remarque également que les dynamiques des sous-parcelles PS et EH se composent uniquement de larves provenant d'œufs pondus par des femelles issues de la sous-parcelle ER.
 
 Les paramètres sont :
@@ -144,12 +147,12 @@ $\gamma$ & $p_{\text{m}}$ & $\mu_{\text{ER}}$ & $\mu_{\text{EH}}$ & $k$ & \textt
 0 & 0.968 & 1 & 0.025 & 0.1 & 14483 & 6.26
  \end{tabular}
  \end{center}
- Ici aussi, il y a une absence totale d'individus qui émergent de la sous-parcelle avec un enherbement haut ($\mu_{\text{EH}} = 0.025$)
+ Ici aussi, il y a une absence totale d'individus qui émergent de la sous-parcelle avec un enherbement haut ($\mu_{\text{EH}} = 0.025$).
  L'absence d'individus exogènes se compensent par un nombre d'œufs pondus plus élevé que précédemment (6.26 contre 3.08) et un stock de larves diapausantes significatif (\texttt{stock} $=14483$).
  
 \item \textbf{Solution--type 3 :}
 Contrairement aux deux premières solutions, il y a ici des femelles qui émergent de la sous-parcelle EH.
-Il faut cependant reconnaître que les dynamiques sont très mal captées.
+Il faut cependant reconnaître que les dynamiques sont très mal captées : les problèmes d'ajustement des dynamiques identifiés pour les deux précédentes solutions sont toujours présents, et la décroissance en fin de saison est encore moins bien captée.
 
 Les paramètres sont :
  \begin{center}
@@ -181,9 +184,9 @@ On observe que l'émergence d'individus dans la sous-parcelle EH ($\mu_{\text{EH
  \label{fig:A1}
 \end{figure}
 
-Ces trois scénarios semblent tous montrer que le modèle actuel n'est pas suffisamment complet pour capter le phénomène observé.
-Il fait soit appel à trop d'exogènes, soit il n'y a aucun individus qui émergent de la sous-parcelle EH, soit les deux.
-Et lorsqu'il y a des individus qui émergent de la sous-parcelle EH, le modèle ne parvient pas à recréer les dynamiques observées.
+Ces trois scénarios semblent tous montrer que le modèle actuel n'est pas suffisamment complet pour capter de façon satisfaisante le phénomène observé.
+Pour les deux premières solutions, il y a quasiment aucun individus qui émergent de la sous-parcelle EH, et les individus se composent surtout d'individus exogènes (première solution-type) ou d'individus endogènes venant de la sous-parcelle ER (deuxième solution-type).
+Et lorsqu'il y a des individus qui émergent de la sous-parcelle EH (troisième solution--type), le modèle ne parvient pas à recréer les dynamiques observées.
 
 Cela peut s'expliquer par l'incapacité pour le modèle d'arrêter la reproduction des femelles et donc de stopper la dynamique en fin de saison induisant la baisse du nombre de larves observé.
 C'est peut-être l'une des raisons pour laquelle le modèle fait appel  à beaucoup de femelles exogènes : elles sont proportionnelles aux inflorescences (dont la population baisse en fin de saison), ce qui entraîne donc une baisse du nombre de femelles et \emph{a fortiori} une baisse du nombre de larves.
@@ -196,17 +199,16 @@ Et si en testant une de ces hypothèses, on trouve une solution qui permet d'aju
  
  \clearpage
 
-\section{Prise en compte de la température}
+\section{Solutions avec prise en compte de la température}
 
 La première hypothèse à laquelle on s'intéresse est le lien entre la température et la probabilité d'entrer en pupaison.
-En effet, si la probabilité de pupaison était amenée à être réduite en fin de saison, alors cela permettrait potentiellement au modèle d'avoir une diminution du nombre de larves en fin de saison sans avoir recours à trop de femelles exogènes.
 
 On sait, d'après~\citet{pauldiap}, que la probabilité d'entrer en diapause et d'entrer en pupaison varie tout au long de l'année, et dépend de la température.
-On espère ici qu'il y ait au cours de notre saison considérée (de juillet à octobre 2017) des variations de température pouvant expliquer une chute de la probabilité d'entrer en pupaison en fin de saison.
+On espère ici qu'il y ait au cours de notre saison considérée (de juillet à octobre 2017) des variations de température pouvant expliquer une chute de la probabilité d'entrer en pupaison en fin de saison ce qui permettrait potentiellement au modèle de mieux reproduire la diminution du nombre de larves observées en fin de saison.
 
 On choisira cependant la simplicité en essayant de trouver une relation linéaire permettant d'exprimer la probabilité d'entrer en pupaison en fonction de la température.
 Pour réaliser ceci, on récupère les données de l'article de~\citet{pauldiap}.
-Et à chaque taux de pupaison, on fait correspondre la température moyenne sur une quinzaine de jours (de 7 jours avant à 7 jours après).
+Et à chaque taux de pupaison observé sur des larves prélevées en verger, on fait correspondre la température moyenne sur une quinzaine de jours (de 7 jours avant à 7 jours après la date du prélèvement).
 On fait cela pour prendre en compte l'effet la température sur le cycle de développement complet de la cécidomyie --- depuis la ponte des œufs jusqu'à l'émergence des femelles issues de pupaison.
 
 
@@ -282,7 +284,7 @@ Après calibration du modèle et classification des solutions, on trouve trois s
 Les voici :
 \begin{itemize}
  \item \textbf{Solution--type 1 :} 
- Une solution faisant appel à beaucoup d'individus exogènes.
+ Une solution faisant appel à beaucoup d'individus exogènes et sans individus qui émergent de la sous-parcelle EH.
  
  Les paramètres sont :
  \begin{center}
@@ -293,7 +295,7 @@ $\gamma$ & $p_{\text{m}}$ & $\mu_{\text{ER}}$ & $\mu_{\text{EH}}$ & $k$ & \textt
  \end{center}
 
 \item \textbf{Solution--type 2 :} 
-Une solution sans individus exogènes ni sans individus qui émergent de la sous-parcelle EH.
+Une solution sans individus exogènes ni sans individus qui émergent de la sous-parcelle EH  et sans individus exogènes.
 
 Les paramètres sont :
  \begin{center}
@@ -336,7 +338,7 @@ On peut remarquer que le paramètre $\varpi$ ne dépasse jamais 1.5, ce qui semb
 \end{figure}
 
 \clearpage
-\section{Contraintes liées aux ressources}
+\section{Solutions avec prise en compte de contraintes liées aux ressources}
 
 Puisque la température n'explique pas le phénomène observé en fin de saison, on teste une autre hypothèse.
 On s'intéresse aux ressources.
@@ -369,8 +371,30 @@ La différence entre les inflorescences vivantes et les inflorescences attractiv
 Sur les trois solutions--types trouvées après la calibration du modèle, deux correspondent à celles trouvées précédemment.
 Les dynamiques sont visibles sur la figure~\ref{fig:C}.
 On observe une amélioration sur les sous-parcelles PS et EH, notamment en ce qui concerne la fin de dynamique en fin de saison.
-La parcelle ER est en revanche toujours aussi mal captée.
-Et la pertinence biologique des solutions reste toujours très discutable.
+La parcelle ER est en revanche toujours mal captée.
+Et la pertinence biologique des solutions (concernant la forte présence ou l'absence d'individus exogènes et l'absence d'individus qui émergents de la sous-parcelle EH) reste toujours discutable.
+
+Les paramètres pour les trois solutions--types sont les suivants :
+{%
+\newcommand{\mc}[3]{\multicolumn{#1}{#2}{#3}}
+\begin{center}
+\begin{tabular}{lllllll}
+\mc{7}{c}{\textbf{Solution--type 1}}\\
+$\gamma$ & $p_{\text{m}}$ & $\mu_{\text{ER}}$ & $\mu_{\text{EH}}$ & $k$ & \texttt{stock} & $E_0\mu_\ell$\\
+0.115 & 0.189 & 0.898 & 0.012 & 1.877 & 515 & 3.097\\
+ &  &  &  &  &  & \\
+\mc{7}{c}{\textbf{Solution--type 2}}\\
+$\gamma$ & $p_{\text{m}}$ & $\mu_{\text{ER}}$ & $\mu_{\text{EH}}$ & $k$ & \texttt{stock} & $E_0\mu_\ell$\\
+0.004 & 0.490 & 0.990 & 0.018 & 0.242 & 9970 & 5.638\\
+ &  &  &  &  &  & \\
+\mc{7}{c}{\textbf{Solution--type 3}}\\
+$\gamma$ & $p_{\text{m}}$ & $\mu_{\text{ER}}$ & $\mu_{\text{EH}}$ & $k$ & \texttt{stock} & $E_0\mu_\ell$\\
+0 & 0.094 & 0.999 & 0.514 & 0.181 & 18214 & 8.259
+\end{tabular}
+\end{center}
+}%
+
+
 \begin{figure}[ht]
  \centering
  
@@ -397,7 +421,7 @@ On remarquera que la prédiction sur la troisième solution--type est toujours a
 La prise en compte de l'attractivité des inflorescences ne permet toujours pas la baisse des dynamiques observées en fin de saison lorsqu'il y a des individus endogènes dans la sous-parcelle EH.
 
 \clearpage
-\section{Introduction d'un paramètre de saisonnalité}
+\section{Solutions avec l'introduction d'un paramètre de saisonnalité}
 
 Les hypothèses émises jusqu'à présent n'ont pas permis d'expliquer ce qu'il se produit en fin de saison.
 Aux hypothèses déjà faites, on en rajoute une autre.
@@ -413,7 +437,7 @@ F_{t,i} := \begin{cases}
             \xi \, F_{t, i} & \text{si $t\geq$ 15 septembre.}
            \end{cases}
 \]
-Concrètement, si le modèle décide de mettre une valeur éloignée de 1, cela signifie qu'à partir du 15 septembre que l'aspect ponte/reproduction du cycle de développement de la cécidomyie subit des perturbations qui entraînent une baisse du nombre de larves produites.
+Concrètement, si le modèle décide de mettre une valeur éloignée de 1, cela signifie qu'à partir du 15 septembre que le cycle de développement de la cécidomyie subit des perturbations qui entraînent une baisse du nombre de larves produites.
 
 Après calibration du modèle, un scénario se dégage des autres.
 Il est visible sur la figure~\ref{fig:D}.

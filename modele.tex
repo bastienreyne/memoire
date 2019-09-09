@@ -27,15 +27,13 @@ Les hypothèses sur les processus biologiques qui régissent le système, que no
 \begin{itemize}
  \item la modalité de couverture du sol n'influe pas sur le développement et la phénologie du manguier, elle n'influe pas non plus sur le déplacement des cécidomyies ;
  \item la durée de vie des femelles n'est que d'un jour, et il correspond au jour de la ponte ;
- \item aucune cécidomyie (larve ou adulte) ne rentre dans le sol ou ne sort du sol pour la sous-parcelle avec un paillage synthétique ;
- \item il y a un taux de mortalité pour larves lorsqu'elle rentrent et pour les adultes lorsqu'ils sortent du sol. Et ce taux est différent entre l'enherbement ras et l'enherbement haut ;
+ \item il y a un taux de mortalité pour les larves lorsqu'elles rentrent et pour les adultes lorsqu'ils sortent du sol. Et ce taux est différent entre l'enherbement ras et l'enherbement haut. Pour le paillage synthétique il est égal à 1 (\textit{i.e.}, aucune cécidomyie ne rentre dans le sol ou ne sort du sol) ;
  \item les larves qui n'entrent pas en pupaison (soit qui meurent, soit qui rentrent en diapause) sont exclues du système ;
 %  \item la probabilité d'entrer en pupaison dépend de la température ;
  \item la quantité de cécidomyies en diapause est la même pour les trois sous-parcelles;
  \item un individu qui émerge dans une sous-parcelle peut se déplacer dans les autres sous-parcelles, il y a cependant un coût relatif à la distance (autrement dit, les cécidomyies préfèrent rester dans la sous-parcelle dans laquelle elles émergent, puis aller dans la sous-parcelle limitrophe plutôt que dans la troisième) ;
  \item les femelles exogènes arrivent proportionnellement aux inflorescences vivantes dans les sous-parcelles (qui exercent un effet d'attraction) ;
- \item s’il y a significativement plus de femelles que d’inflorescences, alors elles ne peuvent pas toutes pondre ;  
- \item il y a un taux de mortalité sur les œufs pondus par les femelles, ils ne donneront pas tous des larves.
+ \item la reproduction des femelles (ponte et/ou le développement des larves) est limitée par la ressource disponible, c'est à dire le nombre d'inflorescences par femelle.
 %  \item  seuls les premiers stades phénologiques de l'inflorescence sont attractifs pour les cécidomyies.
 \end{itemize}
 
@@ -147,15 +145,15 @@ Formellement, cela peut se traduire par
 \end{align}
 Ici, $L_{t,i}$ désigne le nombre de larves qui s'éjectent des inflorescences à la date $t$ dans la sous-parcelle $i$, $F_{t - d_{\ell}, i}$ le nombre de femelles qu'il y avait dans la sous-parcelle $i$ une durée de développement larvaire auparavant (durée qu'il y a entre la ponte des œufs et l'apparition du dernier stade larvaire où les larves s'éjectent des inflorescences pour s'enfouir dans le sol), $R$ représente la disponibilité d'inflorescences pour les cécidomyies, $E_0$ le nombre maximal d'œufs pondus par une femelle et $\mu_{\ell}$ la probabilité de survie des œufs et larves.
 
-Le coefficient $R$ représentant la disponibilité en ressources traduit le fait que lorsqu'il n'y a pas suffisamment d'inflorescences dans le verger par rapport au nombre de femelles, alors il y a une compétition entre cécidomyies pour ces ressources. Seulement une proportion des femelles pourra alors accéder aux ressources et pondre.
+Le coefficient $R$ représentant la disponibilité en ressources traduit le fait que lorsqu'il n'y a pas suffisamment d'inflorescences dans le verger par rapport au nombre de femelles, alors il y a une compétition entre cécidomyies pour ces ressources. Seulement une proportion des femelles pourra alors accéder aux ressources et pondre et/ou il y aura une plus forte mortalité des larves.
 Cette idée sera prise en compte comme suit :
 \[
 R = \min\!\left\{1, \frac{k I_{t, i}}{ F_{t, i}} \right\}\!.
 \]
 $R$ vaut 1 lorsque toutes les cécidomyies femelles peuvent pondre ; il est compris entre 0 et 1 lorsque le ratio entre nombre d'inflorescences et nombre de cécidomyie est insuffisant.
-Ce coefficient $R$ dépend du paramètre $k$ qui indique combien de femelles peut accueillir une inflorescence chaque jour.
+Ce coefficient $R$ dépend du paramètre $k$ qui indique combien de femelles peut accueillir une inflorescence chaque jour sans générer de compétition entre les cécidomyies.
 
-Dans l'équation \ref{eq:larves}, on peut noter que le nombre de larves dépend du nombre de femelles présentes dans la sous-parcelle $i$ au jour $t$.
+Dans l'équation \ref{eq:larves}, on peut noter que le nombre de larves au jour $t+d_{\ell}$ dépend du nombre de femelles présentes dans la sous-parcelle $i$ au jour $t$.
 Ces femelles sont composées de femelles exogènes et de femelles endogènes.
 Parmi les femelles endogènes, il y a celles qui proviennent de la sous-parcelle $i$ et qui y restent et celles qui proviennent des sous-parcelles $j$ et $k$ et qui viennent dans la sous-parcelle $i$.
 Le nombre de femelles dans la sous-parcelle $i$ au jour $t$ peut s'écrire
@@ -165,9 +163,9 @@ F_{t, i} = F^{\text{endo}}_{t, i\rightarrow i} + F^{\text{endo}}_{t, (j,k)\right
 où $F^{\text{endo}}_{t, i\rightarrow i}$ sont les femelles qui émergent dans la sous-parcelle $i$ et qui y restent, $F^{\text{endo}}_{t, (j,k)\rightarrow i}$ sont les femelles qui ont émergées dans les sous-parcelles $j$ et $k$ et qui viennent dans la sous-parcelle $i$, $F^{\text{exo}}_{t, i}$ sont les femelles exogènes à la parcelle qui viennent dans la sous-parcelle $i$.
 On rappelle également que le nombre de femelles exogènes est, d'après notre hypothèse, proportionnel au nombre d'inflorescences. Chose qui peut se formaliser par
 \[
-F^{\text{exo}}_{t, i} = \gamma \times I_{t, i},
+F^{\text{exo}}_{t, i} = \gamma \times I_{t, i}.
 \]
-avec $\gamma$ à déterminer.
+
 
 Les échanges de femelles entre les différentes sous-parcelles est basé sur l'hypothèse qu'elles préfèrent rester dans la sous-parcelle de laquelle elles émergent plutôt que d'aller ailleurs.
 Ainsi, le nombre de femelles qui ont émergées dans la sous-parcelle $i$ et qui vont dans la sous-parcelle $j$ est donné par
@@ -188,12 +186,12 @@ On peut noter que les femelles endogènes comprennent les femelles issues de la 
 \[
 F^{\text{endo}}_{t, i} = F^{\text{pupe}}_{t, i} + F^{\text{diap}}_{t,i}.
 \]
-Le nombre de femelles issues de la phase de pupaison qui émergent à une certaine date correspond au nombre de larves qui ont réussies à pénétrer dans le sol, qui sont entrées en pupaison, se sont transformées en cécidomyies, ont survécues puis ont émergées --- en prenant en compte la durée de développement et la proportion de femelles chez les cécidomyies.
+Le nombre de femelles issues de la phase de pupaison qui émergent à une certaine date correspond au nombre de larves qui ont réussies à pénétrer dans le sol, qui sont entrées en pupaison, se sont transformées en adultes, ont survécues puis ont émergées du sol --- en prenant en compte la durée de développement et la proportion de femelles chez les cécidomyies.
 On le retranscrit comme ceci :
 \[
 F^{\text{pupe}}_{t, i} = L_{t - d_{\text{p}}, i} \times \mu_{\text{sol}} \times p_{\text{p}} \times \frac{1}{1 + \mathit{SR}}.
 \]
-On a ici $F^{\text{pupe}}_{t, i}$ qui désigne le nombre de femelles issues du cycle de développement et qui émergent des pupes présentent dans le sol de la sous-parcelle $i$ à la date $t$, $L_{t - d_{\text{p}}, i}$ le nombre de larves qui sont rentrés dans le sol de la sous-parcelle $i$ une durée de pupaison auparavant, $\mu_{\text{sol}}$ la probabilité pour une larve d'entrer dans le sol et pour une femelle d'en sortir (probabilité qui dépend de la modalité de couverture du sol), $p_{\text{p}}$ la probabilité pour une larve d'entrer en phase de pupaison et d'y survivre et $\mathit{SR}$ le ratio du nombre de mâles sur le nombre de femelles. 
+On a ici $F^{\text{pupe}}_{t, i}$ qui désigne le nombre de femelles issues du cycle de développement et qui émergent des pupes présentent dans le sol de la sous-parcelle $i$ à la date $t$, $L_{t - d_{\text{p}}, i}$ le nombre de larves qui sont rentrées dans le sol de la sous-parcelle $i$ une durée de pupaison auparavant, $\mu_{\text{sol}}$ la probabilité pour une larve d'entrer dans le sol et pour une femelle d'en sortir (probabilité qui dépend de la modalité de couverture du sol), $p_{\text{p}}$ la probabilité pour une larve d'entrer en phase de pupaison et d'y survivre et $\mathit{SR}$ le ratio du nombre de mâles sur le nombre de femelles. 
 Ainsi, $\frac{1}{1 + \mathit{SR}}$ donne la proportion de larves qui se transforment en femelles (les mâles ne pondant pas, ils ne sont pas considéré dans le modèle).
 Notons qu'ici
 \[
@@ -231,8 +229,8 @@ Le tableau~\ref{tab:param} recense les paramètres du modèle, et indique ceux q
 $\gamma$ & Paramètre régulant l'arrivée des individus exogènes au verger & Calibration\\
 $p_{\text{m}}$ & Paramètre régulant l'intensité des échanges entre sous-parcelles & Calibration\\
 $\mu_{\text{sol}}^1$ & Probabilité de survie des larves lorsqu'elles s'enfouissent dans le sol à la modalité de couverture du sol & Calibration\\
-$\mu_{\text{sol}}^2$ & Probabilité de survie des femelles qui émergent (de pupaison ou de diapause) la modalité de couverture du sol & Calibration\\
-$k$ & Paramètre quantifiant le nombre de femelles que peut accueillir une inflorescence chaque jour & Calibration\\
+$\mu_{\text{sol}}^2$ & Probabilité de survie des femelles qui émergent du sol (de pupaison ou de diapause) selon la modalité de couverture du sol & Calibration\\
+$k$ & Paramètre quantifiant le nombre de femelles que peut accueillir une inflorescence chaque jour sans générer de compétition entre les cécidomyies & Calibration\\
 \texttt{stock} & Nombre d'individus entrés en diapause les années précédentes qui émergent l'année considérée & Calibration  \\
 $E_0$ & Nombre maximal d'œufs pondus par une femelle & $\sim\!150$ \citep{paul}\\
 $\mu_{\ell}$ & Probabilité de survie des œufs et des larves & $\sim\!0.04$ \citep{paul}\\

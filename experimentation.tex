@@ -131,14 +131,15 @@ Ce choix découle du fait que ce sont les dynamiques associées aux dynamiques d
 Le \emph{dataset 2} permet aussi d'extraire la dynamique de larves, à partir des larves piégées.
 En effet, on connait le nombre de larves par piège, le nombre d'inflorescences vivantes situées au-dessus des pièges et le nombre d'inflorescences vivantes dans les arbres suivis.
 De là, on peut estimer le nombre de larves qui s'éjecte des inflorescences à l'échelle d'un arbre, puis à l'échelle de la sous-parcelle.
-Il y a cependant ici une subtilité : le relevé des pièges n'est pas quotidien, il faut donc répartir le nombre de larves piégées entre deux relevés effectifs sur la période entre lesdits relevés.
+On notera qu'une hypothèse est faite : toutes les larves qui s'éjectent des inflorescences au-dessus des pièges sont piégées.
+Il y a également ici une subtilité : le relevé des pièges n'est pas quotidien, il faut donc répartir le nombre de larves piégées entre deux relevés effectifs sur la période entre lesdits relevés.
 La dynamiques de larves peut donc s'obtenir en utilisant la formule 
 \[
-L_t = \frac{N}{n}\left(\sum_{k = 1}^n L_{t}^{k} \times \frac{I_{k, t}^{2}}{I_{k, t}^{2, p}} \right),
+L_t = \frac{N}{n}\left(\sum_{k = 1}^n L_{k, t} \times \frac{I_{k, t}^{2}}{I_{k, t}^{2, p}} \right),
 \]
-où $N$ représente le nombre d'arbre dans la sous-parcelle, $n$ le nombre d'arbre suivis, $I^{2}_{k, t}$ le nombre d'inflorescences sur l'arbre $k$ à la date $t$, $I^{2, p}_{k, t}$ le nombre d'inflorescences au-dessus des pièges dans l'arbre $k$ à la date $t$ et on définit $L_t^k$, le nombre de larves dans les pièges de l’arbre $k$ à la date $t$, par
+où $N$ représente le nombre d'arbre dans la sous-parcelle, $n$ le nombre d'arbre suivis, $I^{2}_{k, t}$ le nombre d'inflorescences sur l'arbre $k$ à la date $t$, $I^{2, p}_{k, t}$ le nombre d'inflorescences au-dessus des pièges dans l'arbre $k$ à la date $t$ et on définit $L_{k,t}$, le nombre de larves dans les pièges de l’arbre $k$ à la date $t$, par
 \[
-L_t^k = \frac{L_{k, t}^j}{t^j - t^{j-1}},
+L_{k,t} = \frac{L_{k, t}^j}{t^j - t^{j-1}},
 \]
 avec $t^j$  le nombre de jours entre la première observation et le $j^{\text{ème}}$ relevé et $L_{k, t}^j$ le nombre de larves dans les pièges de l'arbre $k$ au $j^{\text{ème}}$ relevé.
 Les différentes dynamiques de larves sont visibles sur la figure~\ref{fig:larves}.

@@ -107,9 +107,9 @@ $$
 f(y, \hat y) = \frac{\sqrt{\frac{1}{n-1}\sum_{j=2}^n\left( y^*_j - \hat y^*_j \right)^2}}{\max_j(y^*_j) - \min_j(y^*_j)},
 $$
 où 
-$$y^*_j =  y_{t^j}, \qquad \text{ et } \qquad \hat y^*_j = \frac{1}{t^j - t^{j-1}}\sum_{k=t^{j-1}}^{t^j} \hat y_k.$$
+$$y^*_j =  y_{t^j}, \qquad \text{ et } \qquad \hat y^*_j = \frac{1}{t^j - t^{j-1}}\sum_{k=t^{j-1}+1}^{t^j} \hat y_k.$$
 Concrètement $\hat y^*_j$ donne la moyenne des estimations correspondant à un relevé et $y^*_j$ donne la valeur observée associée.
-Appliquer la fonction à $n-1$ valeurs (correspondant aux relevés sur le terrain) plutôt qu'à chacun des $m$ jours (correspondant à l'étendue des relevés) de ne pas attribuer plus d'importance aux relevés qui ont eu un écart relativement important avec le relevé précédent.
+Appliquer la fonction à $n-1$ valeurs (correspondant aux relevés sur le terrain) plutôt qu'à chacun des $m$ jours (correspondant à l'étendue des relevés) permet de ne pas attribuer plus d'importance aux relevés qui ont eu un écart relativement important avec le relevé précédent.
 
 
 
@@ -124,7 +124,7 @@ L'analyse de sensibilité est définie par \citet{saltelli2004} comme
  «l'étude de comment l'incertitude de la sortie d'un modèle --- qu'elle soit numérique ou non --- peut être répartie entre les différentes sources d'incertitudes présentes dans les entrées du modèle.»\footnote{«The study of how uncertainty in the output of a model (numerical or otherwise) can be apportioned to different sources of uncertainty in the model input.»}
 \end{quote}
 Autrement dit, on cherche à connaître les paramètres les plus influants sur la sortie du modèle.
-La calibration comportant toujours une part d'arbitraire, cette analyse permet de prendre du recul sur les choix de paramètres, relativement à leur impact sur les sorties du modèle.
+La calibration comportant toujours une part d'arbitraire, cette analyse permet de prendre du recul sur les valeurs choisies pour les paramètres calibrés, relativement à leur impact sur les sorties du modèle.
 % En particulier lorsque certains paramètres ne sont qu'approximatifs vis à vis de la réalité qu'ils ont vocation à décrire, mais fortement significatifs pour la sortie du modèle.
 
 Il existe deux grandes catégories d'analyses de sensibilité, celles qui ont une approche globale et celles qui ont une approche locale (parfois appelées \emph{one-at-the-time}).
@@ -139,7 +139,7 @@ Parmi les méthodes les plus connues et les plus utilisées, on peut en citer qu
 Notre modèle possède moins de 20 paramètres et s'exécute en moins d'une minute, nous utiliserons alors la méthode Sobol conformément aux recommendations de \citet[chap. 6]{saltelli}.
 
 Le fonctionnement de cette méthode est relativement intuitif.
-On considère que la sortie de notre modèle $Y$ peut s'exprimer comme une fonction des entrées de notre modèle $X,$ c'est-à-dire $Y = f(X)$.
+On considère que la sortie de notre modèle $Y$ peut s'exprimer comme une fonction des entrées de notre modèle $X$ (ici les entrées $X$ du modèle seront nos paramètres), c'est-à-dire $Y = f(X)$.
 Comme $X = \left( X_1, \ldots, X_p \right)$ peut prendre un nombre important de valeurs possibles, il en résulte qu'il y a \emph{a priori} un nombre important de résultats possibles pour $Y.$
 % L'objectif est alors de décomposer ces résultats possibles --- cette variance qu'admet $Y$ --- en fonction de chaque entrée du modèle $X_i$.
 L'objectif est alors de déterminer quelles entrées du modèle $X_i$ induisent le plus de changements dans ces résultats possibles --- dans cette variance qu'admet $Y.$
@@ -156,7 +156,7 @@ Il faut pour ça utiliser les indices totaux de Sobol définis par
 S^T_i = 1 - \frac{\textbf{Var}\!\left( \mathbf{E}\!\left[Y|X_{\sim i}\right] \right)}{\textbf{Var}\!\left( Y \right)},
 \]
 où $X_{\sim i} = \left(X_1, \ldots, X_{i-1}, X_{i+1}, \ldots, X_p \right)$.
-L'indice $S^T_i$ ainsi défini permet lui de prendre en compte l'impact du paramètre $X_i$ et de ses interactions sur la variance de $Y$.
+L'indice $S^T_i$ ainsi défini permet lui de prendre en compte l'impact du paramètre $X_i$ et de ses interactions avec les autres paramètres sur la variance de $Y$.
 À noter que l'interaction entre $X_i$ et $X_j$ est à la fois prise en compte par $S^T_i$ et $S^T_j$.
 C'est pour cette raison qu'il est souvent pertinent d'interpréter les indices principaux et les indices totaux conjointement.
 
@@ -177,18 +177,18 @@ Nous avons cependant trois dynamiques à ajuster (une pour chaque sous-parcelle)
 Une alternative est d'utiliser un algorithme d'optimisation multicritères.
 Ces algorithmes ont l'avantage de pouvoir optimiser simultanément des objectifs qui ne sont pas toujours comparables --- à des échelles différentes, par exemple.
 Un des plus connus est sans conteste l'algorithme génétique NSGA-II (Nondominated Sorting Genetic Algorithm II) \citep{deb}.
-C'est celui que nous avons testé.
+C'est celui que nous avons utilisé.
 
 C'est un algorithme qui ne renvoie pas une unique solution mais un ensemble de solutions. 
 Cet ensemble de solutions converge vers un sous-ensemble du front de Pareto.
 Le front de Pareto désigne l'ensemble des solutions non-dominées pour un problème donné.
-Dans $P \subset \mathbf{R}^{p}$ ($p$ > 1), une solution $x^* = \left( x_1, \ldots, x_p \right) \in  P$ est dite non-dominée lorsque
+Si l'on note $P \subset \mathbf{R}^{p}$ ($p$ > 1) l'ensemble des solutions, alors une solution $x^* = \left( x_1, \ldots, x_p \right) \in  P$ est dite non-dominée lorsque
 \[
 \left\{ x \in P\ |\ \forall\ i \in \{1, \ldots, p\},\ x_i \succcurlyeq x_i^* \text{ et } \exists\ i \text{ tel que } x_i \succ x_i^* \right\} = \emptyset,
 \]
 où $\succcurlyeq$ et $\succ$ veulent respectivement dire «est préféré à» et «est strictement préféré à». 
 Dans notre cas, vu que l'on veut minimiser notre fonction de coût, $x^* \succcurlyeq x$ se traduira par $f(x^*) \leq f(x)$ et $x^* \succ x$ se traduira par $ f(x^*) < f(x)$, où la fonction $f$ représente la composée de notre modèle suivi de notre fonction de coût.
-En d'autres termes, $x$ est non-dominée signifie qu'il n'existe pas de solution $y$ qui soit strictement meilleure sur un des critères et au moins aussi bonne sur tous les autres critères.
+En d'autres termes, $x^*$ est non-dominée signifie qu'il n'existe pas de solution $x$ qui soit strictement meilleure sur un des critères et au moins aussi bonne sur tous les autres critères.
 
 Le front de Pareto étant un sous-ensemble de $\mathbf{R}^{p}$, il n'est (\emph{a priori}) pas dénombrable.
 De ce fait, NSGA-II ne peut pas renvoyer le front tout entier mais seulement un sous-ensemble.
@@ -200,7 +200,7 @@ En pratique, il ne renvoie donc pas un sous-ensemble du front de Pareto mais un 
 \begin{enumerate}
  \item On possède un ensemble de solutions potentielles que l'on nommera \emph{population}.
  La taille de la population $N$ est fixée arbitrairement.
- \item À chaque solution de cette population $P_t$, on attribue une solution fille (on verra la suite comment). 
+ \item À chaque solution de cette population $P_t$, on attribue une solution fille (on verra par la suite comment). 
 \end{enumerate}
 
  Avec la population $P_t$ et les solutions filles associées $O_t$ (\emph{offspring} en anglais), cela forme un ensemble de solutions potentielles $S_t$ de taille $2N$. 
@@ -208,7 +208,7 @@ En pratique, il ne renvoie donc pas un sous-ensemble du front de Pareto mais un 
 \begin{enumerate}[resume]
  \item Pour ce faire, pour chaque solution potentielle $s\in S_t$ :
  \begin{itemize}
-  \item on établit l'ensemble $D_s$ d'élément de $S_t$ qui sont dominées par $s$. On note $n_s$ son cardinal ;
+  \item on établit l'ensemble $D_s$ d'éléments de $S_t$ qui dominent $s$. On note $n_s$ son cardinal ;
   \item on établit l'ensemble $E_s$ des autres solutions de $S_t$ qui sont dominées par la solution $s$.
  \end{itemize}
  \item On répartit alors nos solutions en plusieurs groupes, en plusieurs \emph{fronts}.
@@ -227,7 +227,7 @@ En pratique, il ne renvoie donc pas un sous-ensemble du front de Pareto mais un 
 Un élément important pour assurer une convergence vers le front de Pareto est le choix des solutions filles $O_t$ effectué à chaque génération.
 Bon nombres d'algorithmes génétiques (dont NSGA-II) utilisent la \emph{sélection}, le \emph{crossover} et la \emph{mutation} pour générer une solution fille.
 La sélection consiste à choisir certaines solutions mères qui seront les mieux à même de produire une bonne solution fille.
-Dans notre cas, les solutions du front $F^1$ seront choisies avec une plus grande probabilité que les autres
+Dans notre cas, les solutions du front $F^1$ seront choisies avec une plus grande probabilité que les autres.
 Le crossover consiste à créer une solution fille en mélangeant des coordonnées de deux solutions mères sélectionnées.
 La mutation effectue un changement aléatoire sur une des coordonnées, ce qui favorise la diversité des solutions.
 
@@ -243,6 +243,11 @@ La mutation effectue un changement aléatoire sur une des coordonnées, ce qui f
 
 Et c'est ainsi qu'après un nombre suffisant d'itérations, et pour une taille de population suffisamment grande, l'algorithme NSGA-II renvoie un ensemble de points suffisamment proche du front de Pareto et qui en retranscrit sa diversité.
 
+Il faut cependant noter que l'algorithme est stochastique, il ne renvoie jamais exactement deux fois les mêmes résultats.
+Pour pallier cet aspect, on exécutera trente fois la fonction \texttt{nsga2} \citep{nsga} (avec une taille de population de 200, et 200 générations).
+Cela nous donnera ainsi 6000 solutions.
+Mais parmi ces 6000 solutions certaines seront peut-être dominées par d'autres solutions provenant d'une exécution de \texttt{nsga2} différente.
+On ne récupèrera alors que les solutions non-dominées (et les jeux de paramètres correspondants) grâce à la fonction \texttt{is\textunderscore dominated} \citep{emoa}.
 
 Dans notre cas, cela signifie que l'on possède différents jeux de paramètres et les valeurs de la fonction de coût pour les trois sous-blocs qu'ils produisent.
 Et qu'il ne reste plus qu'à faire un choix.
@@ -303,6 +308,8 @@ En pratique, on choisira un nombre de classes $K^*$ qui minimisera significative
 
 Il faut aussi noter que dans notre cas précis, cette classification est faite dans un but exploratoire. 
 Il vaudra mieux avoir un nombre de classes délibérément grand, quitte à avoir des classes semblables, afin de ne pas passer à côté d'une catégorie de solutions intéressante.
+
+On effectuera la CAH en utilisant la fonction \texttt{hclust} \citep{R}.
 
 La pertinence biologique des classes de paramètres trouvées sera finalement validé par des experts.
 
