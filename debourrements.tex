@@ -34,3 +34,12 @@ I_{t}^{a} = B_t + \sum_{t = 1}^{d_A} B_{t-j} \times \left( 1 - F(j) \right), \qq
 Ici, $B_t$ représente le nombre de débourrements à la date $t$, $d_A$ la durée d'attractivité voulue et $F$ la fonction de répartition d'une $\mathcal{N}\left( 29; 14 \right)$.
 
 Dans notre cas, on choisira $d_A = 16$ jours, correspondant à la durée des stades C, D et E.
+
+La figure~\ref{fig:compsimuobs} illustre la différence entre les inflorescences vivantes observées et les inflorescences vivantes simulées en utilisant la méthode décrite ci-dessus.
+
+\begin{figure}[h]
+\centering
+ \epsfig{file = plots/simu_vs_obs.eps, scale = 0.59}
+ \caption{Différences entre les inflorescences vivantes observées et simulées (verger n\textdegree1).}
+ \label{fig:compsimuobs}
+\end{figure}

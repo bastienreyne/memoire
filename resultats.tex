@@ -339,6 +339,7 @@ On peut remarquer que le paramètre $\varpi$ ne dépasse jamais 1.5, ce qui semb
 
 \clearpage
 \section{Solutions avec prise en compte de contraintes liées aux ressources}
+\label{chap:cde}
 
 Puisque la température n'explique pas le phénomène observé en fin de saison, on teste une autre hypothèse.
 On s'intéresse aux ressources.
@@ -420,6 +421,9 @@ $\gamma$ & $p_{\text{m}}$ & $\mu_{\text{ER}}$ & $\mu_{\text{EH}}$ & $k$ & \textt
 On remarquera que la prédiction sur la troisième solution--type est toujours aussi mauvaise.
 La prise en compte de l'attractivité des inflorescences ne permet toujours pas la baisse des dynamiques observées en fin de saison lorsqu'il y a des individus endogènes dans la sous-parcelle EH.
 
+Le choix d'une durée attractive de seize jours correspondant à la durée des stades phénologiques C, D et E peut apparaître comme un choix trop arbitraire.
+On traite dans l'annexe~\ref{chap:attra} le cas où le modèle calibre aussi la durée d'attractivité.
+
 \clearpage
 \section{Solutions avec l'introduction d'un paramètre de saisonnalité}
 
@@ -466,7 +470,20 @@ Les paramètres montrent (et le graphique aussi) qu'il y a principalement des fe
 
 Cela semble être une bonne estimation.
 On procède à la validation sur le verger n\textdegree2.
-Il faut cependant noter que le phénomène de saisonnalité a lieu sur ce verger aux alentours du 23 août pour les modalités PS et EH et aux alentours du 7 septembre pour la modalité ER.
+Les résultats obtenus sont visibles sur la figure~\ref{fig:vg2_15s}.
+Les prédictions sont plutôt mauvaises tant en terme d'intensité que de temporalité.
+
+\begin{figure}[ht]
+ \centering
+ \epsfig{file = plots/verger2_15sept.eps, scale = 0.59}
+ \caption{Dynamiques observées et simulées sur le verger n\textdegree2. La décomposition indiquant la provenance des femelles qui ont pondus les œufs est disponible pour les dynamiques simulées.
+ Les paramètres utilisés sont ceux calibrés par le modèle sur le verger n\textdegree1.}
+ \label{fig:vg2_15s}
+\end{figure}
+
+
+On pourrait cependant objecter que le phénomène de saisonnalité intervient à une autre date sur ce verger, les conditions climatiques pouvant être différentes.
+En se basant sur les dynamiques observées, il semble que le phénomène de saisonnalité a lieu sur ce verger aux alentours du 23 août pour les modalités PS et EH et aux alentours du 7 septembre pour la modalité ER.
 
 Les résultats produits sur le verger n\textdegree2 sont visibles sur la figure~\ref{fig:D2}.
 On remarque que les dynamiques des modalités ER et EH sont plus ou moins captées.
