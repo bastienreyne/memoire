@@ -200,6 +200,7 @@ Et si en testant une de ces hypothèses, on trouve une solution qui permet d'aju
  \clearpage
 
 \section{Solutions avec prise en compte de la température}
+\label{chap:temp}
 
 La première hypothèse à laquelle on s'intéresse est le lien entre la température et la probabilité d'entrer en pupaison.
 
@@ -295,18 +296,18 @@ $\gamma$ & $p_{\text{m}}$ & $\mu_{\text{ER}}$ & $\mu_{\text{EH}}$ & $k$ & \textt
  \end{center}
 
 \item \textbf{Solution--type 2 :} 
-Une solution sans individus exogènes ni sans individus qui émergent de la sous-parcelle EH  et sans individus exogènes.
+Une solution sans individus exogènes ni sans individus qui émergent de la sous-parcelle EH.
 
 Les paramètres sont :
  \begin{center}
 \begin{tabular}{llllllll}
 $\gamma$ & $p_{\text{m}}$ & $\mu_{\text{ER}}$ & $\mu_{\text{EH}}$ & $k$ & \texttt{stock} & $E_0\mu_{\ell}$ & $\varpi$\\
-0 & 1 & 1 & 0.001 & 0.1 & 17188 & 6.3 & 1.036
+0.000 & 1 & 1 & 0.001 & 0.1 & 17188 & 6.3 & 1.036
  \end{tabular}
  \end{center}
  
 \item \textbf{Solution--type 3 :}
-Une solution avec des femelles qui émergent de la sous-parcelle EH.
+Une solution avec des femelles qui émergent de la sous-parcelle EH  et sans individus exogènes.
 
 Les paramètres sont :
  \begin{center}
@@ -319,6 +320,12 @@ $\gamma$ & $p_{\text{m}}$ & $\mu_{\text{ER}}$ & $\mu_{\text{EH}}$ & $k$ & \textt
 
 Il n'est probablement pas très pertinent de s'étendre longuement sur ces trois nouvelles solutions, dans la mesure où elles sont très similaires aux solutions trouvées avec le modèle initial.
 On peut remarquer que le paramètre $\varpi$ ne dépasse jamais 1.5, ce qui semble indiquer que la prise en compte de l'effet de la température sur la probabilité d'entrer en pupaison ne semble pas améliorer le modèle.
+
+La température n'explique pas le phénomène observé en fin de saison pour l'année de 2017, les températures ne changeant pas suffisamment entre le début et la fin de cette saison.
+Il se peut néanmoins qu'il y ait certaines saisons où les écarts de températures soient suffisamment importants pour qu'il faille les prendre en compte.
+C'est pourquoi on gardera par la suite la prise en compte de la température sur la probabilité d'entrer en pupaison, en fixant $\varpi = 1.$ 
+
+On s'intéresse également dans l'annexe~\ref{chap:pup_chelou} au cas où le modèle a plus de liberté pour l'ajustement de la probabilité d'entrer en phase de pupaison.
 
 \begin{figure}[h]
  \centering
@@ -390,7 +397,7 @@ $\gamma$ & $p_{\text{m}}$ & $\mu_{\text{ER}}$ & $\mu_{\text{EH}}$ & $k$ & \textt
  &  &  &  &  &  & \\
 \mc{7}{c}{\textbf{Solution--type 3}}\\
 $\gamma$ & $p_{\text{m}}$ & $\mu_{\text{ER}}$ & $\mu_{\text{EH}}$ & $k$ & \texttt{stock} & $E_0\mu_\ell$\\
-0 & 0.094 & 0.999 & 0.514 & 0.181 & 18214 & 8.259
+0.000 & 0.094 & 0.999 & 0.514 & 0.181 & 18214 & 8.259
 \end{tabular}
 \end{center}
 }%
@@ -428,7 +435,7 @@ On traite dans l'annexe~\ref{chap:attra} le cas où le modèle calibre aussi la 
 \section{Solutions avec l'introduction d'un paramètre de saisonnalité}
 
 Les hypothèses émises jusqu'à présent n'ont pas permis d'expliquer ce qu'il se produit en fin de saison.
-Aux hypothèses déjà faites, on en rajoute une autre.
+Aux hypothèses déjà faites (probabilité d'entrer en phase de pupaison dépendant de la température et durée d'attractivité des inflorescences de 16 jours), on en rajoute une autre.
 Ce que l'on observe sur les dynamiques de larves, c'est qu'il semble y avoir une forte baisse de la population de larves qui s'amorce aux alentours du 15 septembre (sur le verger n\textdegree1).
 On émet alors l'hypothèse qu'un phénomène intervient à cette date.
 Ce phénomène non-observé caractériserait un changement de la conjoncture sur le verger et induirait une baisse du nombre de larves.
